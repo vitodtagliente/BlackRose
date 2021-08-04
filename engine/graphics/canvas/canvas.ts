@@ -1,6 +1,6 @@
-import CanvasGraphicsContext from "./canvas_graphic_context";
+import CanvasContext from "./canvas_context";
 
 export
 {
-    CanvasGraphicsContext
+    CanvasContext
 }

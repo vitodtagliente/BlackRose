@@ -1,7 +1,10 @@
-import GraphicsContext, { GraphicsApi } from "./graphics_context"
+import { API } from "./api"
+import ContextFactory from "./context_factory"
+import Context from "./context"
 
 export
 {
-    GraphicsApi,
-    GraphicsContext
+    API,
+    Context,
+    ContextFactory
 }
