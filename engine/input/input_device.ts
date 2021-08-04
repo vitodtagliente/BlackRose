@@ -1,4 +1,5 @@
 
-export default class InputDevice {
+export default class InputDevice
+{
 
 }

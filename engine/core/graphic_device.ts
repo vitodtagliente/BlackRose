@@ -9,7 +9,7 @@ export default class GraphicDevice {
         this._canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         // assert(this._canvas != null, `Cannot find any canvas with id ${canvasId}`);
 
-        this._context = new GraphicsContext(this._canvas, api);
+        this._context = GraphicsContext.factory(this._canvas, api);
     }
 
     public resize(width: number, height: number): void {

@@ -1,6 +1,7 @@
 import GraphicsContext, { GraphicsApi } from "./graphics_context"
 
-export {
+export
+{
     GraphicsApi,
     GraphicsContext
 }

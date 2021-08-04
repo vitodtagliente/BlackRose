@@ -3,7 +3,8 @@ import * as Graphics from './graphics/graphics';
 import * as Input from './input/input';
 import Engine from "./engine"
 
-export {
+export
+{
     Core,
     Engine,
     Graphics,
