@@ -31,4 +31,5 @@ export default class GraphicDevice
     public get canvas(): HTMLCanvasElement { return this._canvas; }
     public get context(): Graphics.Context { return this._context; }
     public get isFullscreen(): boolean { return this._isFullscreen; }
+    public get isValid(): boolean { return this.canvas != null && this.context != null; }
 }
