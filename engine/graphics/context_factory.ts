@@ -1,14 +1,15 @@
-import { API } from './api';
-import * as Canvas from './canvas/canvas';
+import { Canvas } from '../application';
+import API from './api';
+import { CanvasContext } from './canvas';
 import Context from './context';
 
 export default class ContextFactory
 {
-    public static get(canvas: HTMLCanvasElement, api: API): Context
+    public static get(canvas: Canvas, api: API): Context
     {
         switch (api)
         {
-            case API.Canvas: return new Canvas.CanvasContext(canvas);
+            case API.Canvas: return new CanvasContext(canvas);
             case API.WebGL:
             default:
                 return null;

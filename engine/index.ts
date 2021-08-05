@@ -1,16 +1,12 @@
-import * as Core from './core/core';
-import * as Graphics from './graphics/graphics';
-import * as Input from './input/input';
-import Application from './application';
-import Engine from "./engine"
+import * as Application from './application';
+import * as Core from './core';
+import * as Graphics from './graphics';
+import * as Input from './input';
 
 export
 {
     Application,
     Core,
-    Engine,
     Graphics,
     Input
 }
-
-export default Engine;

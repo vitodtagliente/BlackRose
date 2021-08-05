@@ -1,5 +1,7 @@
-export enum API
+enum API
 {
     Canvas = '2d',
     WebGL = 'webgl'
 }
+
+export default API;

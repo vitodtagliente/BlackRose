@@ -1,4 +1,4 @@
-import { API } from "./api"
+import API from "./api"
 import ContextFactory from "./context_factory"
 import Context from "./context"
 

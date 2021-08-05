@@ -1,19 +1,22 @@
-import { API } from "../api";
+import { Canvas } from "../../application";
+import API from "../api";
 import Context from "../context";
 
 export default class CanvasContext extends Context
 {
-    private _canvasContext: CanvasRenderingContext2D;
+    private _context: CanvasRenderingContext2D;
 
-    public constructor(canvas: HTMLCanvasElement)
+    public constructor(canvas: Canvas)
     {
         super(canvas, API.Canvas);
-        this._canvasContext = this.context as CanvasRenderingContext2D;
+        this._context = canvas.canvas.getContext(this.api) as CanvasRenderingContext2D;
     }
+
+    public get context(): CanvasRenderingContext2D { return this._context; }
 
     public clear(color: string): void
     {
-        this._canvasContext.fillStyle = color;
-        this._canvasContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.fillStyle = color;
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }

@@ -1,15 +1,11 @@
-import * as Graphics from '../graphics/graphics';
-
-export default class GraphicDevice
+export default class Canvas
 {
     private _canvas: HTMLCanvasElement;
-    private _context: Graphics.Context;
     private _isFullscreen: boolean = false;
 
-    public constructor(canvasId: string, api: Graphics.API)
+    public constructor(id: string)
     {
-        this._canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-        this._context = Graphics.ContextFactory.get(this._canvas, api);
+        this._canvas = document.getElementById(id) as HTMLCanvasElement;
     }
 
     public resize(width: number, height: number): void
@@ -29,7 +25,9 @@ export default class GraphicDevice
     }
 
     public get canvas(): HTMLCanvasElement { return this._canvas; }
-    public get context(): Graphics.Context { return this._context; }
     public get isFullscreen(): boolean { return this._isFullscreen; }
-    public get isValid(): boolean { return this.canvas != null && this.context != null; }
+    public get isValid(): boolean { return this.canvas != null; }
+
+    public get width(): number { return this.canvas.width; }
+    public get height(): number { return this.canvas.height; }
 }
