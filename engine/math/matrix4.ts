@@ -1,0 +1,88 @@
+export default class Matrix4
+{
+    public static readonly zero: Matrix4 = new Matrix4();
+    public static readonly identity: Matrix4 = new Matrix4(
+        1, 0,
+        0, 1
+    );
+
+    public readonly rows: number = 2;
+    public readonly columns: number = 2;
+    public readonly size: number = 2;
+
+    public data: number[][] = [[2], [2]];
+
+    public get m00(): number { return this.data[0][0]; }
+    public set m00(value: number) { this.data[0][0] = value; }
+    public get m01(): number { return this.data[0][1]; }
+    public set m01(value: number) { this.data[0][1] = value; }
+    public get m10(): number { return this.data[1][0]; }
+    public set m10(value: number) { this.data[1][0] = value; }
+    public get m11(): number { return this.data[1][1]; }
+    public set m11(value: number) { this.data[1][1] = value; }
+
+    public constructor(
+        a00?: number, a01?: number,
+        a10?: number, a11?: number
+    )
+    {
+        this.m00 = a00 ?? 0;
+        this.m01 = a01 ?? 0;
+        this.m10 = a10 ?? 0;
+        this.m11 = a11 ?? 0;
+    }
+
+    public determinant(): number
+    {
+        return this.m00 * this.m11 - this.m01 * this.m10;
+    }
+
+    public transpose(): Matrix4
+    {
+        return new Matrix4(
+            this.m00, this.m10,
+            this.m01, this.m11
+        );
+    }
+
+    public inverse(): Matrix4
+    {
+        return new Matrix4(
+            this.m11, -this.m10,
+            -this.m01, this.m00
+        ).div(this.determinant());
+    }
+
+    public add(m: Matrix4): Matrix4
+    {
+        return new Matrix4(
+            this.m00 + m.m00, this.m01 + m.m01,
+            this.m10 + m.m10, this.m11 + m.m11
+        );
+    }
+
+    public sub(m: Matrix4): Matrix4
+    {
+        return new Matrix4(
+            this.m00 - m.m00, this.m01 - m.m01,
+            this.m10 - m.m10, this.m11 - m.m11
+        );
+    }
+
+    public mul(scalar: number): Matrix4
+    {
+        return new Matrix4(
+            this.m00 * scalar, this.m01 * scalar,
+            this.m10 * scalar, this.m11 * scalar
+        );
+    }
+
+    public div(scalar: number): Matrix4
+    {
+        const factor: number = 1 / scalar;
+        return new Matrix4(
+            this.m00 * factor, this.m01 * factor,
+            this.m10 * factor, this.m11 * factor
+        );
+    }
+}
