@@ -1,3 +1,4 @@
+import { clamp, degrees, lerp, radians, random } from "./algo"
 import Transform from "./transform"
 import { toVector2, toVector3, toVector4 } from "./vector"
 import Vector2 from "./vector2"
@@ -6,6 +7,11 @@ import Vector4 from "./vector4"
 
 export 
 {
+    clamp,
+    degrees,
+    lerp,
+    radians,
+    random,
     toVector2,
     toVector3,
     toVector4,
