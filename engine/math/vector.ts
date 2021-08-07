@@ -1,0 +1,16 @@
+import { Vector2, Vector3, Vector4 } from ".";
+
+export function toVector2(v: Vector3 | Vector4): Vector2
+{
+    return new Vector2(v.x, v.y);
+}
+
+export function toVector3(v: Vector2 & Vector4): Vector3
+{
+    return new Vector3(v.x, v.y, typeof (v) === typeof (Vector2) ? 0 : v.z);
+}
+
+export function toVector4(v: Vector2 & Vector3): Vector4
+{
+    return new Vector4(v.x, v.y, typeof (v) === typeof (Vector3) ? v.z : 0, 0);
+}
