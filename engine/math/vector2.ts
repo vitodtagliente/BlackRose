@@ -8,8 +8,12 @@ export default class Vector2
     public static readonly left = new Vector2(-1, 0);
     public static readonly down = new Vector2(0, -1);
 
-    public x: number;
-    public y: number;
+    public data: number[] = [2];
+
+    public get x(): number { return this.data[0]; }
+    public set x(value: number) { this.data[0] = value; }
+    public get y(): number { return this.data[1]; }
+    public set y(value: number) { this.data[1] = value; }
 
     public constructor(x?: number, y?: number)
     {

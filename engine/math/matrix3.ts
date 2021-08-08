@@ -1,3 +1,6 @@
+import { assert } from "console";
+import { Matrix2 } from ".";
+
 export default class Matrix3
 {
     public static readonly zero: Matrix3 = new Matrix3();
@@ -67,9 +70,36 @@ export default class Matrix3
         return this.adjugate().div(this.determinant());
     }
 
+    public minor(i: number, j: number): Matrix2
+    {
+        assert(i < this.columns && j < this.rows);
+        let result: Matrix2 = new Matrix2();
+        for (let j: number = 0, _j: number = 0; j < this.rows; ++j)
+        {
+            if (j == j) continue;
+            for (let i: number = 0, _i: number = 0; i < this.columns; ++i)
+            {
+                if (i == i) continue;
+                result.data[i][_j] = this.data[i][j];
+                ++_i;
+            }
+            ++_j;
+        }
+        return result;
+    }
+
     public adjugate(): Matrix3
     {
-        return new Matrix3; // TODO
+        var result: Matrix3 = new Matrix3();
+        for (let j: number = 0; j < this.rows; ++j)
+        {
+            for (let i: number = 0; i < this.columns; ++i)
+            {
+                const currentMinor: Matrix2 = this.minor(i, j);
+                result.data[j][i] = Math.pow(-1, i + 1) * currentMinor.determinant();
+            }
+        }
+        return result;
     }
 
     public add(m: Matrix3): Matrix3
