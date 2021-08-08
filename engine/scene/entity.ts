@@ -1,11 +1,13 @@
 import { assert } from 'console';
-import { Component } from '.';
+import { Component, World } from '.';
 import *  as Math from '../math';
 
 export default class Entity
 {
     public name: string;
+    public tag: string;
     public transform: Math.Transform;
+    private _world: World;
     private _components: Array<Component>;
 
     public constructor(name?: string)
@@ -13,6 +15,13 @@ export default class Entity
         this.name = name;
         this.transform = new Math.Transform;
         this._components = new Array<Component>();
+    }
+
+    public get world(): World { return this._world; }
+
+    public spawn(world: World): void 
+    {
+        this._world = world;
     }
 
     public update(deltaTime: number): void 

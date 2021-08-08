@@ -24,7 +24,7 @@ export default abstract class Component
         this._unint();
     }
 
-    protected abstract _init(): void;
-    protected abstract _unint(): void;
-    public abstract update(deltaTime: number): void;
+    protected _init(): void { }
+    protected _unint(): void { }
+    public update(deltaTime: number): void { }
 }
