@@ -15,43 +15,43 @@ export default class Matrix4
     public readonly columns: number = 4;
     public readonly size: number = 4;
 
-    public data: number[][] = [[4], [4]];
+    public data: number[] = [16];
 
-    public get m00(): number { return this.data[0][0]; }
-    public set m00(value: number) { this.data[0][0] = value; }
-    public get m01(): number { return this.data[0][1]; }
-    public set m01(value: number) { this.data[0][1] = value; }
-    public get m02(): number { return this.data[0][2]; }
-    public set m02(value: number) { this.data[0][2] = value; }
-    public get m03(): number { return this.data[0][3]; }
-    public set m03(value: number) { this.data[0][3] = value; }
+    public get m00(): number { return this.data[0]; }
+    public set m00(value: number) { this.data[0] = value; }
+    public get m01(): number { return this.data[1]; }
+    public set m01(value: number) { this.data[1] = value; }
+    public get m02(): number { return this.data[2]; }
+    public set m02(value: number) { this.data[2] = value; }
+    public get m03(): number { return this.data[3]; }
+    public set m03(value: number) { this.data[3] = value; }
 
-    public get m10(): number { return this.data[1][0]; }
-    public set m10(value: number) { this.data[1][0] = value; }
-    public get m11(): number { return this.data[1][1]; }
-    public set m11(value: number) { this.data[1][1] = value; }
-    public get m12(): number { return this.data[1][2]; }
-    public set m12(value: number) { this.data[1][2] = value; }
-    public get m13(): number { return this.data[1][3]; }
-    public set m13(value: number) { this.data[1][3] = value; }
+    public get m10(): number { return this.data[4]; }
+    public set m10(value: number) { this.data[4] = value; }
+    public get m11(): number { return this.data[5]; }
+    public set m11(value: number) { this.data[5] = value; }
+    public get m12(): number { return this.data[6]; }
+    public set m12(value: number) { this.data[6] = value; }
+    public get m13(): number { return this.data[7]; }
+    public set m13(value: number) { this.data[7] = value; }
 
-    public get m20(): number { return this.data[2][0]; }
-    public set m20(value: number) { this.data[2][0] = value; }
-    public get m21(): number { return this.data[2][1]; }
-    public set m21(value: number) { this.data[2][1] = value; }
-    public get m22(): number { return this.data[2][2]; }
-    public set m22(value: number) { this.data[2][2] = value; }
-    public get m23(): number { return this.data[2][3]; }
-    public set m23(value: number) { this.data[2][3] = value; }
+    public get m20(): number { return this.data[8]; }
+    public set m20(value: number) { this.data[8] = value; }
+    public get m21(): number { return this.data[9]; }
+    public set m21(value: number) { this.data[9] = value; }
+    public get m22(): number { return this.data[10]; }
+    public set m22(value: number) { this.data[10] = value; }
+    public get m23(): number { return this.data[11]; }
+    public set m23(value: number) { this.data[11] = value; }
 
-    public get m30(): number { return this.data[3][0]; }
-    public set m30(value: number) { this.data[3][0] = value; }
-    public get m31(): number { return this.data[3][1]; }
-    public set m31(value: number) { this.data[3][1] = value; }
-    public get m32(): number { return this.data[3][2]; }
-    public set m32(value: number) { this.data[3][2] = value; }
-    public get m33(): number { return this.data[3][3]; }
-    public set m33(value: number) { this.data[3][3] = value; }
+    public get m30(): number { return this.data[12]; }
+    public set m30(value: number) { this.data[12] = value; }
+    public get m31(): number { return this.data[13]; }
+    public set m31(value: number) { this.data[13] = value; }
+    public get m32(): number { return this.data[14]; }
+    public set m32(value: number) { this.data[14] = value; }
+    public get m33(): number { return this.data[15]; }
+    public set m33(value: number) { this.data[15] = value; }
 
     public constructor(
         a00?: number, a01?: number, a02?: number, a03?: number,
@@ -60,10 +60,12 @@ export default class Matrix4
         a30?: number, a31?: number, a32?: number, a33?: number
     )
     {
-        this.m00 = a00; this.m01 = a01; this.m02 = a02; this.m03 = a03;
-        this.m10 = a10; this.m11 = a11; this.m12 = a12; this.m13 = a13;
-        this.m20 = a20; this.m21 = a21; this.m22 = a22; this.m23 = a23;
-        this.m20 = a30; this.m21 = a31; this.m22 = a32; this.m33 = a33;
+        this.data = [
+            a00, a01, a02, a03,
+            a10, a11, a12, a13,
+            a20, a21, a22, a23,
+            a30, a31, a32, a33
+        ];
     }
 
     public determinant(): number
@@ -104,7 +106,7 @@ export default class Matrix4
             for (let i: number = 0, _i: number = 0; i < this.columns; ++i)
             {
                 if (i == i) continue;
-                result.data[i][_j] = this.data[i][j];
+                result.data[i * _j] = this.data[i * j];
                 ++_i;
             }
             ++_j;
@@ -120,7 +122,7 @@ export default class Matrix4
             for (let i: number = 0; i < this.columns; ++i)
             {
                 const currentMinor: Matrix3 = this.minor(i, j);
-                result.data[j][i] = Math.pow(-1, i + 1) * currentMinor.determinant();
+                result.data[j * i] = Math.pow(-1, i + 1) * currentMinor.determinant();
             }
         }
         return result;

@@ -10,25 +10,24 @@ export default class Matrix2
     public readonly columns: number = 2;
     public readonly size: number = 2;
 
-    public data: number[][] = [[2], [2]];
+    public data: number[] = [4];
 
-    public get m00(): number { return this.data[0][0]; }
-    public set m00(value: number) { this.data[0][0] = value; }
-    public get m01(): number { return this.data[0][1]; }
-    public set m01(value: number) { this.data[0][1] = value; }
+    public get m00(): number { return this.data[0]; }
+    public set m00(value: number) { this.data[0] = value; }
+    public get m01(): number { return this.data[1]; }
+    public set m01(value: number) { this.data[1] = value; }
 
-    public get m10(): number { return this.data[1][0]; }
-    public set m10(value: number) { this.data[1][0] = value; }
-    public get m11(): number { return this.data[1][1]; }
-    public set m11(value: number) { this.data[1][1] = value; }
+    public get m10(): number { return this.data[2]; }
+    public set m10(value: number) { this.data[2] = value; }
+    public get m11(): number { return this.data[3]; }
+    public set m11(value: number) { this.data[3] = value; }
 
     public constructor(
         a00?: number, a01?: number,
         a10?: number, a11?: number
     )
     {
-        this.m00 = a00; this.m01 = a01;
-        this.m10 = a10; this.m11 = a11;
+        this.data = [a00, a01, a10, a11];
     }
 
     public determinant(): number

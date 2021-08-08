@@ -13,28 +13,28 @@ export default class Matrix3
     public readonly columns: number = 3;
     public readonly size: number = 3;
 
-    public data: number[][] = [[3], [3]];
+    public data: number[] = [9];
 
-    public get m00(): number { return this.data[0][0]; }
-    public set m00(value: number) { this.data[0][0] = value; }
-    public get m01(): number { return this.data[0][1]; }
-    public set m01(value: number) { this.data[0][1] = value; }
-    public get m02(): number { return this.data[0][2]; }
-    public set m02(value: number) { this.data[0][2] = value; }
+    public get m00(): number { return this.data[0]; }
+    public set m00(value: number) { this.data[0] = value; }
+    public get m01(): number { return this.data[1]; }
+    public set m01(value: number) { this.data[1] = value; }
+    public get m02(): number { return this.data[2]; }
+    public set m02(value: number) { this.data[2] = value; }
 
-    public get m10(): number { return this.data[1][0]; }
-    public set m10(value: number) { this.data[1][0] = value; }
-    public get m11(): number { return this.data[1][1]; }
-    public set m11(value: number) { this.data[1][1] = value; }
-    public get m12(): number { return this.data[1][2]; }
-    public set m12(value: number) { this.data[1][2] = value; }
+    public get m10(): number { return this.data[3]; }
+    public set m10(value: number) { this.data[3] = value; }
+    public get m11(): number { return this.data[4]; }
+    public set m11(value: number) { this.data[4] = value; }
+    public get m12(): number { return this.data[5]; }
+    public set m12(value: number) { this.data[5] = value; }
 
-    public get m20(): number { return this.data[2][0]; }
-    public set m20(value: number) { this.data[2][0] = value; }
-    public get m21(): number { return this.data[2][1]; }
-    public set m21(value: number) { this.data[2][1] = value; }
-    public get m22(): number { return this.data[2][2]; }
-    public set m22(value: number) { this.data[2][2] = value; }
+    public get m20(): number { return this.data[6]; }
+    public set m20(value: number) { this.data[6] = value; }
+    public get m21(): number { return this.data[7]; }
+    public set m21(value: number) { this.data[7] = value; }
+    public get m22(): number { return this.data[8]; }
+    public set m22(value: number) { this.data[8] = value; }
 
     public constructor(
         a00?: number, a01?: number, a02?: number,
@@ -42,9 +42,11 @@ export default class Matrix3
         a20?: number, a21?: number, a22?: number
     )
     {
-        this.m00 = a00; this.m01 = a01; this.m02 = a02;
-        this.m10 = a10; this.m11 = a11; this.m12 = a12;
-        this.m20 = a20; this.m21 = a21; this.m22 = a22;
+        this.data = [
+            a00, a01, a02,
+            a10, a11, a12,
+            a20, a21, a22
+        ];
     }
 
     public determinant(): number
@@ -79,7 +81,7 @@ export default class Matrix3
             for (let i: number = 0, _i: number = 0; i < this.columns; ++i)
             {
                 if (i == i) continue;
-                result.data[i][_j] = this.data[i][j];
+                result.data[i * _j] = this.data[i * j];
                 ++_i;
             }
             ++_j;
@@ -95,7 +97,7 @@ export default class Matrix3
             for (let i: number = 0; i < this.columns; ++i)
             {
                 const currentMinor: Matrix2 = this.minor(i, j);
-                result.data[j][i] = Math.pow(-1, i + 1) * currentMinor.determinant();
+                result.data[j * i] = Math.pow(-1, i + 1) * currentMinor.determinant();
             }
         }
         return result;
