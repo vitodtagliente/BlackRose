@@ -17,7 +17,7 @@ export default class Color
         this.data = [r, g, b, a];
     }
 
-    public foo()
+    public get name()
     {
         return `rgba(${this.r},${this.g},${this.b},${this.a})`;
     }

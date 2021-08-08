@@ -14,6 +14,14 @@ export default class World
 
     public get entities(): Array<Entity> { return this._entities; }
 
+    public update(deltaTime: number): void 
+    {
+        for (const entity of this._entities)
+        {
+            entity.update(deltaTime);
+        }
+    }
+
     public spawn<T extends Entity>(entity: T, transform: Transform): T
     {
         entity.transform = transform;
