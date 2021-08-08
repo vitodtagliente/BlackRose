@@ -11,7 +11,7 @@ app.context.clear("cyan");
 class BallComponent extends Component
 {
     private _context: Context;
-    private readonly _radius = 6;
+    private readonly _radius = 30;
     private readonly _color: Color;
 
     public constructor(context: Context)
@@ -33,11 +33,11 @@ class BallComponent extends Component
         ctx.context.beginPath();
         ctx.context.arc(position.x, position.y, this._radius, 0, 2 * Math.PI, false);
         ctx.context.fillStyle = 'red';
-        ctx.context.closePath();
-
-        console.log(`drawing circle at position ${position.x}:${position.y}`);
+        ctx.context.fill();
     }
 }
 
 const ball: Entity = app.world.spawn(new Entity("ball"), new Transform);
 ball.addComponent(new BallComponent(app.context));
+
+app.run();

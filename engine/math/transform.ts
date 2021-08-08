@@ -8,8 +8,8 @@ export default class Transform
 
     public constructor()
     {
-        this.position = new Vector3();
-        this.rotation = new Vector3();
+        this.position = new Vector3(0, 0, 0);
+        this.rotation = new Vector3(0, 0, 0);
         this.scale = new Vector3(1, 1, 1);
     }
 }
