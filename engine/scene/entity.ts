@@ -1,4 +1,3 @@
-import { assert } from 'console';
 import { Component, World } from '.';
 import *  as Math from '../math';
 
@@ -34,7 +33,7 @@ export default class Entity
 
     public addComponent<T extends Component>(component: T): T
     {
-        assert(component.isAttached == false);
+        // assert(component.isAttached == false);
         this._components.push(component);
         component.attach(this);
         return component;

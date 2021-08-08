@@ -60,10 +60,10 @@ export default class Matrix4
         a30?: number, a31?: number, a32?: number, a33?: number
     )
     {
-        this.m00 = a00 ?? 0; this.m01 = a01 ?? 0; this.m02 = a02 ?? 0; this.m03 = a03 ?? 0;
-        this.m10 = a10 ?? 0; this.m11 = a11 ?? 0; this.m12 = a12 ?? 0; this.m13 = a13 ?? 0;
-        this.m20 = a20 ?? 0; this.m21 = a21 ?? 0; this.m22 = a22 ?? 0; this.m23 = a23 ?? 0;
-        this.m20 = a30 ?? 0; this.m21 = a31 ?? 0; this.m22 = a32 ?? 0; this.m33 = a33 ?? 0;
+        this.m00 = a00; this.m01 = a01; this.m02 = a02; this.m03 = a03;
+        this.m10 = a10; this.m11 = a11; this.m12 = a12; this.m13 = a13;
+        this.m20 = a20; this.m21 = a21; this.m22 = a22; this.m23 = a23;
+        this.m20 = a30; this.m21 = a31; this.m22 = a32; this.m33 = a33;
     }
 
     public determinant(): number
@@ -96,7 +96,7 @@ export default class Matrix4
 
     public minor(i: number, j: number): Matrix3
     {
-        assert(i < this.columns && j < this.rows);
+        // assert(i < this.columns && j < this.rows);
         let result: Matrix3 = new Matrix3();
         for (let j: number = 0, _j: number = 0; j < this.rows; ++j)
         {

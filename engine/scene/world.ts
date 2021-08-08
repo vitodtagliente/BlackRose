@@ -25,7 +25,7 @@ export default class World
     public destroy(entity: Entity): boolean
     {
         const index: number = this._entities.findIndex(e => e == entity);
-        if (index => 0 && index < this._entities.length)
+        if (index >= 0 && index < this._entities.length)
         {
             this._entities.splice(index, 1);
         }

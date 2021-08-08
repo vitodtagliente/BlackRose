@@ -27,8 +27,8 @@ export default class Matrix2
         a10?: number, a11?: number
     )
     {
-        this.m00 = a00 ?? 0; this.m01 = a01 ?? 0;
-        this.m10 = a10 ?? 0; this.m11 = a11 ?? 0;
+        this.m00 = a00; this.m01 = a01;
+        this.m10 = a10; this.m11 = a11;
     }
 
     public determinant(): number
