@@ -1,3 +1,4 @@
+import { Color } from ".";
 import { Canvas } from "../application";
 import API from "./api";
 
@@ -15,5 +16,5 @@ export default abstract class Context
     public get api(): API { return this._api; }
     public get canvas(): Canvas { return this._canvas; }
 
-    public abstract clear(color: string): void;
+    public abstract clear(color: Color): void;
 }

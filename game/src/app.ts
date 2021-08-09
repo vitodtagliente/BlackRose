@@ -7,7 +7,7 @@ import { Component, Entity } from 'blackrose/scene';
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
 app.canvas.fullscreen();
-app.context.clear("cyan");
+app.context.clear(Color.cyan);
 app.run();
 
 class BallComponent extends Component
@@ -20,7 +20,7 @@ class BallComponent extends Component
     {
         super(app);
         this._context = app.context as CanvasContext;
-        this._color = new Color(1, 0, 0);
+        this._color = Color.red;
     }
 
     public _init(): void 

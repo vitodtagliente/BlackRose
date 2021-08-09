@@ -1,6 +1,16 @@
 
 export default class Color
 {
+    public static readonly white: Color = new Color(1, 1, 1);
+    public static readonly black: Color = new Color(0, 0, 0);
+    public static readonly red: Color = new Color(1, 0, 0);
+    public static readonly green: Color = new Color(0, 1, 0);
+    public static readonly blue: Color = new Color(0, 0, 1);
+    public static readonly cyan: Color = new Color(0, 1, 1);
+    public static readonly yellow: Color = new Color(1, 1, 0);
+    public static readonly magenta: Color = new Color(1, 0, 1);
+    public static readonly transparent: Color = new Color(0, 0, 0, 0);
+
     public data: number[] = [4];
 
     public get r(): number { return this.data[0]; }
