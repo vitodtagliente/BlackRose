@@ -1,5 +1,6 @@
 import { Color } from "..";
 import { Canvas } from "../../application";
+import { Vector3 } from "../../math";
 import API from "../api";
 import Context from "../context";
 
@@ -19,5 +20,13 @@ export default class CanvasContext extends Context
     {
         this.context.fillStyle = color.name;
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    public drawCircle(position: Vector3, radius: number, color: Color): void
+    {
+        this._context.beginPath();
+        this._context.arc(position.x, position.y, radius, 0, 2 * Math.PI, false);
+        this._context.fillStyle = color.name;
+        this._context.fill();
     }
 }

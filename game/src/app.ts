@@ -35,11 +35,7 @@ class BallComponent extends Component
 
     public update(deltaTime: number): void 
     {
-        const position: Vector3 = this.owner.transform.position;
-        this._context.context.beginPath();
-        this._context.context.arc(position.x, position.y, this._radius, 0, 2 * Math.PI, false);
-        this._context.context.fillStyle = this._color.name;
-        this._context.context.fill();
+        this.app.renderer.drawCircle(this.owner.transform.position, this._radius, this._color);
     }
 }
 
