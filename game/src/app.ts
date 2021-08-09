@@ -32,13 +32,13 @@ class BallComponent extends Component
 
     public _init(): void 
     {
-        this.owner.transform.position.y = 50;
+        this.owner.transform.position.y = this.app.canvas.height / 2 - this._radius;
         console.log("initializing the ball");
     }
 
     public update(deltaTime: number): void 
     {
-        const speed: number = 4;
+        const speed: number = this.app.canvas.width / 180;
         if (this.goRight && this.owner.transform.position.x > this.app.canvas.width - this._radius / 2)
         {
             this.goRight = false;
@@ -48,6 +48,7 @@ class BallComponent extends Component
             this.goRight = true;
         }
 
+        this.owner.transform.position.y = this.app.canvas.height / 2 - this._radius;
         this.owner.transform.position.x += speed * (this.goRight ? 1 : -1);
 
         this.app.renderer.drawCircle(this.owner.transform.position, this._radius, this._color);
