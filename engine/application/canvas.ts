@@ -10,7 +10,13 @@ export default class Canvas
     public constructor(id: string)
     {
         this._canvas = document.getElementById(id) as HTMLCanvasElement;
-        this._canvas.addEventListener('resize', () => this.onResize());
+        window.addEventListener('resize', () => {
+            if(this.isFullscreen)
+            {
+                this.fullscreen();
+                this.onResize();
+            }
+        });
     }
 
     public resize(width: number, height: number): void
