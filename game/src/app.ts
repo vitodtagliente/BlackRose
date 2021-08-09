@@ -1,5 +1,6 @@
 import * as BlackRose from 'blackrose';
-import { Color, Context } from 'blackrose/graphics';
+import { Application } from 'blackrose/application';
+import { Color } from 'blackrose/graphics';
 import { CanvasContext } from 'blackrose/graphics/canvas';
 import { Transform, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
@@ -7,18 +8,19 @@ import { Component, Entity } from 'blackrose/scene';
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
 app.canvas.fullscreen();
 app.context.clear("cyan");
+app.run();
 
 class BallComponent extends Component
 {
-    private _context: Context;
+    private _context: CanvasContext;
     private readonly _radius = 30;
     private readonly _color: Color;
 
-    public constructor(context: Context)
+    public constructor(app: Application)
     {
-        super();
-        this._context = context;
-        this._color = new Color(1, 0, 0, 0);
+        super(app);
+        this._context = app.context as CanvasContext;
+        this._color = new Color(1, 0, 0);
     }
 
     public _init(): void 
@@ -28,16 +30,13 @@ class BallComponent extends Component
 
     public update(deltaTime: number): void 
     {
-        const ctx: CanvasContext = this._context as CanvasContext;
         const position: Vector3 = this.owner.transform.position;
-        ctx.context.beginPath();
-        ctx.context.arc(position.x, position.y, this._radius, 0, 2 * Math.PI, false);
-        ctx.context.fillStyle = 'red';
-        ctx.context.fill();
+        this._context.context.beginPath();
+        this._context.context.arc(position.x, position.y, this._radius, 0, 2 * Math.PI, false);
+        this._context.context.fillStyle = this._color.name;
+        this._context.context.fill();
     }
 }
 
 const ball: Entity = app.world.spawn(new Entity("ball"), new Transform);
-ball.addComponent(new BallComponent(app.context));
-
-app.run();
+ball.addComponent(new BallComponent(app));

@@ -1,14 +1,17 @@
 import { Entity } from ".";
+import { Application } from "../application";
 
 export default abstract class Component
 {
+    private _app: Application;
     private _owner: Entity;
 
-    public constructor()
+    public constructor(app: Application)
     {
-
+        this._app = app;
     }
 
+    public get app(): Application { return this._app; }
     public get owner(): Entity { return this._owner; }
     public get isAttached(): boolean { return this._owner != null; }
 
