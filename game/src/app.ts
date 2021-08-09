@@ -7,7 +7,12 @@ import { Component, Entity } from 'blackrose/scene';
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
 app.canvas.fullscreen();
-app.context.clear(Color.cyan);
+app.canvas.onResize = () =>
+{
+    app.context.clear(Color.green);
+    console.log('resize');
+};
+app.renderer.clear(Color.cyan);
 app.run();
 
 class BallComponent extends Component

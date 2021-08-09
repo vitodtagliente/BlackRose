@@ -4,6 +4,7 @@ import Context from "./context"
 import Color from "./color"
 import Material from "./material"
 import Texture from "./texture"
+import Renderer from "./renderer"
 
 export
 {
@@ -12,5 +13,6 @@ export
     Context,
     ContextFactory,
     Material,
+    Renderer,
     Texture
 }

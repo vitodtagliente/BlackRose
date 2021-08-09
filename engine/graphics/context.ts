@@ -16,5 +16,6 @@ export default abstract class Context
     public get api(): API { return this._api; }
     public get canvas(): Canvas { return this._canvas; }
 
+    
     public abstract clear(color: Color): void;
 }

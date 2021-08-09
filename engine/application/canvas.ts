@@ -1,11 +1,16 @@
+type ResizeEvent = () => void;
+
 export default class Canvas
 {
     private _canvas: HTMLCanvasElement;
     private _isFullscreen: boolean = false;
 
+    public onResize: ResizeEvent = () => { };
+
     public constructor(id: string)
     {
         this._canvas = document.getElementById(id) as HTMLCanvasElement;
+        this._canvas.addEventListener('resize', () => this.onResize());
     }
 
     public resize(width: number, height: number): void
