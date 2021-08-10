@@ -18,7 +18,7 @@ export default class Image
 
     public static load(filename: string, onLoadCallback: ImageLoadEvent = () => { }): Image 
     {
-        const img: HTMLImageElement = new HTMLImageElement;
+        const img: HTMLImageElement = new window.Image();
         img.onload = onLoadCallback;
         img.src = filename;
         return new Image(img);

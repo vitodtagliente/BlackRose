@@ -9,6 +9,7 @@ export default class Renderer
 {
     private _context: Context;
     private _commands: Array<Command>;
+    public clearColor: Color = Color.white;
 
     public constructor(context: Context)
     {
@@ -20,7 +21,8 @@ export default class Renderer
 
     public begin(): void 
     {
-
+        // double buffering
+        this.context.clear(this.clearColor);
     }
 
     public flush(): void 

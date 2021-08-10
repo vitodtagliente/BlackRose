@@ -1,6 +1,7 @@
 import * as BlackRose from 'blackrose';
 import { Application } from 'blackrose/application';
-import { Color } from 'blackrose/graphics';
+import { Image } from 'blackrose/asset';
+import { Color, Texture } from 'blackrose/graphics';
 import { Transform, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
 
@@ -44,10 +45,35 @@ class BallComponent extends Component
 
         this.app.renderer.drawCircle(this.owner.transform.position, this._radius, this._color);
 
-        // double buffering
-        this.app.renderer.clear(Color.white);
+    }
+}
+
+class CatComponent extends Component
+{
+    private catTexture: Texture;
+
+    public constructor(app: Application)
+    {
+        super(app);
+        this.catTexture = new Texture(Image.load("assets/cat.png", () =>
+        {
+            console.log("image loaded");
+        })
+        );
+    }
+
+    public update(deltaTime: number): void 
+    {
+        const position: Vector3 = new Vector3(
+            this.app.canvas.width / 2 - this.catTexture.image.width / 2, 
+            this.app.canvas.height / 2 - this.catTexture.image.height / 2
+        );
+        this.app.renderer.drawSprite(position, this.catTexture);
     }
 }
 
 const ball: Entity = app.world.spawn(new Entity("ball"), new Transform);
 ball.addComponent(new BallComponent(app));
+
+const cat: Entity = app.world.spawn(new Entity("cat"), new Transform);
+ball.addComponent(new CatComponent(app));
