@@ -1,4 +1,4 @@
-import { Color } from "..";
+import { Color, Texture } from "..";
 import { Canvas } from "../../application";
 import { Vector3 } from "../../math";
 import API from "../api";
@@ -28,5 +28,10 @@ export default class CanvasContext extends Context
         this._context.arc(position.x, position.y, radius, 0, 2 * Math.PI, false);
         this._context.fillStyle = color.name;
         this._context.fill();
+    }
+
+    public drawSprite(position: Vector3, texture: Texture): void
+    {
+        this._context.drawImage(texture.image.data, position.x, position.y);
     }
 }

@@ -35,7 +35,8 @@ export default class Renderer
     public drawSprite(position: Vector3, texture: Texture): void 
     {
         const command: SpriteCommand = new SpriteCommand;
-
+        command.position = position;
+        command.texture = texture;
         this._commands.push(command);
     }
 
