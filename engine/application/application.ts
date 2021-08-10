@@ -1,6 +1,7 @@
 import { Core, Graphics, Scene } from '..';
 import { ContextFactory } from '../graphics';
 import Canvas from './canvas';
+import * as Stats from 'stats.js'
 
 export default class Application
 {
@@ -9,6 +10,7 @@ export default class Application
     private _renderer: Graphics.Renderer;
     private _time: Core.Time;
     private _world: Scene.World;
+    private _stats: Stats;
 
     public constructor(canvasId: string, api: Graphics.API)
     {
@@ -17,6 +19,12 @@ export default class Application
         this._renderer = new Graphics.Renderer(this._context);
         this._time = new Core.Time();
         this._world = new Scene.World();
+
+        if (true)
+        {
+            this._stats = new Stats();
+            document.body.appendChild(this._stats.dom);
+        }
     }
 
     public get canvas(): Canvas { return this._canvas; }
@@ -35,9 +43,13 @@ export default class Application
         this._time.tick();
         const deltaTime: number = this._time.deltaTime;
 
+        this._stats.begin();
+
         this._renderer.begin();
         this._world.update(deltaTime);
         this._renderer.flush();
+
+        this._stats.end();
 
         requestAnimationFrame(() => this.loop());
     }
