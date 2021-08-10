@@ -10,7 +10,8 @@ export default class Application
     private _renderer: Graphics.Renderer;
     private _time: Core.Time;
     private _world: Scene.World;
-    private _stats: Stats;
+    private _fpsStats: Stats;
+    private _memoryStats: Stats;
 
     public constructor(canvasId: string, api: Graphics.API)
     {
@@ -22,8 +23,15 @@ export default class Application
 
         if (true)
         {
-            this._stats = new Stats();
-            document.body.appendChild(this._stats.dom);
+            this._fpsStats = new Stats();
+            document.body.appendChild(this._fpsStats.dom);
+            this._fpsStats.begin();
+
+            this._memoryStats = new Stats();
+            this._memoryStats.showPanel(2);
+            this._memoryStats.dom.style.cssText = 'position:absolute;top:0px;left:80px;';
+            document.body.appendChild(this._memoryStats.dom);
+            this._memoryStats.begin();
         }
     }
 
@@ -43,13 +51,12 @@ export default class Application
         this._time.tick();
         const deltaTime: number = this._time.deltaTime;
 
-        this._stats.begin();
-
         this._renderer.begin();
         this._world.update(deltaTime);
         this._renderer.flush();
 
-        this._stats.end();
+        this._fpsStats.update();
+        this._memoryStats.update();
 
         requestAnimationFrame(() => this.loop());
     }

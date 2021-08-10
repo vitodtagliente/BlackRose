@@ -1,3 +1,4 @@
+import { random } from "../math";
 
 export default class Color
 {
@@ -46,5 +47,12 @@ export default class Color
     public get name()
     {
         return `rgba(${this.r * 255},${this.g * 255},${this.b * 255},${this.a * 255})`;
+    }
+
+    public static random(randomizeAlpha: boolean = false): Color
+    {
+        return new Color(random(0, 1), random(0, 1), random(0, 1),
+            randomizeAlpha ? random(0, 1) : 1
+        );
     }
 }
