@@ -27,6 +27,7 @@ export default class Renderer
 
     public flush(): void 
     {
+        this._commands.reverse();
         while (this._commands.length > 0)
         {
             const command: Command = this._commands.pop();

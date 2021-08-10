@@ -57,7 +57,7 @@ class CatComponent extends Component
         super(app);
         this.catTexture = new Texture(Image.load("assets/cat.png", () =>
         {
-            console.log("image loaded");
+            console.log("cat loaded");
         })
         );
     }
@@ -76,4 +76,4 @@ const ball: Entity = app.world.spawn(new Entity("ball"), new Transform);
 ball.addComponent(new BallComponent(app));
 
 const cat: Entity = app.world.spawn(new Entity("cat"), new Transform);
-ball.addComponent(new CatComponent(app));
+cat.addComponent(new CatComponent(app));
