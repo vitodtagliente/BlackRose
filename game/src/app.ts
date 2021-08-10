@@ -1,23 +1,15 @@
 import * as BlackRose from 'blackrose';
 import { Application } from 'blackrose/application';
 import { Color } from 'blackrose/graphics';
-import { CanvasContext } from 'blackrose/graphics/canvas';
 import { Transform, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
 app.canvas.fullscreen();
-app.canvas.onResize = () =>
-{
-    app.context.clear(Color.green);
-    console.log('resize');
-};
-app.renderer.clear(Color.cyan);
 app.run();
 
 class BallComponent extends Component
 {
-    private _context: CanvasContext;
     private readonly _radius = 30;
     private readonly _color: Color;
 
@@ -26,7 +18,6 @@ class BallComponent extends Component
     public constructor(app: Application)
     {
         super(app);
-        this._context = app.context as CanvasContext;
         this._color = Color.red;
     }
 

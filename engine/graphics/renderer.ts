@@ -1,8 +1,9 @@
-import { Color, Context } from ".";
+import { Color, Context, Texture } from ".";
 import { Vector3 } from "../math";
 import Command from "./command";
 import ClearCommand from "./commands/clear_command";
 import ShapeCommand, { ShapeType } from "./commands/shape_command";
+import SpriteCommand from "./commands/sprite_command";
 
 export default class Renderer
 {
@@ -29,6 +30,13 @@ export default class Renderer
             const command: Command = this._commands.pop();
             command.execute(this._context);
         }
+    }
+
+    public drawSprite(position: Vector3, texture: Texture): void 
+    {
+        const command: SpriteCommand = new SpriteCommand;
+
+        this._commands.push(command);
     }
 
     public drawCircle(position: Vector3, radius: number, color: Color): void
