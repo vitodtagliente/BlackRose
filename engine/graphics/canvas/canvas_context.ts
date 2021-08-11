@@ -18,7 +18,7 @@ export default class CanvasContext extends Context
 
     public clear(color: Color): void
     {
-        this.context.fillStyle = color.name;
+        this.context.fillStyle = color.rgba;
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
@@ -26,7 +26,7 @@ export default class CanvasContext extends Context
     {
         this._context.beginPath();
         this._context.arc(position.x, position.y, radius, 0, 2 * Math.PI, false);
-        this._context.fillStyle = color.name;
+        this._context.fillStyle = color.rgba;
         this._context.fill();
     }
 

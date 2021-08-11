@@ -68,9 +68,40 @@ export default class Color
         this.data = [r, g, b, a ? a : 1];
     }
 
-    public get name()
+    public get rgba(): string
     {
         return `rgba(${this.r * 255},${this.g * 255},${this.b * 255},${this.a * 255})`;
+    }
+
+    public set rgba(value: string) 
+    {
+        const sep: string = value.indexOf(",") > -1 ? "," : " ";
+        // Turn "rgba(r,g,b,a)" into [r,g,b,a]
+        const data: string[] = value.substr(5).split(")")[0].split(sep);
+
+        this.r = Number.parseInt(data[0]);
+        this.g = Number.parseInt(data[1]);
+        this.b = Number.parseInt(data[2]);
+        this.a = Number.parseInt(data[2]);
+    }
+
+    public get hex(): string 
+    {
+        let r = Math.round(this.r * 255).toString(16);
+        let g = Math.round(this.g * 255).toString(16);
+        let b = Math.round(this.b * 255).toString(16);
+        let a = Math.round(this.a * 255).toString(16);
+
+        if (r.length == 1)
+            r = "0" + r;
+        if (g.length == 1)
+            g = "0" + g;
+        if (b.length == 1)
+            b = "0" + b;
+        if (a.length == 1)
+            a = "0" + a;
+
+        return `#${r}${g}${b}${a}`;
     }
 
     public static random(randomizeAlpha: boolean = false): Color

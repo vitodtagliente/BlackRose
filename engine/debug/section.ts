@@ -18,16 +18,13 @@ export default class Section
 
     public vector3(name: string, vector: Vector3): void 
     {
-        this._context.add(vector, 'x');
-        this._context.add(vector, 'y');
-        this._context.add(vector, 'z');
+        this._context.add(vector, 'x').name(`${name}-x`);
+        this._context.add(vector, 'y').name(`${name}-y`);
+        this._context.add(vector, 'z').name(`${name}-z`);
     }
 
     public color(name: string, color: Color): void 
     {
-        this._context.add(color, 'r', 0, 1, 0.1);
-        this._context.add(color, 'g', 0, 1, 0.1);
-        this._context.add(color, 'b', 0, 1, 0.1);
-        this._context.add(color, 'a', 0, 1, 0.1);
+        this._context.addColor(color, 'rgba').name(name);
     }
 }
