@@ -1,6 +1,7 @@
 import * as BlackRose from 'blackrose';
 import { Application } from 'blackrose/application';
 import { Image } from 'blackrose/asset';
+import { Section } from 'blackrose/debug';
 import { Color, Texture } from 'blackrose/graphics';
 import { random, Transform, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
@@ -11,9 +12,9 @@ app.run();
 
 class BallComponent extends Component
 {
-    private _radius: number;
-    private _color: Color;
-    private _speed: number;
+    public radius: number;
+    public color: Color;
+    public speed: number;
 
     private goRight: boolean = true;
 
@@ -24,14 +25,14 @@ class BallComponent extends Component
 
     public _init(): void 
     {
-        this._color = Color.random();
-        this._radius = random(5, 30);
-        this._speed = random(4, 10);
+        this.color = Color.random();
+        this.radius = random(5, 30);
+        this.speed = random(4, 10);
         this.owner.transform.position.x = random(
-            this._radius, this.app.canvas.width - this._radius
+            this.radius, this.app.canvas.width - this.radius
         );
         this.owner.transform.position.y = random(
-            this._radius, this.app.canvas.height - this._radius
+            this.radius, this.app.canvas.height - this.radius
         );
     }
 
@@ -39,16 +40,16 @@ class BallComponent extends Component
     {
         if (this.goRight)
         {
-            this.goRight = this.owner.transform.position.x < this.app.canvas.width - this._radius;
+            this.goRight = this.owner.transform.position.x < this.app.canvas.width - this.radius;
         }
         else 
         {
-            this.goRight = this.owner.transform.position.x < this._radius;
+            this.goRight = this.owner.transform.position.x < this.radius;
         }
 
-        this.owner.transform.position.x += this._speed * (this.goRight ? 1 : -1);
+        this.owner.transform.position.x += this.speed * (this.goRight ? 1 : -1);
 
-        this.app.renderer.drawCircle(this.owner.transform.position, this._radius, this._color);
+        this.app.renderer.drawCircle(this.owner.transform.position, this.radius, this.color);
     }
 }
 
