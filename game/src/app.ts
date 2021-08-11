@@ -14,63 +14,19 @@ app.run();
 const backgroundAudio: Audio = Audio.load("assets/music.mp3");
 // backgroundAudio.play();
 
-class BallComponent extends Component
-{
-    public radius: number;
-    public color: Color;
-    public speed: number;
-
-    private goRight: boolean = true;
-
-    public constructor(app: Application)
-    {
-        super(app);
-    }
-
-    public _init(): void 
-    {
-        this.color = Color.random();
-        this.radius = random(5, 30);
-        this.speed = random(4, 10);
-        this.owner.transform.position.x = random(
-            this.radius, this.app.canvas.width - this.radius
-        );
-        this.owner.transform.position.y = random(
-            this.radius, this.app.canvas.height - this.radius
-        );
-    }
-
-    public update(deltaTime: number): void 
-    {
-        if (this.goRight)
-        {
-            this.goRight = this.owner.transform.position.x < this.app.canvas.width - this.radius;
-        }
-        else 
-        {
-            this.goRight = this.owner.transform.position.x < this.radius;
-        }
-
-        this.owner.transform.position.x += this.speed * (this.goRight ? 1 : -1);
-
-        this.app.renderer.drawCircle(this.owner.transform.position, this.radius, this.color);
-    }
-}
-
 class CatComponent extends Component
 {
     private _catTexture: Texture;
-    private _animIndex: number = 0;
+    private _rainbowTexture: Texture;
+    private _catAnimIndex: number = 0;
+    private _rainbowAnimIndex: number = 0;
     private _animTime: number = 0;
 
     public constructor(app: Application)
     {
         super(app);
-        this._catTexture = new Texture(Image.load("assets/cat.png", () =>
-        {
-            console.log("cat loaded");
-        })
-        );
+        this._catTexture = new Texture(Image.load("assets/cat.png"));
+        this._rainbowTexture = new Texture(Image.load("assets/rainbow.png"));
     }
 
     public _init(): void 
@@ -85,9 +41,16 @@ class CatComponent extends Component
     public update(deltaTime: number): void 
     {
         this.app.renderer.drawSubTexture(
+            this.owner.transform.position.sub(new Vector3(100, 0, 0)),
+            this._rainbowTexture,
+            new Vector2(this._rainbowTexture.image.width / 2 * this._rainbowAnimIndex, 0),
+            new Vector2(this._rainbowTexture.image.width / 2, this._rainbowTexture.image.height)
+        );
+
+        this.app.renderer.drawSubTexture(
             this.owner.transform.position,
             this._catTexture,
-            new Vector2(this._catTexture.image.width / 6 * this._animIndex, 0),
+            new Vector2(this._catTexture.image.width / 6 * this._catAnimIndex, 0),
             new Vector2(this._catTexture.image.width / 6, this._catTexture.image.height)
         );
 
@@ -95,17 +58,17 @@ class CatComponent extends Component
         if (this._animTime > 200)
         {
             this._animTime = 0;
-            this._animIndex++;
-            if (this._animIndex > 5)
-                this._animIndex = 0;
+
+            this._catAnimIndex++;
+            this._rainbowAnimIndex++;
+
+            if (this._catAnimIndex > 5)
+                this._catAnimIndex = 0;
+
+            if (this._rainbowAnimIndex > 1)
+                this._rainbowAnimIndex = 0;
         }
     }
-}
-
-for (let i: number = 0; i < 200; ++i)
-{
-    const ball: Entity = app.world.spawn(new Entity("ball"), new Transform);
-    ball.addComponent(new BallComponent(app));
 }
 
 const cat: Entity = app.world.spawn(new Entity("cat"), new Transform);
