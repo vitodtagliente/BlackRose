@@ -81,7 +81,7 @@ class CatComponent extends Component
 
     public update(deltaTime: number): void 
     {
-        this.app.renderer.drawSprite(this.owner.transform.position, this.catTexture);
+        this.app.renderer.drawTexture(this.owner.transform.position, this.catTexture);
     }
 }
 

@@ -1,9 +1,9 @@
 import { Color, Context, Texture } from ".";
-import { Vector3 } from "../math";
+import { Vector2, Vector3 } from "../math";
 import Command from "./command";
 import ClearCommand from "./commands/clear_command";
 import ShapeCommand, { ShapeType } from "./commands/shape_command";
-import SpriteCommand from "./commands/sprite_command";
+import TextureCommand from "./commands/texture_command";
 
 export default class Renderer
 {
@@ -35,11 +35,23 @@ export default class Renderer
         }
     }
 
-    public drawSprite(position: Vector3, texture: Texture): void 
+    public drawTexture(position: Vector3, texture: Texture): void 
     {
-        const command: SpriteCommand = new SpriteCommand;
+        const command: TextureCommand = new TextureCommand;
         command.position = position;
         command.texture = texture;
+        command.origin = Vector2.zero;
+        command.end = Vector2.one;
+        this._commands.push(command);
+    }
+
+    public drawSubTexture(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void 
+    {
+        const command: TextureCommand = new TextureCommand;
+        command.position = position;
+        command.texture = texture;
+        command.origin = origin;
+        command.end = end;
         this._commands.push(command);
     }
 

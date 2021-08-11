@@ -1,6 +1,6 @@
 import { Color, Texture } from "..";
 import { Canvas } from "../../application";
-import { Vector3 } from "../../math";
+import { Vector2, Vector3 } from "../../math";
 import API from "../api";
 import Context from "../context";
 
@@ -30,8 +30,19 @@ export default class CanvasContext extends Context
         this._context.fill();
     }
 
-    public drawSprite(position: Vector3, texture: Texture): void
+    public drawTexture(position: Vector3, texture: Texture): void
     {
         this._context.drawImage(texture.image.data, position.x, position.y);
+    }
+
+    public drawSubTexture(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void
+    {
+        this._context.drawImage(
+            texture.image.data,
+            position.x, position.y,
+            end.x, end.y,
+            origin.x, origin.y,
+            end.x, end.y
+        );
     }
 }

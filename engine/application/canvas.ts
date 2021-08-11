@@ -1,3 +1,5 @@
+import { Vector2 } from "../math";
+
 type ResizeEvent = () => void;
 
 export default class Canvas
@@ -10,8 +12,9 @@ export default class Canvas
     public constructor(id: string)
     {
         this._canvas = document.getElementById(id) as HTMLCanvasElement;
-        window.addEventListener('resize', () => {
-            if(this.isFullscreen)
+        window.addEventListener('resize', () =>
+        {
+            if (this.isFullscreen)
             {
                 this.fullscreen();
                 this.onResize();
@@ -41,4 +44,5 @@ export default class Canvas
 
     public get width(): number { return this.canvas.width; }
     public get height(): number { return this.canvas.height; }
+    public get size(): Vector2 { return new Vector2(this.width, this.height); }
 }

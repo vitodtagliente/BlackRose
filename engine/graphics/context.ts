@@ -1,6 +1,6 @@
 import { Color, Texture } from ".";
 import { Canvas } from "../application";
-import { Vector3 } from "../math";
+import { Vector2, Vector3 } from "../math";
 import API from "./api";
 
 export default abstract class Context
@@ -20,5 +20,6 @@ export default abstract class Context
     
     public abstract clear(color: Color): void;    
     public abstract drawCircle(position: Vector3, radius: number, color: Color): void;
-    public abstract drawSprite(position: Vector3, texture: Texture): void;
+    public abstract drawTexture(position: Vector3, texture: Texture): void;
+    public abstract drawSubTexture(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void;
 }

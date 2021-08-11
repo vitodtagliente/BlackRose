@@ -1,4 +1,4 @@
-import { Core, Debug, Graphics, Scene } from '..';
+import { Core, Debug, Graphics, Input, Scene } from '..';
 import { Section } from '../debug';
 import { ContextFactory } from '../graphics';
 import Canvas from './canvas';
@@ -13,6 +13,7 @@ export default class Application
     private _world: Scene.World;
     private _stats: Stats;
     private _inspector: Debug.Inspector;
+    private _keyboard: Input.Keyboard;
 
     public constructor(canvasId: string, api: Graphics.API)
     {
@@ -23,6 +24,7 @@ export default class Application
         this._world = new Scene.World();
         this._stats = new Stats();
         this._inspector = new Debug.Inspector();
+        this._keyboard = new Input.Keyboard(this.canvas);
 
         {
             const rendererSection: Section = this._inspector.addSection('renderer');
@@ -36,6 +38,7 @@ export default class Application
     public get time(): Core.Time { return this._time; }
     public get world(): Scene.World { return this._world; }
     public get debug(): Debug.Inspector { return this._inspector; }
+    public get keyboard(): Input.Keyboard { return this._keyboard; }
 
     public run(): void
     {
