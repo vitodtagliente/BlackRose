@@ -1,6 +1,6 @@
 import * as BlackRose from 'blackrose';
 import { Application } from 'blackrose/application';
-import { Image } from 'blackrose/asset';
+import { Audio, Image } from 'blackrose/asset';
 import { Section } from 'blackrose/debug';
 import { Color, Texture } from 'blackrose/graphics';
 import { random, Transform, Vector3 } from 'blackrose/math';
@@ -9,6 +9,9 @@ import { Component, Entity } from 'blackrose/scene';
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
 app.canvas.fullscreen();
 app.run();
+
+const backgroundAudio: Audio = Audio.load("assets/music.mp3");
+// backgroundAudio.play();
 
 class BallComponent extends Component
 {
