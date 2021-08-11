@@ -39,9 +39,9 @@ export default class CanvasContext extends Context
     {
         this._context.drawImage(
             texture.image.data,
-            position.x, position.y,
-            end.x, end.y,
             origin.x, origin.y,
+            end.x, end.y,
+            position.x, position.y,
             end.x, end.y
         );
     }

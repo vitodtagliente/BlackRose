@@ -25,6 +25,7 @@ export default class Application
         this._stats = new Stats();
         this._inspector = new Debug.Inspector();
         this._keyboard = new Input.Keyboard(this.canvas);
+        this._keyboard.plugin();
 
         {
             const rendererSection: Section = this._inspector.addSection('renderer');

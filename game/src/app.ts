@@ -3,7 +3,8 @@ import { Application } from 'blackrose/application';
 import { Audio, Image } from 'blackrose/asset';
 import { Section } from 'blackrose/debug';
 import { Color, Texture } from 'blackrose/graphics';
-import { random, Transform, Vector3 } from 'blackrose/math';
+import { KeyCode } from 'blackrose/input';
+import { random, Transform, Vector2, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
@@ -58,12 +59,14 @@ class BallComponent extends Component
 
 class CatComponent extends Component
 {
-    private catTexture: Texture;
+    private _catTexture: Texture;
+    private _animIndex: number = 0;
+    private _animTime: number = 0;
 
     public constructor(app: Application)
     {
         super(app);
-        this.catTexture = new Texture(Image.load("assets/cat.png", () =>
+        this._catTexture = new Texture(Image.load("assets/cat.png", () =>
         {
             console.log("cat loaded");
         })
@@ -73,15 +76,29 @@ class CatComponent extends Component
     public _init(): void 
     {
         this.owner.transform.position = new Vector3(
-            this.app.canvas.width / 2 - this.catTexture.image.width / 2,
-            this.app.canvas.height / 2 - this.catTexture.image.height / 2,
+            this.app.canvas.width / 2 - this._catTexture.image.width / 12,
+            this.app.canvas.height / 2 - this._catTexture.image.height / 12,
             0
         );
     }
 
     public update(deltaTime: number): void 
     {
-        this.app.renderer.drawTexture(this.owner.transform.position, this.catTexture);
+        this.app.renderer.drawSubTexture(
+            this.owner.transform.position,
+            this._catTexture,
+            new Vector2(this._catTexture.image.width / 6 * this._animIndex, 0),
+            new Vector2(this._catTexture.image.width / 6, this._catTexture.image.height)
+        );
+
+        this._animTime += deltaTime;
+        if (this._animTime > 200)
+        {
+            this._animTime = 0;
+            this._animIndex++;
+            if (this._animIndex > 5)
+                this._animIndex = 0;
+        }
     }
 }
 
