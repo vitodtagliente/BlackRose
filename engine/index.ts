@@ -2,6 +2,7 @@ import * as Application from './application';
 import * as Asset from './asset';
 import * as Audio from './audio';
 import * as Core from './core';
+import * as Debug from './debug';
 import * as Graphics from './graphics';
 import * as Input from './input';
 import * as Math from './math';
@@ -14,6 +15,7 @@ export
     Asset,
     Audio,
     Core,
+    Debug,
     Graphics,
     Input,
     Math,

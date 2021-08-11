@@ -66,13 +66,18 @@ class CatComponent extends Component
         );
     }
 
+    public _init(): void 
+    {
+        this.owner.transform.position = new Vector3(
+            this.app.canvas.width / 2 - this.catTexture.image.width / 2,
+            this.app.canvas.height / 2 - this.catTexture.image.height / 2,
+            0
+        );
+    }
+
     public update(deltaTime: number): void 
     {
-        const position: Vector3 = new Vector3(
-            this.app.canvas.width / 2 - this.catTexture.image.width / 2,
-            this.app.canvas.height / 2 - this.catTexture.image.height / 2
-        );
-        this.app.renderer.drawSprite(position, this.catTexture);
+        this.app.renderer.drawSprite(this.owner.transform.position, this.catTexture);
     }
 }
 
@@ -84,3 +89,5 @@ for (let i: number = 0; i < 200; ++i)
 
 const cat: Entity = app.world.spawn(new Entity("cat"), new Transform);
 cat.addComponent(new CatComponent(app));
+
+app.debug.addSection('cat').vector3('position', cat.transform.position);
