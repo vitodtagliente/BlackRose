@@ -25,7 +25,7 @@ class BallComponent extends Component
     public _init(): void 
     {
         this._color = Color.random();
-        this._radius = random(15, 30);
+        this._radius = random(5, 30);
         this._speed = random(4, 10);
         this.owner.transform.position.x = random(
             this._radius, this.app.canvas.width - this._radius
@@ -76,7 +76,7 @@ class CatComponent extends Component
     }
 }
 
-for (let i: number = 0; i < 1000; ++i)
+for (let i: number = 0; i < 200; ++i)
 {
     const ball: Entity = app.world.spawn(new Entity("ball"), new Transform);
     ball.addComponent(new BallComponent(app));
