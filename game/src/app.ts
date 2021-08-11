@@ -91,4 +91,5 @@ for (let i: number = 0; i < 200; ++i)
 const cat: Entity = app.world.spawn(new Entity("cat"), new Transform);
 cat.addComponent(new CatComponent(app));
 
-app.debug.addSection('cat').vector3('position', cat.transform.position);
+app.debug.addSection('entities')
+    .entity('cat', cat);
