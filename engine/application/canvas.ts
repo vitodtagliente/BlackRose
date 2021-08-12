@@ -1,23 +1,24 @@
+import { Signal } from "../core";
 import { Vector2 } from "../math";
-
-type ResizeEvent = () => void;
 
 export default class Canvas
 {
     private _canvas: HTMLCanvasElement;
     private _isFullscreen: boolean = false;
 
-    public onResize: ResizeEvent = () => { };
+    public onResize: Signal<void>;
 
     public constructor(id: string)
     {
         this._canvas = document.getElementById(id) as HTMLCanvasElement;
+        this.onResize = new Signal<void>();
+
         window.addEventListener('resize', () =>
         {
             if (this.isFullscreen)
             {
                 this.fullscreen();
-                this.onResize();
+                this.onResize.emit();
             }
         });
     }

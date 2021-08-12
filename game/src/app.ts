@@ -36,6 +36,15 @@ class CatComponent extends Component
             this.app.canvas.height / 2 - this._catTexture.image.height / 12,
             0
         );
+
+        this.app.canvas.onResize.on(() =>
+        {
+            this.owner.transform.position = new Vector3(
+                this.app.canvas.width / 2 - this._catTexture.image.width / 12,
+                this.app.canvas.height / 2 - this._catTexture.image.height / 12,
+                0
+            );
+        });
     }
 
     public update(deltaTime: number): void 
