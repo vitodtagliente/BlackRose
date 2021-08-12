@@ -15,6 +15,7 @@ export default class Application
     private _inspector: Debug.Inspector;
     private _keyboard: Input.Keyboard;
     private _mouse: Input.Mouse;
+    private _touch: Input.Touch;
 
     public constructor(canvasId: string, api: Graphics.API)
     {
@@ -29,6 +30,8 @@ export default class Application
         this._keyboard.plugin();
         this._mouse = new Input.Mouse(this.canvas);
         this._mouse.plugin();
+        this._touch = new Input.Touch(this.canvas);
+        this._touch.plugin();
 
         {
             const rendererSection: Section = this._inspector.addSection('renderer');
@@ -44,6 +47,7 @@ export default class Application
     public get debug(): Debug.Inspector { return this._inspector; }
     public get keyboard(): Input.Keyboard { return this._keyboard; }
     public get mouse(): Input.Mouse { return this._mouse; }
+    public get touch(): Input.Touch { return this._touch; }
 
     public run(): void
     {
