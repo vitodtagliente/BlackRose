@@ -1,9 +1,6 @@
 import Vector3 from "./vector3";
 
-export default class Shape
+export default interface IShape
 {
-    public constructor(position: Vector3)
-    {
-
-    }
+    contains(point: Vector3): boolean;
 }
