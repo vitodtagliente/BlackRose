@@ -14,6 +14,7 @@ export default class Application
     private _stats: Stats;
     private _inspector: Debug.Inspector;
     private _keyboard: Input.Keyboard;
+    private _mouse: Input.Mouse;
 
     public constructor(canvasId: string, api: Graphics.API)
     {
@@ -26,6 +27,8 @@ export default class Application
         this._inspector = new Debug.Inspector();
         this._keyboard = new Input.Keyboard(this.canvas);
         this._keyboard.plugin();
+        this._mouse = new Input.Mouse(this.canvas);
+        this._mouse.plugin();
 
         {
             const rendererSection: Section = this._inspector.addSection('renderer');
@@ -40,6 +43,7 @@ export default class Application
     public get world(): Scene.World { return this._world; }
     public get debug(): Debug.Inspector { return this._inspector; }
     public get keyboard(): Input.Keyboard { return this._keyboard; }
+    public get mouse(): Input.Mouse { return this._mouse; }
 
     public run(): void
     {

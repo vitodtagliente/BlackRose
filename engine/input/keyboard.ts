@@ -1,20 +1,22 @@
 import { Canvas } from "../application";
+import { Signal } from "../core";
 import Device from "./device";
 import KeyCode from "./keycode";
-
-type KeyEvent = (key: KeyCode) => void;
 
 export default class Keyboard extends Device
 {
     private _keys: Set<KeyCode>;
 
-    public onKeyDown: KeyEvent = (key: KeyCode) => { };
-    public onKeyUp: KeyEvent = (key: KeyCode) => { };
+    public onKeyDown: Signal<KeyCode>;
+    public onKeyUp: Signal<KeyCode>;
 
     public constructor(canvas: Canvas)
     {
         super(canvas);
         this._keys = new Set<KeyCode>();
+
+        this.onKeyDown = new Signal<KeyCode>();
+        this.onKeyUp = new Signal<KeyCode>();
     }
 
     public isKeyPressed(keyCode: KeyCode): boolean
@@ -47,7 +49,7 @@ export default class Keyboard extends Device
             e.stopPropagation();
             e.preventDefault();
 
-            this.onKeyDown(key);
+            this.onKeyDown.emit(key);
         });
 
         document.addEventListener('keyup', (e: KeyboardEvent) =>
@@ -58,7 +60,7 @@ export default class Keyboard extends Device
             e.stopPropagation();
             e.preventDefault();
 
-            this.onKeyUp(key);
+            this.onKeyUp.emit(key);
         });
 
         return true;

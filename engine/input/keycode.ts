@@ -16,6 +16,8 @@ enum KeyCode
     Enter = 'Enter', Tab = 'Tab', Delete = 'Delete', Backquote = 'Backquote',
     Digit1 = 'Digit1', Digit2 = 'Digit2', Digit3 = 'Digit3', Digit4 = 'Digit4', Digit5 = 'Digit5',
     Digit6 = 'Digit6', Digit7 = 'Digit7', Digit8 = 'Digit8', Digit9 = 'Digit9', Digit0 = 'Digit0',
+    MouseButton0 = 'MouseButton0', MouseButton1 = 'MouseButton1', MouseButton2 = 'MouseButton2', 
+    MouseButton4 = 'MouseButton4', MouseButton5 = 'MouseButton5'
 };
 
 export default KeyCode;
