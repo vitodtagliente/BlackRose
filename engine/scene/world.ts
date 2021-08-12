@@ -39,4 +39,22 @@ export default class World
         }
         return false;
     }
+
+    public findEntity<T extends Entity>(constr: { new(...args: any[]): T }): T 
+    {
+        return this._entities.find(entity => entity instanceof constr) as T;
+    }
+
+    public findEntities<T extends Entity>(constr: { new(...args: any[]): T }): Array<T> 
+    {
+        let result: Array<T> = new Array<T>();
+        for (const entity of this._entities)
+        {
+            if (entity instanceof constr)
+            {
+                result.push(entity as T);
+            }
+        }
+        return result;
+    }
 }
