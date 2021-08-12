@@ -11,9 +11,6 @@ const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics
 app.canvas.fullscreen();
 app.run();
 
-const backgroundAudio: Audio = Audio.load("assets/music.mp3");
-// backgroundAudio.play();
-
 class CatComponent extends Component
 {
     private _catTexture: Texture;
@@ -85,3 +82,9 @@ cat.addComponent(new CatComponent(app));
 
 app.debug.addSection('entities')
     .entity('cat', cat);
+
+const backgroundAudio: Audio = Audio.load("assets/music.mp3");
+app.mouse.onClick.on(() =>
+{
+    backgroundAudio.play();
+});

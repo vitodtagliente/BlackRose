@@ -1,5 +1,6 @@
 import { KeyCode } from ".";
 import { Canvas } from "../application";
+import { Signal } from "../core";
 import { Vector2 } from "../math";
 import Device from "./device";
 
@@ -9,12 +10,16 @@ export default class Mouse extends Device
     private _position: Vector2;
     private _isOutOfCanvas: boolean;
 
+    public onClick: Signal<void>;
+
     public constructor(canvas: Canvas)
     {
         super(canvas);
         this._keys = new Set<KeyCode>();
         this._position = Vector2.zero;
         this._isOutOfCanvas = false;
+
+        this.onClick = new Signal<void>();
     }
 
     public get position(): Vector2 { return this._position; }
@@ -45,6 +50,11 @@ export default class Mouse extends Device
         {
             const keyCode: KeyCode = `MouseButton${e.button.toString()}` as KeyCode;
             this._keys.add(keyCode);
+
+            if (keyCode == KeyCode.MouseButton0)
+            {
+                this.onClick.emit();
+            }
 
             e.stopPropagation();
             e.preventDefault();

@@ -16,7 +16,13 @@ export default class Audio
 
     public play(): void 
     {
-        this._data.play();
+        if (this.isPlaying == false)
+            this._data.play();
+    }
+
+    public get isPlaying(): boolean
+    {
+        return this._data.paused == false;
     }
 
     public static load(filename: string, onLoadCallback: AudioLoadEvent = () => { }): Audio 
