@@ -8,19 +8,24 @@ export default class Entity
     public transform: Math.Transform;
     private _world: World;
     private _components: Array<Component>;
+    private _parent: Entity;
+    private _children: Array<Entity>;
 
     public constructor(name?: string)
     {
         this.name = name;
         this.transform = new Math.Transform;
         this._components = new Array<Component>();
+        this._children = new Array<Entity>();
     }
 
     public get world(): World { return this._world; }
+    public get parent(): Entity { return this._parent; }
+    public get children(): Array<Entity> { return this._children; }
 
     public prepareSpawn(world: World): void 
     {
-        this._world = world;        
+        this._world = world;
     }
 
     public prepareDestroy(): void 
@@ -31,6 +36,11 @@ export default class Entity
         }
         delete this._components;
         this._components = [];
+    }
+
+    public setParent(entity: Entity): void
+    {
+        this._parent = entity;
     }
 
     public update(deltaTime: number): void 
