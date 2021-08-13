@@ -26,6 +26,12 @@ export default class Vector2
         this.y = y;
     }
 
+    public copy(v: Vector2): void
+    {
+        v.x = this.x;
+        v.y = this.y;
+    }
+
     public add(v: Vector2): Vector2
     {
         return new Vector2(this.x + v.x, this.y + v.y);

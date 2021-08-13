@@ -30,6 +30,13 @@ export default class Vector3
         this.z = z;
     }
 
+    public copy(v: Vector3): void
+    {
+        v.x = this.x;
+        v.y = this.y;
+        v.z = this.z;
+    }
+
     public add(v: Vector3): Vector3
     {
         return new Vector3(this.x + v.x, this.y + v.y, this.z + v.z);

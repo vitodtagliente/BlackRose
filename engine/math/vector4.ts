@@ -27,6 +27,14 @@ export default class Vector4
         this.w = w;
     }
 
+    public copy(v: Vector4): void
+    {
+        v.x = this.x;
+        v.y = this.y;
+        v.z = this.z;
+        v.w = this.w;
+    }
+
     public add(v: Vector4): Vector4
     {
         return new Vector4(this.x + v.x, this.y + v.y, this.z + v.z, this.w + v.w);

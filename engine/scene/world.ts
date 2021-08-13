@@ -25,12 +25,8 @@ export default class World
 
     public spawn<T extends Entity>(entity: T, position: Vector3, rotation: Quaternion): T
     {
-        entity.transform.position.x = position.x;
-        entity.transform.position.y = position.y;
-        entity.transform.position.z = position.z;
-        entity.transform.rotation.x = rotation.x;
-        entity.transform.rotation.y = rotation.y;
-        entity.transform.rotation.z = rotation.z;
+        position.copy(entity.transform.position);
+        entity.transform.rotation.set(rotation.x, rotation.y, rotation.z);
         this._entities.push(entity);
 
         return entity;
