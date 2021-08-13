@@ -1,6 +1,6 @@
 export default class Vector3
 {
-    public static readonly zero = new Vector3();
+    public static readonly zero = new Vector3(0, 0, 0);
     public static readonly one = new Vector3(1, 1, 1);
 
     public static readonly up = new Vector3(0, 1, 0);
@@ -18,9 +18,16 @@ export default class Vector3
     public get z(): number { return this.data[2]; }
     public set z(value: number) { this.data[2] = value; }
 
-    public constructor(x?: number, y?: number, z?: number)
+    public constructor(x: number = 0, y: number = 0, z: number = 0)
     {
         this.data = [x, y, z];
+    }
+
+    public set(x: number, y: number, z: number): void
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public add(v: Vector3): Vector3

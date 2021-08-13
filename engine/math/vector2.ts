@@ -1,6 +1,6 @@
 export default class Vector2
 {
-    public static readonly zero = new Vector2();
+    public static readonly zero = new Vector2(0, 0);
     public static readonly one = new Vector2(1, 1);
 
     public static readonly up = new Vector2(0, 1);
@@ -15,9 +15,15 @@ export default class Vector2
     public get y(): number { return this.data[1]; }
     public set y(value: number) { this.data[1] = value; }
 
-    public constructor(x?: number, y?: number)
+    public constructor(x: number = 0, y: number = 0)
     {
         this.data = [x, y];
+    }
+
+    public set(x: number, y: number): void
+    {
+        this.x = x;
+        this.y = y;
     }
 
     public add(v: Vector2): Vector2

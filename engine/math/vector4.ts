@@ -1,6 +1,6 @@
 export default class Vector4
 {
-    public static readonly zero = new Vector4();
+    public static readonly zero = new Vector4(0, 0, 0, 0);
     public static readonly one = new Vector4(1, 1, 1, 1);
 
     public data: number[] = [4];
@@ -14,9 +14,17 @@ export default class Vector4
     public get w(): number { return this.data[3]; }
     public set w(value: number) { this.data[3] = value; }
 
-    public constructor(x?: number, y?: number, z?: number, w?: number)
+    public constructor(x: number = 0, y: number = 0, z: number = 0, w: number = 0)
     {
         this.data = [x, y, z, w];
+    }
+
+    public set(x: number, y: number, z: number, w: number): void
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
     }
 
     public add(v: Vector4): Vector4

@@ -1,5 +1,6 @@
 import { Entity } from ".";
-import { Transform } from "../math";
+import { Transform, Vector3 } from "../math";
+import Quaternion from "../math/quaternion";
 
 export default class World
 {
@@ -22,9 +23,14 @@ export default class World
         }
     }
 
-    public spawn<T extends Entity>(entity: T, transform: Transform): T
+    public spawn<T extends Entity>(entity: T, position: Vector3, rotation: Quaternion): T
     {
-        entity.transform = transform;
+        entity.transform.position.x = position.x;
+        entity.transform.position.y = position.y;
+        entity.transform.position.z = position.z;
+        entity.transform.rotation.x = rotation.x;
+        entity.transform.rotation.y = rotation.y;
+        entity.transform.rotation.z = rotation.z;
         this._entities.push(entity);
 
         return entity;

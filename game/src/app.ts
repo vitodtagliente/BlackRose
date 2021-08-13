@@ -5,6 +5,7 @@ import { Section } from 'blackrose/debug';
 import { Color, Texture } from 'blackrose/graphics';
 import { KeyCode } from 'blackrose/input';
 import { random, Transform, Vector2, Vector3 } from 'blackrose/math';
+import Quaternion from 'blackrose/math/quaternion';
 import { Component, Entity } from 'blackrose/scene';
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
@@ -77,7 +78,7 @@ class CatComponent extends Component
     }
 }
 
-const cat: Entity = app.world.spawn(new Entity("cat"), new Transform);
+const cat: Entity = app.world.spawn(new Entity("cat"), Vector3.zero, Quaternion.identity);
 cat.addComponent(new CatComponent(app));
 
 app.debug.addSection('entities')
