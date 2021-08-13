@@ -18,9 +18,19 @@ export default class Entity
 
     public get world(): World { return this._world; }
 
-    public spawn(world: World): void 
+    public prepareSpawn(world: World): void 
     {
-        this._world = world;
+        this._world = world;        
+    }
+
+    public prepareDestroy(): void 
+    {
+        for (const component of this._components)
+        {
+            component.unint();
+        }
+        delete this._components;
+        this._components = [];
     }
 
     public update(deltaTime: number): void 

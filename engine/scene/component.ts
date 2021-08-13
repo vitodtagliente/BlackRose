@@ -1,5 +1,6 @@
 import { Entity } from ".";
 import { Application } from "../application";
+import { Transform } from "../math";
 
 export default abstract class Component
 {
@@ -14,20 +15,21 @@ export default abstract class Component
     public get app(): Application { return this._app; }
     public get owner(): Entity { return this._owner; }
     public get isAttached(): boolean { return this._owner != null; }
+    public get transform(): Transform { return this.owner.transform; }
 
     public attach(entity: Entity): void 
     {
         this._owner = entity;
-        this._init();
+        this.init();
     }
 
     public detach(): void 
     {
         this._owner = null;
-        this._unint();
+        this.unint();
     }
 
-    protected _init(): void { }
-    protected _unint(): void { }
+    public init(): void { }
+    public unint(): void { }
     public update(deltaTime: number): void { }
 }

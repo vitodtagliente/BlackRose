@@ -4,8 +4,7 @@ import { Audio, Image } from 'blackrose/asset';
 import { Section } from 'blackrose/debug';
 import { Color, Texture } from 'blackrose/graphics';
 import { KeyCode } from 'blackrose/input';
-import { random, Transform, Vector2, Vector3 } from 'blackrose/math';
-import Quaternion from 'blackrose/math/quaternion';
+import { Quaternion, random, Transform, Vector2, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
@@ -27,9 +26,9 @@ class CatComponent extends Component
         this._rainbowTexture = new Texture(Image.load("assets/rainbow.png"));
     }
 
-    public _init(): void 
+    public init(): void 
     {
-        this.owner.transform.position = new Vector3(
+        this.transform.position.set(
             this.app.canvas.width / 2 - this._catTexture.image.width / 12,
             this.app.canvas.height / 2 - this._catTexture.image.height / 12,
             0
@@ -37,7 +36,7 @@ class CatComponent extends Component
 
         this.app.canvas.onResize.on(() =>
         {
-            this.owner.transform.position = new Vector3(
+            this.transform.position.set(
                 this.app.canvas.width / 2 - this._catTexture.image.width / 12,
                 this.app.canvas.height / 2 - this._catTexture.image.height / 12,
                 0

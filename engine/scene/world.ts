@@ -1,6 +1,5 @@
 import { Entity } from ".";
-import { Transform, Vector3 } from "../math";
-import Quaternion from "../math/quaternion";
+import { Vector3, Quaternion } from "../math";
 
 export default class World
 {
@@ -27,6 +26,7 @@ export default class World
     {
         position.copy(entity.transform.position);
         entity.transform.rotation.set(rotation.x, rotation.y, rotation.z);
+        entity.prepareSpawn(this);
         this._entities.push(entity);
 
         return entity;
@@ -37,6 +37,8 @@ export default class World
         const index: number = this._entities.findIndex(e => e == entity);
         if (index >= 0 && index < this._entities.length)
         {
+            this._entities[index].prepareDestroy();
+            delete this._entities[index];
             this._entities.splice(index, 1);
         }
         return false;
