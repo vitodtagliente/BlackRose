@@ -1,10 +1,10 @@
 export default class IndexBuffer
 {
     private _id: WebGLBuffer;
-    private _context: WebGLRenderingContext;
+    private _context: WebGL2RenderingContext;
     private _size: number;
 
-    public constructor(context: WebGLRenderingContext, size: number)
+    public constructor(context: WebGL2RenderingContext, size: number)
     {
         this._context = context;
         this._size = size;
