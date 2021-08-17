@@ -1,4 +1,4 @@
-import { Shader, ShaderProgram } from ".";
+import { Renderable, Shader, ShaderProgram, VertexBuffer } from ".";
 import { Color, Texture } from "..";
 import { Canvas } from "../../application";
 import { Vector2, Vector3 } from "../../math";
@@ -6,11 +6,14 @@ import API from "../api";
 import Context from "../context";
 import { ShaderType } from "./shader";
 import * as Shaders from "../shaders";
+import Geometry from "../geometry";
+import * as Geometries from "../geometries";
 
 export default class WebGLContext extends Context
 {
     private _context: WebGL2RenderingContext;
     private _positionProgram: ShaderProgram;
+    private _quad: Renderable;
 
     public constructor(canvas: Canvas)
     {
@@ -45,6 +48,26 @@ export default class WebGLContext extends Context
 
     public drawSubTexture(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void
     {
+
+    }
+
+    public test(): void 
+    {
+        const geom: Geometry = new Geometries.Quad();
+        var positions = [
+            0, 0,
+            0, 0.5,
+            0.7, 0,
+        ];
+        const vb: VertexBuffer = new VertexBuffer(this._context, 0, 2);
+        vb.update(positions);
+        this._positionProgram.use();
+
+        // draw
+        var primitiveType = this._context.TRIANGLES;
+        var offset = 0;
+        var count = 3;
+        this._context.drawArrays(primitiveType, offset, count);
 
     }
 }

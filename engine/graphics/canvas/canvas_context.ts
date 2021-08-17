@@ -45,4 +45,9 @@ export default class CanvasContext extends Context
             end.x, end.y
         );
     }
+
+    public test(): void 
+    {
+
+    }
 }
