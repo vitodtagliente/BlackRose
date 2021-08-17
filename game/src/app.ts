@@ -11,7 +11,7 @@ const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics
 app.canvas.fullscreen();
 app.run();
 
-app.context.clear(Color.yellow);
+Color.yellow.copy(app.renderer.clearColor);
 
 /*
 class CatComponent extends Component
