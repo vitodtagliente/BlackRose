@@ -1,5 +1,4 @@
-const VertexSource: string = `
-#version 300 es
+const VertexSource: string = `#version 300 es
  
 // an attribute is an input (in) to a vertex shader.
 // It will receive data from a buffer
@@ -14,8 +13,7 @@ void main() {
 }
 `;
 
-const FragmentSource: string = `
-#version 300 es
+const FragmentSource: string = `#version 300 es
  
 // fragment shaders don't have a default precision so we need
 // to pick one. highp is a good default. It means "high precision"
