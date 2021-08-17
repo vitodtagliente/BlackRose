@@ -29,4 +29,10 @@ export default class TextureCoords
         this.u = u;
         this.v = v;
     }
+
+    public copy(c: TextureCoords): void
+    {
+        c.u = this.u;
+        c.v = this.v;
+    }
 }

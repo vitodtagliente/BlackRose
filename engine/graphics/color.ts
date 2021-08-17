@@ -68,6 +68,14 @@ export default class Color
         this.data = [r, g, b, a ? a : 1];
     }
 
+    public copy(c: Color): void 
+    {
+        c.r = this.r;
+        c.b = this.b;
+        c.g = this.g;
+        c.a = this.a;
+    }
+
     public get rgba(): string
     {
         return `rgba(${this.r * 255},${this.g * 255},${this.b * 255},${this.a * 255})`;
