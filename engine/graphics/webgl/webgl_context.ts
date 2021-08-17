@@ -10,7 +10,7 @@ export default class WebGLContext extends Context
 
     public constructor(canvas: Canvas)
     {
-        super(canvas, API.Canvas);
+        super(canvas, API.WebGL);
         this._context = canvas.canvas.getContext(this.api) as WebGL2RenderingContext;
     }
 
@@ -18,21 +18,22 @@ export default class WebGLContext extends Context
 
     public clear(color: Color): void
     {
-        
+        this.context.clearColor(color.r, color.g, color.b, color.a);
+        this.context.clear(this.context.COLOR_BUFFER_BIT);
     }
 
     public drawCircle(position: Vector3, radius: number, color: Color): void
     {
-        
+
     }
 
     public drawTexture(position: Vector3, texture: Texture): void
     {
-        
+
     }
 
     public drawSubTexture(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void
     {
-        
+
     }
 }
