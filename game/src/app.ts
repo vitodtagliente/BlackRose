@@ -7,10 +7,11 @@ import { KeyCode } from 'blackrose/input';
 import { Quaternion, random, Transform, Vector2, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
 
-const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.Canvas);
+const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
 app.canvas.fullscreen();
 app.run();
 
+/*
 class CatComponent extends Component
 {
     private _catTexture: Texture;
@@ -88,3 +89,4 @@ app.mouse.onClick.on(() =>
 {
     backgroundAudio.play();
 });
+*/
