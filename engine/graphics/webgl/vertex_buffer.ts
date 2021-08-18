@@ -49,7 +49,7 @@ export class BufferLayout
     public push(element: BufferElement): void 
     {
         this._elements.push(element);
-        // this._stride += element.size;
+        this._stride += element.size;
     }
 
     public clear(): void
@@ -84,9 +84,9 @@ export class BufferLayout
                 type,
                 element.normalized,
                 // move forward size * sizeof(type) each iteration to get the next position
-                this._stride,
+                this._stride * 4,
                 // start at the beginning of the buffer
-                offset
+                offset * 4
             );
             offset += element.size;
             ++elementIndex;

@@ -16,6 +16,8 @@ export default class GLContext extends Context
     private _context: WebGL2RenderingContext;
     private _positionProgram: ShaderProgram;
     private _textureProgram: ShaderProgram;
+    private _cat: Image;
+    private _texture: Texture;
 
     public constructor(canvas: Canvas)
     {
@@ -35,6 +37,12 @@ export default class GLContext extends Context
             this._textureProgram = new ShaderProgram(this._context, vs, fs);
             console.log(this._textureProgram.linked);
         }
+
+        this._cat = Image.load("assets/cat.png", () =>
+        {
+            console.log("cat loaded")
+            this._texture = this.createTexture(this._cat);
+        });
     }
 
     public get context(): WebGL2RenderingContext { return this._context; }
@@ -72,6 +80,8 @@ export default class GLContext extends Context
 
     public test(): void 
     {
+        if (this._texture == null) return;
+
         const gl = this._context;
 
         /*
@@ -105,12 +115,12 @@ export default class GLContext extends Context
 
         const vb: VertexBuffer = new VertexBuffer(this._context);
         vb.layout.push(new BufferElement("position", BufferElementType.Float, 2, true));
-        //vb.layout.push(new BufferElement("texcoord", BufferElementType.Float, 2, true));
+        vb.layout.push(new BufferElement("texcoord", BufferElementType.Float, 2, true));
         vb.update([
-            1, 1, //1, 1,
-            1, -1, //1, 0,
-            -1, -1, //0, 0,
-            -1, 1, //0, 1
+            1, 1, 1, 1,
+            1, -1, 1, 0,
+            -1, -1, 0, 0,
+            -1, 1, 0, 1
         ]);
 
         const ib: IndexBuffer = new IndexBuffer(this._context);
@@ -118,6 +128,9 @@ export default class GLContext extends Context
 
         // Tell it to use our program (pair of shaders)
         this._positionProgram.use();
+
+        // this._texture.bind(0);
+        // this._textureProgram.setInt("u_texture", 0);
 
         // draw
         /*
