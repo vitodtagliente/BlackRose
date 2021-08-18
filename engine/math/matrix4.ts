@@ -234,10 +234,10 @@ export default class Matrix4
     public static translate(v: Vector3): Matrix4
     {
         return new Matrix4(
-            1, 0, 0, v.x,
-            0, 1, 0, v.y,
-            0, 0, 1, v.z,
-            0, 0, 0, 1
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            v.x, v.y, v.z, 1
         );
     }
 

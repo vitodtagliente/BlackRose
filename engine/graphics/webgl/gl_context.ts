@@ -136,7 +136,7 @@ export default class GLContext extends Context
 
         this._texture.bind(0);
         this._textureProgram.setInt("u_texture", 0);
-        let transform : Transform = new Transform;
+        let transform: Transform = new Transform;
         transform.position.x = .6;
         this._textureProgram.setMatrix("u_matrix", transform.matrix());
 
