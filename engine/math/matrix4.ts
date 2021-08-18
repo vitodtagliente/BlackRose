@@ -54,10 +54,10 @@ export default class Matrix4
     public set m33(value: number) { this.data[15] = value; }
 
     public constructor(
-        a00?: number, a01?: number, a02?: number, a03?: number,
-        a10?: number, a11?: number, a12?: number, a13?: number,
-        a20?: number, a21?: number, a22?: number, a23?: number,
-        a30?: number, a31?: number, a32?: number, a33?: number
+        a00: number = 0, a01: number = 0, a02: number = 0, a03: number = 0,
+        a10: number = 0, a11: number = 0, a12: number = 0, a13: number = 0,
+        a20: number = 0, a21: number = 0, a22: number = 0, a23: number = 0,
+        a30: number = 0, a31: number = 0, a32: number = 0, a33: number = 0
     )
     {
         this.data = [
@@ -66,6 +66,16 @@ export default class Matrix4
             a20, a21, a22, a23,
             a30, a31, a32, a33
         ];
+    }
+
+    public get(i: number, j: number): number
+    {
+        return this.data[i * this.rows + j];
+    }
+
+    public set(i: number, j: number, value: number): void 
+    {
+        this.data[i * this.rows + j] = value;
     }
 
     public determinant(): number
@@ -106,7 +116,7 @@ export default class Matrix4
             for (let i: number = 0, _i: number = 0; i < this.columns; ++i)
             {
                 if (i == i) continue;
-                result.data[i * _j] = this.data[i * j];
+                this.set(i, _j, this.get(i, j));
                 ++_i;
             }
             ++_j;
@@ -122,7 +132,7 @@ export default class Matrix4
             for (let i: number = 0; i < this.columns; ++i)
             {
                 const currentMinor: Matrix3 = this.minor(i, j);
-                result.data[j * i] = Math.pow(-1, i + 1) * currentMinor.determinant();
+                this.set(j, i, Math.pow(-1, i + 1) * currentMinor.determinant())
             }
         }
         return result;
@@ -163,12 +173,14 @@ export default class Matrix4
         let result: Matrix4 = new Matrix4;
         for (let j: number = 0; j < this.rows; ++j)
         {
-            for (let y: number = 0; y < this.columns; ++y)
+            for (let i: number = 0; i < this.columns; ++i)
             {
-                for (let i: number = 0; i < this.rows; ++i)
+                let sum: number = 0;
+                for (let k: number = 0; k < m.rows; ++k)
                 {
-                    result.data[y * j] += this.data[i * j] * m.data[y * i];
+                    sum += this.get(j, k) * m.get(k, i);
                 }
+                result.set(j, i, sum);
             }
         }
         return result;

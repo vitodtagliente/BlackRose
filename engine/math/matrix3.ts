@@ -37,9 +37,9 @@ export default class Matrix3
     public set m22(value: number) { this.data[8] = value; }
 
     public constructor(
-        a00?: number, a01?: number, a02?: number,
-        a10?: number, a11?: number, a12?: number,
-        a20?: number, a21?: number, a22?: number
+        a00: number = 0, a01: number = 0, a02: number = 0,
+        a10: number = 0, a11: number = 0, a12: number = 0,
+        a20: number = 0, a21: number = 0, a22: number = 0
     )
     {
         this.data = [
@@ -47,6 +47,16 @@ export default class Matrix3
             a10, a11, a12,
             a20, a21, a22
         ];
+    }
+
+    public get(i: number, j: number): number
+    {
+        return this.data[i * this.rows + j];
+    }
+
+    public set(i: number, j: number, value: number): void 
+    {
+        this.data[i * this.rows + j] = value;
     }
 
     public determinant(): number
@@ -128,6 +138,24 @@ export default class Matrix3
             this.m10 * scalar, this.m11 * scalar, this.m12 * scalar,
             this.m20 * scalar, this.m21 * scalar, this.m22 * scalar
         );
+    }
+
+    public mulMatrix(m: Matrix3): Matrix3
+    {
+        let result: Matrix3 = new Matrix3;
+        for (let j: number = 0; j < this.rows; ++j)
+        {
+            for (let i: number = 0; i < this.columns; ++i)
+            {
+                let sum: number = 0;
+                for (let k: number = 0; k < m.rows; ++k)
+                {
+                    sum += this.get(j, k) * m.get(k, i);
+                }
+                result.set(j, i, sum);
+            }
+        }
+        return result;
     }
 
     public div(scalar: number): Matrix3

@@ -4,7 +4,7 @@ import { Audio, Image } from 'blackrose/asset';
 import { Section } from 'blackrose/debug';
 import { Color, Texture } from 'blackrose/graphics';
 import { KeyCode } from 'blackrose/input';
-import { Quaternion, random, Transform, Vector2, Vector3 } from 'blackrose/math';
+import { Matrix2, Matrix3, Quaternion, random, Transform, Vector2, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
@@ -12,6 +12,25 @@ app.canvas.fullscreen();
 app.run();
 
 Color.yellow.copy(app.renderer.clearColor);
+
+const a: Matrix3 = new Matrix3(
+    4, 3, 2,
+    5, 6, 3,
+    3, 5, 2
+);
+const b: Matrix3 = new Matrix3(
+    3, -4, 3,
+    1, -2, 2,
+    -7, 11, -9
+);
+console.log(a.mulMatrix(b).data);
+console.log(new Matrix2(
+    0, 1,
+    0, 0
+).mulMatrix(new Matrix2(
+    0, 0,
+    1, 0
+)).data);
 
 /*
 class CatComponent extends Component
@@ -29,7 +48,7 @@ class CatComponent extends Component
         this._rainbowTexture = new Texture(Image.load("assets/rainbow.png"));
     }
 
-    public init(): void 
+    public init(): void
     {
         this.transform.position.set(
             this.app.canvas.width / 2 - this._catTexture.image.width / 12,
@@ -47,7 +66,7 @@ class CatComponent extends Component
         });
     }
 
-    public update(deltaTime: number): void 
+    public update(deltaTime: number): void
     {
         this.app.renderer.drawSubTexture(
             this.owner.transform.position.sub(new Vector3(100, 0, 0)),

@@ -138,6 +138,8 @@ export default class GLContext extends Context
         this._textureProgram.setInt("u_texture", 0);
         let transform: Transform = new Transform;
         transform.position.x = .6;
+        transform.scale.set(.4, .4, 0);
+        transform.rotation.z = 35;
         this._textureProgram.setMatrix("u_matrix", transform.matrix());
 
         // draw

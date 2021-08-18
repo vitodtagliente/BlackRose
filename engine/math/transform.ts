@@ -16,6 +16,8 @@ export default class Transform
 
     public matrix(): Matrix4
     {
-        return Matrix4.translate(this.position);
+        return Matrix4.scale(this.scale)
+            .mulMatrix(Matrix4.rotateZ(this.rotation.z))
+            .mulMatrix(Matrix4.translate(this.position));
     }
 }
