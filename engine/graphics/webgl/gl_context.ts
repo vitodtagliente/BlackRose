@@ -8,8 +8,10 @@ import { ShaderType } from "./shader";
 import * as Shaders from "../shaders";
 import Geometry from "../geometry";
 import * as Geometries from "../geometries";
+import { default as GLTexture } from "./gl_texture";
+import { Image } from "../../asset";
 
-export default class WebGLContext extends Context
+export default class GLContext extends Context
 {
     private _context: WebGL2RenderingContext;
     private _positionProgram: ShaderProgram;
@@ -31,6 +33,11 @@ export default class WebGLContext extends Context
     }
 
     public get context(): WebGL2RenderingContext { return this._context; }
+
+    public createTexture(image: Image): Texture
+    {
+        return new GLTexture(this._context, image);
+    }
 
     public clear(color: Color): void
     {

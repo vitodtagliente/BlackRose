@@ -1,5 +1,6 @@
 import { Color, Texture } from "..";
 import { Canvas } from "../../application";
+import { Image } from "../../asset";
 import { Vector2, Vector3 } from "../../math";
 import API from "../api";
 import Context from "../context";
@@ -15,6 +16,11 @@ export default class CanvasContext extends Context
     }
 
     public get context(): CanvasRenderingContext2D { return this._context; }
+
+    public createTexture(image: Image): Texture
+    {
+        return null;
+    }
 
     public clear(color: Color): void
     {

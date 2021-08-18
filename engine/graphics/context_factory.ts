@@ -2,7 +2,7 @@ import { Canvas } from '../application';
 import API from './api';
 import { CanvasContext } from './canvas';
 import Context from './context';
-import { WebGLContext } from './webgl';
+import { GLContext } from './webgl';
 
 export default class ContextFactory
 {
@@ -11,7 +11,7 @@ export default class ContextFactory
         switch (api)
         {
             case API.Canvas: return new CanvasContext(canvas);
-            case API.WebGL: return new WebGLContext(canvas);
+            case API.WebGL: return new GLContext(canvas);
             default:
                 return null;
         }
