@@ -127,19 +127,12 @@ export default class GLContext extends Context
         ib.update(quad.indices);
 
         // Tell it to use our program (pair of shaders)
-        this._positionProgram.use();
+        this._textureProgram.use();
 
-        // this._texture.bind(0);
-        // this._textureProgram.setInt("u_texture", 0);
+        this._texture.bind(0);
+        this._textureProgram.setInt("u_texture", 0);
 
         // draw
-        /*
-        var primitiveType = gl.TRIANGLES;
-        var offset = 0;
-        var count = vb.length;
-        gl.drawArrays(primitiveType, offset, count);
-        */
-
         var primitiveType = gl.TRIANGLES;
         var offset = 0;
         var count = ib.length;
