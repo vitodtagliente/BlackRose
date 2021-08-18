@@ -25,6 +25,9 @@ export default class GLContext extends Context
         this._context = canvas.canvas.getContext(this.api) as WebGL2RenderingContext;
         // to prevent showing images upside down
         this._context.pixelStorei(this._context.UNPACK_FLIP_Y_WEBGL, true);
+        // enable the alpha blending
+        this._context.enable(this._context.BLEND);
+        this._context.blendFunc(this._context.SRC_ALPHA, this._context.ONE_MINUS_SRC_ALPHA);
 
         {
             const vs: Shader = new Shader(this._context, ShaderType.Vertex, Shaders.PositionShader.VertexSource);
