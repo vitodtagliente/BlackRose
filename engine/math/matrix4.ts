@@ -158,6 +158,22 @@ export default class Matrix4
         );
     }
 
+    public mulMatrix(m: Matrix4): Matrix4
+    {
+        let result: Matrix4 = new Matrix4;
+        for (let j: number = 0; j < this.rows; ++j)
+        {
+            for (let y: number = 0; y < this.columns; ++y)
+            {
+                for (let i: number = 0; i < this.rows; ++i)
+                {
+                    result.data[y * j] += this.data[i * j] * m.data[y * i];
+                }
+            }
+        }
+        return result;
+    }
+
     public div(scalar: number): Matrix4
     {
         const factor: number = 1 / scalar;

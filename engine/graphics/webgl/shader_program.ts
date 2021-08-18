@@ -1,3 +1,4 @@
+import { Matrix4 } from "../../math";
 import Shader from "./shader";
 
 export default class ShaderProgram
@@ -44,5 +45,10 @@ export default class ShaderProgram
     public setInt(name: string, value: number): void 
     {
         this._context.uniform1i(this.getUniformLocation(name), value);
+    }
+
+    public setMatrix(name: string, value: Matrix4): void
+    {
+        this._context.uniformMatrix4fv(this.getUniformLocation(name), false, value.data);
     }
 }
