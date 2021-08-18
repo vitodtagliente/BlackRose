@@ -13,4 +13,9 @@ export default class VAO
     {
         this._context.bindVertexArray(this._id);
     }
+
+    public free(): void 
+    {
+        this._context.deleteVertexArray(this._id);
+    }
 }
