@@ -28,6 +28,11 @@ export default class CanvasContext extends Context
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
+    public viewport(width: number, height: number): void 
+    {
+        
+    }
+
     public drawCircle(position: Vector3, radius: number, color: Color): void
     {
         this._context.beginPath();

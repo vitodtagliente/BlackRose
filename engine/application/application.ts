@@ -21,6 +21,10 @@ export default class Application
     {
         this._canvas = new Canvas(canvasId);
         this._context = ContextFactory.get(this.canvas, api);
+        this._context.viewport(this._canvas.width, this._canvas.height);
+        this._canvas.onResize.on(() => {
+            this._context.viewport(this._canvas.width, this._canvas.height);
+        });
         this._renderer = new Graphics.Renderer(this._context);
         this._time = new Core.Time();
         this._world = new Scene.World();

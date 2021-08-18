@@ -30,6 +30,8 @@ export default class Canvas
             this._canvas.width = width;
             this._canvas.height = height;
             this._isFullscreen = false;
+
+            this.onResize.emit();
         }
     }
 

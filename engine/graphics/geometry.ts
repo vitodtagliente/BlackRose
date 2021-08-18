@@ -14,7 +14,7 @@ export default class Geometry
     public get vertices(): Array<VertexData> { return this._vertices; }
     public get indices(): Array<number> { return this._indices; }
 
-    public data(): Array<number>
+    public get data(): Array<number>
     {
         let data: Array<number> = [];
         for (const vertex of this._vertices)

@@ -9,8 +9,8 @@ export default class VertexData
 
     public constructor(position: Vector3 = Vector3.zero, uv: TextureCoords = TextureCoords.zero, color: Color = Color.black)
     {
-        position.copy(this.position);
-        uv.copy(this.uv);
-        color.copy(this.color);
+        this.position = new Vector3(position.x, position.y, position.z);
+        this.uv = new TextureCoords(uv.u, uv.v);
+        this.color = new Color(color.r, color.g, color.b, color.a);
     }
 }

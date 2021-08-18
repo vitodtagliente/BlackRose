@@ -21,6 +21,7 @@ export default abstract class Context
     public abstract createTexture(image: Image): Texture;
     
     public abstract clear(color: Color): void;    
+    public abstract viewport(width: number, height: number): void;
     public abstract drawCircle(position: Vector3, radius: number, color: Color): void;
     public abstract drawTexture(position: Vector3, texture: Texture): void;
     public abstract drawSubTexture(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void;

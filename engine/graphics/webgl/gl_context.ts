@@ -1,4 +1,4 @@
-import { BufferElement, BufferElementType, Renderable, Shader, ShaderProgram, VAO, VertexBuffer } from ".";
+import { BufferElement, BufferElementType, IndexBuffer, Renderable, Shader, ShaderProgram, VAO, VertexBuffer } from ".";
 import { Color, Texture } from "..";
 import { Canvas } from "../../application";
 import { Vector2, Vector3 } from "../../math";
@@ -15,20 +15,25 @@ export default class GLContext extends Context
 {
     private _context: WebGL2RenderingContext;
     private _positionProgram: ShaderProgram;
+    private _textureProgram: ShaderProgram;
 
     public constructor(canvas: Canvas)
     {
         super(canvas, API.WebGL);
         this._context = canvas.canvas.getContext(this.api) as WebGL2RenderingContext;
-        // Tell WebGL how to convert from clip space to pixels
-        canvas.onResize.on(() => this._context.viewport(0, 0, this.canvas.width, this.canvas.height));
-        this._context.viewport(0, 0, canvas.width, canvas.height);
 
         {
             const vs: Shader = new Shader(this._context, ShaderType.Vertex, Shaders.PositionShader.VertexSource);
             const fs: Shader = new Shader(this._context, ShaderType.Fragment, Shaders.PositionShader.FragmentSource);
             this._positionProgram = new ShaderProgram(this._context, vs, fs);
             console.log(this._positionProgram.linked);
+        }
+
+        {
+            const vs: Shader = new Shader(this._context, ShaderType.Vertex, Shaders.TextureShader.VertexSource);
+            const fs: Shader = new Shader(this._context, ShaderType.Fragment, Shaders.TextureShader.FragmentSource);
+            this._textureProgram = new ShaderProgram(this._context, vs, fs);
+            console.log(this._textureProgram.linked);
         }
     }
 
@@ -37,6 +42,11 @@ export default class GLContext extends Context
     public createTexture(image: Image): Texture
     {
         return new GLTexture(this._context, image);
+    }
+
+    public viewport(width: number, height: number): void 
+    {
+        this._context.viewport(0, 0, width, height);
     }
 
     public clear(color: Color): void
@@ -64,6 +74,7 @@ export default class GLContext extends Context
     {
         const gl = this._context;
 
+        /*
         var positions = [
             0, 0,
             0, 0.5,
@@ -85,6 +96,41 @@ export default class GLContext extends Context
         var offset = 0;
         var count = vb.length;
         gl.drawArrays(primitiveType, offset, count);
+        */
 
+        const vao: VAO = new VAO(gl);
+        vao.bind();
+
+        const quad: Geometries.Quad = new Geometries.Quad;
+
+        const vb: VertexBuffer = new VertexBuffer(this._context);
+        vb.layout.push(new BufferElement("position", BufferElementType.Float, 2, true));
+        //vb.layout.push(new BufferElement("texcoord", BufferElementType.Float, 2, true));
+        vb.update([
+            1, 1, //1, 1,
+            1, -1, //1, 0,
+            -1, -1, //0, 0,
+            -1, 1, //0, 1
+        ]);
+
+        const ib: IndexBuffer = new IndexBuffer(this._context);
+        ib.update(quad.indices);
+
+        // Tell it to use our program (pair of shaders)
+        this._positionProgram.use();
+
+        // draw
+        /*
+        var primitiveType = gl.TRIANGLES;
+        var offset = 0;
+        var count = vb.length;
+        gl.drawArrays(primitiveType, offset, count);
+        */
+
+        var primitiveType = gl.TRIANGLES;
+        var offset = 0;
+        var count = ib.length;
+        var indexType = gl.UNSIGNED_SHORT;
+        gl.drawElements(primitiveType, count, indexType, offset);
     }
 }
