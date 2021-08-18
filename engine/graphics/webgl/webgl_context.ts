@@ -1,4 +1,4 @@
-import { Renderable, Shader, ShaderProgram, VertexBuffer } from ".";
+import { BufferElement, BufferElementType, Renderable, Shader, ShaderProgram, VAO, VertexBuffer } from ".";
 import { Color, Texture } from "..";
 import { Canvas } from "../../application";
 import { Vector2, Vector3 } from "../../math";
@@ -13,12 +13,14 @@ export default class WebGLContext extends Context
 {
     private _context: WebGL2RenderingContext;
     private _positionProgram: ShaderProgram;
-    private _quad: Renderable;
 
     public constructor(canvas: Canvas)
     {
         super(canvas, API.WebGL);
         this._context = canvas.canvas.getContext(this.api) as WebGL2RenderingContext;
+        // Tell WebGL how to convert from clip space to pixels
+        canvas.onResize.on(() => this._context.viewport(0, 0, this.canvas.width, this.canvas.height));
+        this._context.viewport(0, 0, canvas.width, canvas.height);
 
         {
             const vs: Shader = new Shader(this._context, ShaderType.Vertex, Shaders.PositionShader.VertexSource);
@@ -53,21 +55,29 @@ export default class WebGLContext extends Context
 
     public test(): void 
     {
-        const geom: Geometry = new Geometries.Quad();
+        const gl = this._context;
+
         var positions = [
             0, 0,
             0, 0.5,
             0.7, 0,
         ];
-        const vb: VertexBuffer = new VertexBuffer(this._context, 0, 2);
+
+        const vao: VAO = new VAO(gl);
+        vao.bind();
+
+        const vb: VertexBuffer = new VertexBuffer(this._context);
+        vb.layout.push(new BufferElement("position", BufferElementType.Float, 2, true));
         vb.update(positions);
+
+        // Tell it to use our program (pair of shaders)
         this._positionProgram.use();
 
         // draw
-        var primitiveType = this._context.TRIANGLES;
+        var primitiveType = gl.TRIANGLES;
         var offset = 0;
-        var count = 3;
-        this._context.drawArrays(primitiveType, offset, count);
+        var count = vb.length;
+        gl.drawArrays(primitiveType, offset, count);
 
     }
 }

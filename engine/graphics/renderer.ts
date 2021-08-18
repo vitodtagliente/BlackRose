@@ -71,4 +71,9 @@ export default class Renderer
         command.color = color;
         this._commands.push(command);
     }
+
+    public test(): void 
+    {
+        this._context.test();
+    }
 }
