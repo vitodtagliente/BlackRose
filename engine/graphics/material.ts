@@ -1,5 +1,5 @@
 import { ShaderProgram } from ".";
-import { Matrix4 } from "../math";
+import { Matrix2, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "../math";
 
 export enum MaterialPropertyType
 {
@@ -54,16 +54,14 @@ export default class Material
         {
             switch (property.type)
             {
-                case MaterialPropertyType.Int:
-                    {
-                        this._program.setInt(name, property.value as number);
-                        break;
-                    }
-                case MaterialPropertyType.Mat4:
-                    {
-                        this._program.setMatrix(name, property.value as Matrix4);
-                        break;
-                    }
+                case MaterialPropertyType.Int: this._program.setInt(name, property.value as number); break;
+                case MaterialPropertyType.Bool: this._program.setBool(name, property.value as boolean); break;
+                case MaterialPropertyType.Vec2: this._program.setVec2(name, property.value as Vector2); break;
+                case MaterialPropertyType.Vec3: this._program.setVec3(name, property.value as Vector3); break;
+                case MaterialPropertyType.Vec4: this._program.setVec4(name, property.value as Vector4); break;
+                case MaterialPropertyType.Mat2: this._program.setMat2(name, property.value as Matrix2); break;
+                case MaterialPropertyType.Mat3: this._program.setMat3(name, property.value as Matrix3); break;
+                case MaterialPropertyType.Mat4: this._program.setMat4(name, property.value as Matrix4); break;
                 default: break;
             }
         }

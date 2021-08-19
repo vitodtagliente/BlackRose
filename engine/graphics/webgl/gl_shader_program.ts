@@ -1,4 +1,4 @@
-import { Matrix4, Vector2 } from "../../math";
+import { Matrix2, Matrix3, Matrix4, Vector2, Vector3, Vector4 } from "../../math";
 import GLShader from "./gl_shader";
 import ShaderProgram from "../shader_program";
 import { TextureCoords } from "..";
@@ -44,23 +44,12 @@ export default class GLShaderProgram extends ShaderProgram
         return uniformLocation;
     }
 
-    public setInt(name: string, value: number): void 
-    {
-        this._context.uniform1i(this.getUniformLocation(name), value);
-    }
-
-    public setVec2(name: string, value: Vector2): void 
-    {
-        this._context.uniform2fv(this.getUniformLocation(name), value.data);
-    }
-
-    public setTextCoords(name: string, value: TextureCoords): void 
-    {
-        this._context.uniform2fv(this.getUniformLocation(name), value.data);
-    }
-
-    public setMatrix(name: string, value: Matrix4): void
-    {
-        this._context.uniformMatrix4fv(this.getUniformLocation(name), false, value.data);
-    }
+    public setInt(name: string, value: number): void { this._context.uniform1i(this.getUniformLocation(name), value); }
+    public setBool(name: string, value: boolean): void { this._context.uniform1i(this.getUniformLocation(name), value ? 1 : 0); }
+    public setVec2(name: string, value: Vector2): void { this._context.uniform2fv(this.getUniformLocation(name), value.data); }
+    public setVec3(name: string, value: Vector3): void { this._context.uniform3fv(this.getUniformLocation(name), value.data); }
+    public setVec4(name: string, value: Vector4): void { this._context.uniform4fv(this.getUniformLocation(name), value.data); }
+    public setMat2(name: string, value: Matrix2): void { this._context.uniformMatrix2fv(this.getUniformLocation(name), false, value.data); }
+    public setMat3(name: string, value: Matrix3): void { this._context.uniformMatrix3fv(this.getUniformLocation(name), false, value.data); }
+    public setMat4(name: string, value: Matrix4): void { this._context.uniformMatrix4fv(this.getUniformLocation(name), false, value.data); }
 }

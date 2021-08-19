@@ -1,6 +1,6 @@
 import { Color, ShaderType, Texture, TextureRect } from "..";
 import { Canvas } from "../../application";
-import { Matrix4, Transform, Vector2, Vector3 } from "../../math";
+import { Matrix4, Transform, Vector2, Vector3, Vector4 } from "../../math";
 import API from "../api";
 import Context from "../context";
 import * as Shaders from "../shaders";
@@ -126,7 +126,7 @@ export default class GLContext extends Context
         this._spriteProgram.use();
         texture.bind(0);
         this._spriteProgram.setInt("u_texture", 0);
-        this._spriteProgram.setMatrix("u_matrix", transform.matrix());
+        this._spriteProgram.setMat4("u_matrix", transform.matrix());
 
         // draw
         var primitiveType = this._context.TRIANGLES;
@@ -145,8 +145,8 @@ export default class GLContext extends Context
         this._subSpriteProgram.use();
         texture.bind(0);
         this._subSpriteProgram.setInt("u_texture", 0);
-        this._subSpriteProgram.setMatrix("u_matrix", transform.matrix());
-        this._subSpriteProgram.setTextCoords("u_crop", rect.size);
+        this._subSpriteProgram.setMat4("u_matrix", transform.matrix());
+        // this._subSpriteProgram.setVec4("u_crop", new Vector4(rect.x, rect.y, rect.width, rect.height));
 
         // draw
         var primitiveType = this._context.TRIANGLES;

@@ -1,22 +1,25 @@
-import { TextureCoords } from ".";
+import { clamp } from "../math";
 
 export default class TextureRect
 {
-    private _origin: TextureCoords;
-    private _size: TextureCoords;
+    public data: number[] = [4];
+
+    public get x(): number { return this.data[0]; }
+    public set x(value: number) { this.data[0] = clamp(value, 0, 1); }
+    public get y(): number { return this.data[1]; }
+    public set y(value: number) { this.data[1] = clamp(value, 0, 1); }
+    public get width(): number { return this.data[2]; }
+    public set width(value: number) { this.data[2] = clamp(value, 0, 1); }
+    public get height(): number { return this.data[3]; }
+    public set height(value: number) { this.data[3] = clamp(value, 0, 1); }
 
     public constructor(x: number = 0, y: number = 0, width: number = 1, height: number = 1)
     {
-        this._origin = new TextureCoords(x, y);
-        this._size = new TextureCoords(width, height);
+        this.data = [clamp(x, 0, 1), clamp(y, 0, 1), clamp(width, 0, 1), clamp(height, 0, 1)]
     }
-
-    public get origin(): TextureCoords { return this._origin; }
-    public get size(): TextureCoords { return this._size; }
 
     public copy(r: TextureRect): void 
     {
-        this._origin.copy(r._origin);
-        this._size.copy(r._size);
+        r.data = [...this.data];
     }
 }

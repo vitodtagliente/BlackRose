@@ -72,10 +72,10 @@ export default class CanvasContext extends Context
 
     public drawSubSprite(texture: Texture, transform: Transform, rect: TextureRect): void
     {
-        const x: number = rect.origin.u * texture.image.width;
-        const y: number = rect.origin.v * texture.image.height;
-        const x1: number = (rect.origin.u + rect.size.u) * texture.image.width;
-        const y1: number = (rect.origin.v + rect.size.v) * texture.image.height;
+        const x: number = rect.x * texture.image.width;
+        const y: number = rect.x * texture.image.height;
+        const x1: number = (rect.x + rect.width) * texture.image.width;
+        const y1: number = (rect.x + rect.height) * texture.image.height;
 
         this._context.drawImage(
             texture.image.data,
