@@ -14,13 +14,26 @@ import GLVertexArrayObject from "./gl_vertext_array_object";
 import GLVertexBuffer, { GLVertexBufferElement, GLVertexBufferElementType } from "./gl_vertex_buffer";
 import GLIndexBuffer from "./gl_index_buffer";
 
+class RenderData
+{
+    public vao: GLVertexArrayObject;
+    public vb: GLVertexBuffer;
+    public ib: GLIndexBuffer;
+
+    public bind(): void 
+    {
+        if (this.vao != null) this.vao.bind();
+    }
+}
+
 export default class GLContext extends Context
 {
     private _context: WebGL2RenderingContext;
-    private _positionProgram: GLShaderProgram;
-    private _textureProgram: GLShaderProgram;
+    private _spriteProgram: GLShaderProgram;
     private _cat: Image;
     private _texture: Texture;
+
+    private _spriteRenderData: RenderData;
 
     public constructor(canvas: Canvas)
     {
@@ -33,17 +46,26 @@ export default class GLContext extends Context
         this._context.blendFunc(this._context.SRC_ALPHA, this._context.ONE_MINUS_SRC_ALPHA);
 
         {
-            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.PositionShader.VertexSource);
-            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.PositionShader.FragmentSource);
-            this._positionProgram =this.createShaderProgram(vs, fs);
-            console.log(this._positionProgram.linked);
-        }
-
-        {
             const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.TextureShader.VertexSource);
             const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.TextureShader.FragmentSource);
-            this._textureProgram =this.createShaderProgram(vs, fs);
-            console.log(this._textureProgram.linked);
+            this._spriteProgram = this.createShaderProgram(vs, fs);
+        }
+
+        // sprite geometry
+        {
+            this._spriteRenderData = new RenderData;
+            this._spriteRenderData.vao = new GLVertexArrayObject(this._context);
+            this._spriteRenderData.vao.bind();
+
+            const quad: Geometries.Quad = new Geometries.Quad;
+
+            this._spriteRenderData.vb = new GLVertexBuffer(this._context);
+            this._spriteRenderData.vb.layout.push(new GLVertexBufferElement("position", GLVertexBufferElementType.Float, 3, true));
+            this._spriteRenderData.vb.layout.push(new GLVertexBufferElement("texcoord", GLVertexBufferElementType.Float, 2, true));
+            this._spriteRenderData.vb.update(quad.data);
+
+            this._spriteRenderData.ib = new GLIndexBuffer(this._context);
+            this._spriteRenderData.ib.update(quad.indices);
         }
 
         this._cat = Image.load("assets/cat.png", () =>
@@ -59,7 +81,7 @@ export default class GLContext extends Context
     {
         return new GLTexture(this._context, image);
     }
-    
+
     public createShader(type: ShaderType, source: string): GLShader
     {
         return new GLShader(this._context, type, source);
@@ -88,49 +110,25 @@ export default class GLContext extends Context
 
     public drawSprite(texture: Texture, transform: Transform): void
     {
+        if (texture == null) return;
 
+        this._spriteRenderData.bind();
+
+        this._spriteProgram.use();
+        texture.bind(0);
+        this._spriteProgram.setInt("u_texture", 0);
+        this._spriteProgram.setMatrix("u_matrix", transform.matrix());
+
+        // draw
+        var primitiveType = this._context.TRIANGLES;
+        var offset = 0;
+        var count = this._spriteRenderData.ib.length;
+        var indexType = this._context.UNSIGNED_SHORT;
+        this._context.drawElements(primitiveType, count, indexType, offset);
     }
 
     public test(): void 
     {
-        if (this._texture == null) return;
-
-        const gl = this._context;
-
-        const vao: GLVertexArrayObject = new GLVertexArrayObject(gl);
-        vao.bind();
-
-        const quad: Geometries.Quad = new Geometries.Quad;
-
-        const vb: GLVertexBuffer = new GLVertexBuffer(this._context);
-        vb.layout.push(new GLVertexBufferElement("position", GLVertexBufferElementType.Float, 2, true));
-        vb.layout.push(new GLVertexBufferElement("texcoord", GLVertexBufferElementType.Float, 2, true));
-        vb.update([
-            1, 1, 1, 1,
-            1, -1, 1, 0,
-            -1, -1, 0, 0,
-            -1, 1, 0, 1
-        ]);
-
-        const ib: GLIndexBuffer = new GLIndexBuffer(this._context);
-        ib.update(quad.indices);
-
-        // Tell it to use our program (pair of shaders)
-        this._textureProgram.use();
-
-        this._texture.bind(0);
-        this._textureProgram.setInt("u_texture", 0);
-        let transform: Transform = new Transform;
-        transform.position.x = .6;
-        transform.scale.set(.4, .4, 0);
-        transform.rotation.z = 35;
-        this._textureProgram.setMatrix("u_matrix", transform.matrix());
-
-        // draw
-        var primitiveType = gl.TRIANGLES;
-        var offset = 0;
-        var count = ib.length;
-        var indexType = gl.UNSIGNED_SHORT;
-        gl.drawElements(primitiveType, count, indexType, offset);
+        this.drawSprite(this._texture, new Transform);
     }
 }

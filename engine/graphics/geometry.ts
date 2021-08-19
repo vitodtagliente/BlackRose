@@ -24,10 +24,6 @@ export default class Geometry
             data.push(vertex.position.z);
             data.push(vertex.uv.u);
             data.push(vertex.uv.v);
-            data.push(vertex.color.r);
-            data.push(vertex.color.g);
-            data.push(vertex.color.b);
-            data.push(vertex.color.a);
         }
         return data;
     }
