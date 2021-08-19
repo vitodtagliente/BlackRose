@@ -86,6 +86,11 @@ export default class CanvasContext extends Context
         );
     }
 
+    public drawSprites(texture: Texture, data: Array<[Transform, TextureRect]>): void
+    {
+
+    }
+
     public test(): void 
     {
 

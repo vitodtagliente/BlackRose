@@ -16,7 +16,7 @@ export class VertexBufferElement
     // normalized
     private _normalized: boolean
 
-    public constructor(name: string, type: VertexBufferElementType, size: number, normalized: boolean)
+    public constructor(name: string, type: VertexBufferElementType, size: number, normalized: boolean = true)
     {
         this._name = name;
         this._type = type;
