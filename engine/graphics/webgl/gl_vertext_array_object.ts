@@ -1,4 +1,4 @@
-export default class VAO
+export default class GLVertexArrayObject
 {
     private _id: WebGLVertexArrayObject;
     private _context: WebGL2RenderingContext;

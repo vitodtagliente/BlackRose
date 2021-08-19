@@ -1,15 +1,17 @@
 import { Matrix4 } from "../../math";
-import Shader from "./shader";
+import GLShader from "./gl_shader";
+import ShaderProgram from "../shader_program";
 
-export default class ShaderProgram
+export default class GLShaderProgram extends ShaderProgram
 {
     private _id: WebGLProgram;
     private _context: WebGL2RenderingContext;
-    private _linked: boolean;
     private _uniforms: Map<string, WebGLUniformLocation>;
 
-    public constructor(context: WebGL2RenderingContext, vertexShader: Shader, fragmentShader: Shader)
+    public constructor(context: WebGL2RenderingContext, vertexShader: GLShader, fragmentShader: GLShader)
     {
+        super(vertexShader, fragmentShader);
+
         this._context = context;
         this._uniforms = new Map<string, WebGLUniformLocation>();
 
@@ -26,7 +28,6 @@ export default class ShaderProgram
     }
 
     public get id(): WebGLProgram { return this._id; }
-    public get linked(): boolean { return this._linked; }
 
     public use(): void 
     {

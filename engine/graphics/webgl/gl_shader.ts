@@ -1,21 +1,16 @@
-export enum ShaderType
-{
-    Vertex,
-    Fragment,
-}
+import Shader, { ShaderType } from "../shader";
 
-export default class Shader
+export default class GLShader extends Shader
 {
     private _id: WebGLShader;
-    private _type: ShaderType;
-    private _compiled: boolean;
 
     public constructor(context: WebGL2RenderingContext, type: ShaderType, source: string)
     {
+        super(type, source);
+
         this._id = context.createShader(
             type == ShaderType.Vertex ? context.VERTEX_SHADER : context.FRAGMENT_SHADER
         );
-        this._type = type;
 
         context.shaderSource(this._id, source);
         context.compileShader(this._id);
@@ -28,6 +23,4 @@ export default class Shader
     }
 
     public get id(): WebGLShader { return this._id; }
-    public get compiled(): boolean { return this._compiled; }
-    public get type(): ShaderType { return this._type; }
 }

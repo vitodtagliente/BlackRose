@@ -1,21 +1,24 @@
-import { BufferElement, BufferElementType, IndexBuffer, Renderable, Shader, ShaderProgram, VAO, VertexBuffer } from ".";
-import { Color, Texture } from "..";
+import { Color, ShaderType, Texture } from "..";
 import { Canvas } from "../../application";
 import { Matrix4, Transform, Vector2, Vector3 } from "../../math";
 import API from "../api";
 import Context from "../context";
-import { ShaderType } from "./shader";
 import * as Shaders from "../shaders";
 import Geometry from "../geometry";
 import * as Geometries from "../geometries";
 import { default as GLTexture } from "./gl_texture";
 import { Image } from "../../asset";
+import GLShader from "./gl_shader";
+import GLShaderProgram from "./gl_shader_program";
+import GLVertexArrayObject from "./gl_vertext_array_object";
+import GLVertexBuffer, { GLVertexBufferElement, GLVertexBufferElementType } from "./gl_vertex_buffer";
+import GLIndexBuffer from "./gl_index_buffer";
 
 export default class GLContext extends Context
 {
     private _context: WebGL2RenderingContext;
-    private _positionProgram: ShaderProgram;
-    private _textureProgram: ShaderProgram;
+    private _positionProgram: GLShaderProgram;
+    private _textureProgram: GLShaderProgram;
     private _cat: Image;
     private _texture: Texture;
 
@@ -30,16 +33,16 @@ export default class GLContext extends Context
         this._context.blendFunc(this._context.SRC_ALPHA, this._context.ONE_MINUS_SRC_ALPHA);
 
         {
-            const vs: Shader = new Shader(this._context, ShaderType.Vertex, Shaders.PositionShader.VertexSource);
-            const fs: Shader = new Shader(this._context, ShaderType.Fragment, Shaders.PositionShader.FragmentSource);
-            this._positionProgram = new ShaderProgram(this._context, vs, fs);
+            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.PositionShader.VertexSource);
+            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.PositionShader.FragmentSource);
+            this._positionProgram =this.createShaderProgram(vs, fs);
             console.log(this._positionProgram.linked);
         }
 
         {
-            const vs: Shader = new Shader(this._context, ShaderType.Vertex, Shaders.TextureShader.VertexSource);
-            const fs: Shader = new Shader(this._context, ShaderType.Fragment, Shaders.TextureShader.FragmentSource);
-            this._textureProgram = new ShaderProgram(this._context, vs, fs);
+            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.TextureShader.VertexSource);
+            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.TextureShader.FragmentSource);
+            this._textureProgram =this.createShaderProgram(vs, fs);
             console.log(this._textureProgram.linked);
         }
 
@@ -55,6 +58,16 @@ export default class GLContext extends Context
     public createTexture(image: Image): Texture
     {
         return new GLTexture(this._context, image);
+    }
+    
+    public createShader(type: ShaderType, source: string): GLShader
+    {
+        return new GLShader(this._context, type, source);
+    }
+
+    public createShaderProgram(vertexShader: GLShader, fragmentShader: GLShader): GLShaderProgram
+    {
+        return new GLShaderProgram(this._context, vertexShader, fragmentShader);
     }
 
     public viewport(width: number, height: number): void 
@@ -89,38 +102,14 @@ export default class GLContext extends Context
 
         const gl = this._context;
 
-        /*
-        var positions = [
-            0, 0,
-            0, 0.5,
-            0.7, 0,
-        ];
-
-        const vao: VAO = new VAO(gl);
-        vao.bind();
-
-        const vb: VertexBuffer = new VertexBuffer(this._context);
-        vb.layout.push(new BufferElement("position", BufferElementType.Float, 2, true));
-        vb.update(positions);
-
-        // Tell it to use our program (pair of shaders)
-        this._positionProgram.use();
-
-        // draw
-        var primitiveType = gl.TRIANGLES;
-        var offset = 0;
-        var count = vb.length;
-        gl.drawArrays(primitiveType, offset, count);
-        */
-
-        const vao: VAO = new VAO(gl);
+        const vao: GLVertexArrayObject = new GLVertexArrayObject(gl);
         vao.bind();
 
         const quad: Geometries.Quad = new Geometries.Quad;
 
-        const vb: VertexBuffer = new VertexBuffer(this._context);
-        vb.layout.push(new BufferElement("position", BufferElementType.Float, 2, true));
-        vb.layout.push(new BufferElement("texcoord", BufferElementType.Float, 2, true));
+        const vb: GLVertexBuffer = new GLVertexBuffer(this._context);
+        vb.layout.push(new GLVertexBufferElement("position", GLVertexBufferElementType.Float, 2, true));
+        vb.layout.push(new GLVertexBufferElement("texcoord", GLVertexBufferElementType.Float, 2, true));
         vb.update([
             1, 1, 1, 1,
             1, -1, 1, 0,
@@ -128,7 +117,7 @@ export default class GLContext extends Context
             -1, 1, 0, 1
         ]);
 
-        const ib: IndexBuffer = new IndexBuffer(this._context);
+        const ib: GLIndexBuffer = new GLIndexBuffer(this._context);
         ib.update(quad.indices);
 
         // Tell it to use our program (pair of shaders)

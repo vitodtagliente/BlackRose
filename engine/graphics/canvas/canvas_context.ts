@@ -1,4 +1,4 @@
-import { Color, Texture } from "..";
+import { Color, Shader, ShaderProgram, ShaderType, Texture } from "..";
 import { Canvas } from "../../application";
 import { Image } from "../../asset";
 import { Vector2, Vector3 } from "../../math";
@@ -22,6 +22,16 @@ export default class CanvasContext extends Context
         return null;
     }
 
+    public createShader(type: ShaderType, source: string): Shader
+    {
+        return null;
+    }
+
+    public createShaderProgram(vertexShader: Shader, fragmentShader: Shader): ShaderProgram
+    {
+        return null;
+    }
+
     public clear(color: Color): void
     {
         this.context.fillStyle = color.rgba;
@@ -30,7 +40,7 @@ export default class CanvasContext extends Context
 
     public viewport(width: number, height: number): void 
     {
-        
+
     }
 
     public drawCircle(position: Vector3, radius: number, color: Color): void

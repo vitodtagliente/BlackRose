@@ -1,4 +1,4 @@
-import { Color, Texture } from ".";
+import { Color, Shader, ShaderProgram, ShaderType, Texture } from ".";
 import { Canvas } from "../application";
 import { Image } from "../asset";
 import { Vector2, Vector3 } from "../math";
@@ -19,8 +19,10 @@ export default abstract class Context
     public get canvas(): Canvas { return this._canvas; }
 
     public abstract createTexture(image: Image): Texture;
-    
-    public abstract clear(color: Color): void;    
+    public abstract createShader(type: ShaderType, source: string): Shader;
+    public abstract createShaderProgram(vertexShader: Shader, fragmentShader: Shader): ShaderProgram;
+
+    public abstract clear(color: Color): void;
     public abstract viewport(width: number, height: number): void;
     public abstract drawCircle(position: Vector3, radius: number, color: Color): void;
     public abstract drawTexture(position: Vector3, texture: Texture): void;

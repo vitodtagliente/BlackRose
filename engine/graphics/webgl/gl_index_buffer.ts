@@ -1,4 +1,4 @@
-export default class IndexBuffer
+export default class GLIndexBuffer
 {
     private _id: WebGLBuffer;
     private _context: WebGL2RenderingContext;

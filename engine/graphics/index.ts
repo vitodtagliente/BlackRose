@@ -8,6 +8,8 @@ import Renderer from "./renderer"
 import Texture from "./texture"
 import TextureCoords from "./texture_coords"
 import TextureRect from "./texture_rect"
+import Shader, { ShaderType } from "./shader"
+import ShaderProgram from "./shader_program"
 
 export
 {
@@ -18,6 +20,9 @@ export
     Material,
     Materials,
     Renderer,
+    Shader,
+    ShaderType,
+    ShaderProgram,
     Texture,
     TextureCoords,
     TextureRect
