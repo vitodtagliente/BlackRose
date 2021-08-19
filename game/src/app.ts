@@ -22,6 +22,8 @@ const roseImg: Image = Image.load("assets/rose.png", () =>
 
 class RoseComponent extends Component
 {
+    private _moveDirection: Vector3;
+
     public constructor(app: Application)
     {
         super(app);
@@ -29,12 +31,8 @@ class RoseComponent extends Component
 
     public init(): void
     {
-        this.transform.position.set(
-            random(-1, 1),
-            random(-1, 1),
-            0
-        );
-        this.transform.scale.set(0.4, 0.4, 1);
+        this.transform.position.set(random(-.8, .8), random(-.8, .8), 0);
+        this.transform.scale.set(random(.2, .5), random(.2, .5), 1);
     }
 
     public update(deltaTime: number): void
