@@ -1,4 +1,4 @@
-import { Color, ShaderType, Texture } from "..";
+import { Color, ShaderType, Texture, TextureRect } from "..";
 import { Canvas } from "../../application";
 import { Matrix4, Transform, Vector2, Vector3 } from "../../math";
 import API from "../api";
@@ -31,6 +31,7 @@ export default class GLContext extends Context
 {
     private _context: WebGL2RenderingContext;
     private _spriteProgram: GLShaderProgram;
+    private _subSpriteProgram: GLShaderProgram;
 
     private _spriteRenderData: RenderData;
 
@@ -45,9 +46,15 @@ export default class GLContext extends Context
         this._context.blendFunc(this._context.SRC_ALPHA, this._context.ONE_MINUS_SRC_ALPHA);
 
         {
-            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.TextureShader.VertexSource);
-            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.TextureShader.FragmentSource);
+            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.SpriteShader.VertexSource);
+            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.SpriteShader.FragmentSource);
             this._spriteProgram = this.createShaderProgram(vs, fs);
+        }
+
+        {
+            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.SubSpriteShader.VertexSource);
+            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.SubSpriteShader.FragmentSource);
+            this._subSpriteProgram = this.createShaderProgram(vs, fs);
         }
 
         // sprite geometry
@@ -129,8 +136,27 @@ export default class GLContext extends Context
         this._context.drawElements(primitiveType, count, indexType, offset);
     }
 
+    public drawSubSprite(texture: Texture, transform: Transform, rect: TextureRect): void
+    {
+        if (texture == null) return;
+
+        this._spriteRenderData.bind();
+
+        this._spriteProgram.use();
+        texture.bind(0);
+        this._spriteProgram.setInt("u_texture", 0);
+        this._spriteProgram.setMatrix("u_matrix", transform.matrix());
+
+        // draw
+        var primitiveType = this._context.TRIANGLES;
+        var offset = 0;
+        var count = this._spriteRenderData.ib.length;
+        var indexType = this._context.UNSIGNED_SHORT;
+        this._context.drawElements(primitiveType, count, indexType, offset);
+    }
+
     public test(): void 
     {
-        
+
     }
 }

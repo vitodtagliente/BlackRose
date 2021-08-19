@@ -1,4 +1,4 @@
-import { Color, IndexBuffer, ShaderType, Texture } from "..";
+import { Color, IndexBuffer, ShaderType, Texture, TextureRect } from "..";
 import { Canvas } from "../../application";
 import { Image } from "../../asset";
 import { Transform, Vector2, Vector3 } from "../../math";
@@ -70,14 +70,19 @@ export default class CanvasContext extends Context
         this._context.drawImage(texture.image.data, transform.position.x, transform.position.y);
     }
 
-    public drawSubSprite(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void
+    public drawSubSprite(texture: Texture, transform: Transform, rect: TextureRect): void
     {
+        const x: number = rect.origin.u * texture.image.width;
+        const y: number = rect.origin.v * texture.image.height;
+        const x1: number = (rect.origin.u + rect.size.u) * texture.image.width;
+        const y1: number = (rect.origin.v + rect.size.v) * texture.image.height;
+
         this._context.drawImage(
             texture.image.data,
-            origin.x, origin.y,
-            end.x, end.y,
-            position.x, position.y,
-            end.x, end.y
+            x, y,
+            x1, y1,
+            transform.position.x, transform.position.y,
+            x1, y1
         );
     }
 

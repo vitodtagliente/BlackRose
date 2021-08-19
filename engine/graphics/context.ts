@@ -1,4 +1,4 @@
-import { Color, IndexBuffer, Shader, ShaderProgram, ShaderType, Texture } from ".";
+import { Color, IndexBuffer, Shader, ShaderProgram, ShaderType, Texture, TextureRect } from ".";
 import { Canvas } from "../application";
 import { Image } from "../asset";
 import { Transform, Vector3 } from "../math";
@@ -20,7 +20,7 @@ export default abstract class Context
     public get canvas(): Canvas { return this._canvas; }
 
     public abstract createIndexBuffer(): IndexBuffer;
-    public abstract createVertexBuffer(usageMode: VertexBufferUsageMode): VertexBuffer; 
+    public abstract createVertexBuffer(usageMode: VertexBufferUsageMode): VertexBuffer;
     public abstract createTexture(image: Image): Texture;
     public abstract createShader(type: ShaderType, source: string): Shader;
     public abstract createShaderProgram(vertexShader: Shader, fragmentShader: Shader): ShaderProgram;
@@ -29,7 +29,7 @@ export default abstract class Context
     public abstract viewport(width: number, height: number): void;
     public abstract drawCircle(position: Vector3, radius: number, color: Color): void;
     public abstract drawSprite(texture: Texture, transform: Transform): void;
-    // public abstract drawSubSprite(texture: Texture, transform: Transform, ): void;
+    public abstract drawSubSprite(texture: Texture, transform: Transform, rect: TextureRect): void;
 
     public abstract test(): void;
 }

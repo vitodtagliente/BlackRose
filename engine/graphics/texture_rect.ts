@@ -5,10 +5,10 @@ export default class TextureRect
     private _origin: TextureCoords;
     private _size: TextureCoords;
 
-    public constructor(origin?: TextureCoords, size?: TextureCoords)
+    public constructor(x: number = 0, y: number = 0, width: number = 1, height: number = 1)
     {
-        this._origin = origin ? origin : TextureCoords.zero;
-        this._size = size ? size : TextureCoords.one;
+        this._origin = new TextureCoords(x, y);
+        this._size = new TextureCoords(width, height);
     }
 
     public get origin(): TextureCoords { return this._origin; }

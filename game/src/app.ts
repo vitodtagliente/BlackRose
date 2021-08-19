@@ -2,7 +2,7 @@ import * as BlackRose from 'blackrose';
 import { Application } from 'blackrose/application';
 import { Audio, Image } from 'blackrose/asset';
 import { Section } from 'blackrose/debug';
-import { Color, Texture } from 'blackrose/graphics';
+import { Color, Texture, TextureRect } from 'blackrose/graphics';
 import { KeyCode } from 'blackrose/input';
 import { Matrix2, Matrix3, Quaternion, random, Transform, Vector2, Vector3 } from 'blackrose/math';
 import { Component, Entity } from 'blackrose/scene';
@@ -31,17 +31,18 @@ class RoseComponent extends Component
 
     public init(): void
     {
-        this.transform.position.set(random(-.8, .8), random(-.8, .8), 0);
-        this.transform.scale.set(random(.2, .5), random(.2, .5), 1);
+        //this.transform.position.set(random(-.8, .8), random(-.8, .8), 0);
+        //this.transform.scale.set(random(.2, .5), random(.2, .5), 1);
     }
 
     public update(deltaTime: number): void
     {
-        this.app.context.drawSprite(roseTexture, this.transform);
+        //this.app.context.drawSprite(roseTexture, this.transform);
+        this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 0.5, 0.5));
     }
 }
 
-for (let i: number = 0; i < 10; ++i)
+for (let i: number = 0; i < 1; ++i)
 {
     const rose: Entity = app.world.spawn(new Entity("rose"), Vector3.zero, Quaternion.identity);
     rose.addComponent(new RoseComponent(app));
