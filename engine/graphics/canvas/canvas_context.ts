@@ -1,9 +1,10 @@
-import { Color, ShaderType, Texture } from "..";
+import { Color, IndexBuffer, ShaderType, Texture } from "..";
 import { Canvas } from "../../application";
 import { Image } from "../../asset";
 import { Transform, Vector2, Vector3 } from "../../math";
 import API from "../api";
 import Context from "../context";
+import VertexBuffer, { VertexBufferUsageMode } from "../vertex_buffer";
 import CanvasShader from "./canvas_shader";
 import CanvasShaderProgram from "./canvas_shader_program";
 import CanvasTexture from "./canvas_texture";
@@ -19,6 +20,16 @@ export default class CanvasContext extends Context
     }
 
     public get context(): CanvasRenderingContext2D { return this._context; }
+
+    public createIndexBuffer(): IndexBuffer
+    {
+        return null;
+    }
+
+    public createVertexBuffer(usageMode: VertexBufferUsageMode): VertexBuffer
+    {
+        return null;
+    }
 
     public createTexture(image: Image): CanvasTexture
     {

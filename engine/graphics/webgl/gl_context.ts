@@ -11,8 +11,9 @@ import { Image } from "../../asset";
 import GLShader from "./gl_shader";
 import GLShaderProgram from "./gl_shader_program";
 import GLVertexArrayObject from "./gl_vertext_array_object";
-import GLVertexBuffer, { GLVertexBufferElement, GLVertexBufferElementType } from "./gl_vertex_buffer";
+import GLVertexBuffer from "./gl_vertex_buffer";
 import GLIndexBuffer from "./gl_index_buffer";
+import { VertexBufferElement, VertexBufferElementType, VertexBufferUsageMode } from "../vertex_buffer";
 
 class RenderData
 {
@@ -60,8 +61,8 @@ export default class GLContext extends Context
             const quad: Geometries.Quad = new Geometries.Quad;
 
             this._spriteRenderData.vb = new GLVertexBuffer(this._context);
-            this._spriteRenderData.vb.layout.push(new GLVertexBufferElement("position", GLVertexBufferElementType.Float, 3, true));
-            this._spriteRenderData.vb.layout.push(new GLVertexBufferElement("texcoord", GLVertexBufferElementType.Float, 2, true));
+            this._spriteRenderData.vb.layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3, true));
+            this._spriteRenderData.vb.layout.push(new VertexBufferElement("texcoord", VertexBufferElementType.Float, 2, true));
             this._spriteRenderData.vb.update(quad.data);
 
             this._spriteRenderData.ib = new GLIndexBuffer(this._context);
@@ -76,6 +77,16 @@ export default class GLContext extends Context
     }
 
     public get context(): WebGL2RenderingContext { return this._context; }
+
+    public createIndexBuffer(): GLIndexBuffer
+    {
+        return new GLIndexBuffer(this._context);
+    }
+
+    public createVertexBuffer(usageMode: VertexBufferUsageMode): GLVertexBuffer
+    {
+        return new GLVertexBuffer(this._context, usageMode);
+    }
 
     public createTexture(image: Image): GLTexture
     {

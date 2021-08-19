@@ -1,8 +1,9 @@
-import { Color, Shader, ShaderProgram, ShaderType, Texture } from ".";
+import { Color, IndexBuffer, Shader, ShaderProgram, ShaderType, Texture } from ".";
 import { Canvas } from "../application";
 import { Image } from "../asset";
-import { Transform, Vector2, Vector3 } from "../math";
+import { Transform, Vector3 } from "../math";
 import API from "./api";
+import VertexBuffer, { VertexBufferUsageMode } from "./vertex_buffer";
 
 export default abstract class Context
 {
@@ -18,6 +19,8 @@ export default abstract class Context
     public get api(): API { return this._api; }
     public get canvas(): Canvas { return this._canvas; }
 
+    public abstract createIndexBuffer(): IndexBuffer;
+    public abstract createVertexBuffer(usageMode: VertexBufferUsageMode): VertexBuffer; 
     public abstract createTexture(image: Image): Texture;
     public abstract createShader(type: ShaderType, source: string): Shader;
     public abstract createShaderProgram(vertexShader: Shader, fragmentShader: Shader): ShaderProgram;

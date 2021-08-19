@@ -1,18 +1,17 @@
-export default class GLIndexBuffer
+import IndexBuffer from "../index_buffer";
+
+export default class GLIndexBuffer extends IndexBuffer
 {
     private _id: WebGLBuffer;
     private _context: WebGL2RenderingContext;
-    private _length: number;
 
     public constructor(context: WebGL2RenderingContext)
     {
+        super();
         this._context = context;
-        this._length = 0;
 
         this._id = context.createBuffer();
     }
-
-    public get length(): number { return this._length; }
 
     public bind(): void 
     {
