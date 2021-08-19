@@ -1,9 +1,12 @@
-import { Color, Shader, ShaderProgram, ShaderType, Texture } from "..";
+import { Color, ShaderType, Texture } from "..";
 import { Canvas } from "../../application";
 import { Image } from "../../asset";
 import { Vector2, Vector3 } from "../../math";
 import API from "../api";
 import Context from "../context";
+import CanvasShader from "./canvas_shader";
+import CanvasShaderProgram from "./canvas_shader_program";
+import CanvasTexture from "./canvas_texture";
 
 export default class CanvasContext extends Context
 {
@@ -17,19 +20,19 @@ export default class CanvasContext extends Context
 
     public get context(): CanvasRenderingContext2D { return this._context; }
 
-    public createTexture(image: Image): Texture
+    public createTexture(image: Image): CanvasTexture
     {
-        return null;
+        return new CanvasTexture(image);
     }
 
-    public createShader(type: ShaderType, source: string): Shader
+    public createShader(type: ShaderType, source: string): CanvasShader
     {
-        return null;
+        return new CanvasShader(type, source);
     }
 
-    public createShaderProgram(vertexShader: Shader, fragmentShader: Shader): ShaderProgram
+    public createShaderProgram(vertexShader: CanvasShader, fragmentShader: CanvasShader): CanvasShaderProgram
     {
-        return null;
+        return new CanvasShaderProgram(vertexShader, fragmentShader);
     }
 
     public clear(color: Color): void

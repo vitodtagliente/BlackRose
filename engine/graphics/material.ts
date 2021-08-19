@@ -1,3 +1,5 @@
+import { ShaderProgram } from ".";
+
 export enum MaterialPropertyType
 {
     Color,
@@ -34,5 +36,11 @@ export class MaterialProperty
 
 export default class Material
 {
+    private _program: ShaderProgram;
     private _properties: Map<string, MaterialProperty>;
+
+    public constructor()
+    {
+        
+    }
 }

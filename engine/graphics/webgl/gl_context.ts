@@ -55,7 +55,7 @@ export default class GLContext extends Context
 
     public get context(): WebGL2RenderingContext { return this._context; }
 
-    public createTexture(image: Image): Texture
+    public createTexture(image: Image): GLTexture
     {
         return new GLTexture(this._context, image);
     }
