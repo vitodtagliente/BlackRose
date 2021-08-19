@@ -1,3 +1,4 @@
+import { VertexBufferElement, VertexBufferElementType, VertexBufferLayout } from "./vertex_buffer";
 import VertexData from "./vertex_data";
 
 export default class Geometry
@@ -26,5 +27,11 @@ export default class Geometry
             data.push(vertex.uv.v);
         }
         return data;
+    }
+
+    public layout(layout: VertexBufferLayout): void
+    {
+        layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3, true));
+        layout.push(new VertexBufferElement("texcoord", VertexBufferElementType.Float, 2, true));
     }
 }

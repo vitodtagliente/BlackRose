@@ -61,8 +61,7 @@ export default class GLContext extends Context
             const quad: Geometries.Quad = new Geometries.Quad;
 
             this._spriteRenderData.vb = new GLVertexBuffer(this._context);
-            this._spriteRenderData.vb.layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3, true));
-            this._spriteRenderData.vb.layout.push(new VertexBufferElement("texcoord", VertexBufferElementType.Float, 2, true));
+            quad.layout(this._spriteRenderData.vb.layout);
             this._spriteRenderData.vb.update(quad.data);
 
             this._spriteRenderData.ib = new GLIndexBuffer(this._context);
