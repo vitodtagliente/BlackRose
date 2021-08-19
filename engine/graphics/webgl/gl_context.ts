@@ -146,7 +146,7 @@ export default class GLContext extends Context
         texture.bind(0);
         this._subSpriteProgram.setInt("u_texture", 0);
         this._subSpriteProgram.setMat4("u_matrix", transform.matrix());
-        // this._subSpriteProgram.setVec4("u_crop", new Vector4(rect.x, rect.y, rect.width, rect.height));
+        this._subSpriteProgram.setVec4("u_crop", new Vector4(rect.x, rect.y, rect.width, rect.height));
 
         // draw
         var primitiveType = this._context.TRIANGLES;

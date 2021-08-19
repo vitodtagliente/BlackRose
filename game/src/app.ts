@@ -38,7 +38,7 @@ class RoseComponent extends Component
     public update(deltaTime: number): void
     {
         //this.app.context.drawSprite(roseTexture, this.transform);
-        this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 0.5, 0.5));
+        this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 1, 1));
     }
 }
 

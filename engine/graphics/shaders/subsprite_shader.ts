@@ -24,12 +24,12 @@ in vec2 v_texcoord;
  
 // The texture.
 uniform sampler2D u_texture;
-uniform vec2 u_crop;
+uniform vec4 u_crop;
  
 out vec4 outColor;
  
 void main() {
-   outColor = texture(u_texture, v_texcoord + u_crop);
+   outColor = texture(u_texture, clamp(v_texcoord * u_crop.zw + u_crop.xy, vec2(0, 0), vec2(1, 1)));
 }
 `;
 
