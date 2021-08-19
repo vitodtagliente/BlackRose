@@ -1,4 +1,5 @@
 import { ShaderProgram } from ".";
+import { Matrix4 } from "../math";
 
 export enum MaterialPropertyType
 {
@@ -39,8 +40,47 @@ export default class Material
     private _program: ShaderProgram;
     private _properties: Map<string, MaterialProperty>;
 
-    public constructor()
+    public constructor(program: ShaderProgram)
     {
-        
+        this._program = program;
+        this._properties = new Map<string, MaterialProperty>();
+    }
+
+    public bind(): void 
+    {
+        this._program.use();
+
+        for (const [name, property] of this._properties)
+        {
+            switch (property.type)
+            {
+                case MaterialPropertyType.Int:
+                    {
+                        this._program.setInt(name, property.value as number);
+                        break;
+                    }
+                case MaterialPropertyType.Mat4:
+                    {
+                        this._program.setMatrix(name, property.value as Matrix4);
+                        break;
+                    }
+                default: break;
+            }
+        }
+    }
+
+    public free(): void
+    {
+
+    }
+
+    public setInt(name: string, value: number): void
+    {
+        this._properties.set(name, new MaterialProperty(MaterialPropertyType.Int, value));
+    }
+
+    public setMatrix4(name: string, value: Matrix4): void 
+    {
+        this._properties.set(name, new MaterialProperty(MaterialPropertyType.Mat4, value));
     }
 }
