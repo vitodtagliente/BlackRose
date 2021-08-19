@@ -142,10 +142,10 @@ export default class GLContext extends Context
 
         this._spriteRenderData.bind();
 
-        this._spriteProgram.use();
+        this._subSpriteProgram.use();
         texture.bind(0);
-        this._spriteProgram.setInt("u_texture", 0);
-        this._spriteProgram.setMatrix("u_matrix", transform.matrix());
+        this._subSpriteProgram.setInt("u_texture", 0);
+        this._subSpriteProgram.setMatrix("u_matrix", transform.matrix());
 
         // draw
         var primitiveType = this._context.TRIANGLES;
