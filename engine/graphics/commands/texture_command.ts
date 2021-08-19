@@ -11,6 +11,7 @@ export default class TextureCommand extends Command
 
     public execute(context: Context): void
     {
+        /*
         if (this.origin != Vector2.zero
             || this.end != Vector2.one)
         {
@@ -20,6 +21,7 @@ export default class TextureCommand extends Command
         {
             context.drawTexture(this.position, this.texture);
         }
+        */
     }
 
 }

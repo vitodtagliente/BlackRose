@@ -86,12 +86,7 @@ export default class GLContext extends Context
 
     }
 
-    public drawTexture(position: Vector3, texture: Texture): void
-    {
-
-    }
-
-    public drawSubTexture(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void
+    public drawSprite(texture: Texture, transform: Transform): void
     {
 
     }

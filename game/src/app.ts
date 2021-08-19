@@ -13,25 +13,6 @@ app.run();
 
 Color.yellow.copy(app.renderer.clearColor);
 
-const a: Matrix3 = new Matrix3(
-    4, 3, 2,
-    5, 6, 3,
-    3, 5, 2
-);
-const b: Matrix3 = new Matrix3(
-    3, -4, 3,
-    1, -2, 2,
-    -7, 11, -9
-);
-console.log(a.mulMatrix(b).data);
-console.log(new Matrix2(
-    0, 1,
-    0, 0
-).mulMatrix(new Matrix2(
-    0, 0,
-    1, 0
-)).data);
-
 /*
 class CatComponent extends Component
 {

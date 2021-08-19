@@ -1,7 +1,7 @@
 import { Color, ShaderType, Texture } from "..";
 import { Canvas } from "../../application";
 import { Image } from "../../asset";
-import { Vector2, Vector3 } from "../../math";
+import { Transform, Vector2, Vector3 } from "../../math";
 import API from "../api";
 import Context from "../context";
 import CanvasShader from "./canvas_shader";
@@ -54,12 +54,12 @@ export default class CanvasContext extends Context
         this._context.fill();
     }
 
-    public drawTexture(position: Vector3, texture: Texture): void
+    public drawSprite(texture: Texture, transform: Transform): void
     {
-        this._context.drawImage(texture.image.data, position.x, position.y);
+        this._context.drawImage(texture.image.data, transform.position.x, transform.position.y);
     }
 
-    public drawSubTexture(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void
+    public drawSubSprite(position: Vector3, texture: Texture, origin: Vector2, end: Vector2): void
     {
         this._context.drawImage(
             texture.image.data,
