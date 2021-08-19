@@ -31,8 +31,6 @@ export default class GLContext extends Context
 {
     private _context: WebGL2RenderingContext;
     private _spriteProgram: GLShaderProgram;
-    private _cat: Image;
-    private _texture: Texture;
 
     private _spriteRenderData: RenderData;
 
@@ -67,12 +65,6 @@ export default class GLContext extends Context
             this._spriteRenderData.ib = new GLIndexBuffer(this._context);
             this._spriteRenderData.ib.update(quad.indices);
         }
-
-        this._cat = Image.load("assets/cat.png", () =>
-        {
-            console.log("cat loaded")
-            this._texture = this.createTexture(this._cat);
-        });
     }
 
     public get context(): WebGL2RenderingContext { return this._context; }
@@ -139,6 +131,6 @@ export default class GLContext extends Context
 
     public test(): void 
     {
-        this.drawSprite(this._texture, new Transform);
+        
     }
 }
