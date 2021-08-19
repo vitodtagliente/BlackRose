@@ -1,6 +1,7 @@
-import { Matrix4 } from "../../math";
+import { Matrix4, Vector2 } from "../../math";
 import GLShader from "./gl_shader";
 import ShaderProgram from "../shader_program";
+import { TextureCoords } from "..";
 
 export default class GLShaderProgram extends ShaderProgram
 {
@@ -46,6 +47,16 @@ export default class GLShaderProgram extends ShaderProgram
     public setInt(name: string, value: number): void 
     {
         this._context.uniform1i(this.getUniformLocation(name), value);
+    }
+
+    public setVec2(name: string, value: Vector2): void 
+    {
+        this._context.uniform2fv(this.getUniformLocation(name), value.data);
+    }
+
+    public setTextCoords(name: string, value: TextureCoords): void 
+    {
+        this._context.uniform2fv(this.getUniformLocation(name), value.data);
     }
 
     public setMatrix(name: string, value: Matrix4): void
