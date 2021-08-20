@@ -30,6 +30,7 @@ class RenderData
 class SpriteBatchRenderData extends RenderData
 {
     public transformBuffer: GLVertexBuffer;
+    public cropBuffer: GLVertexBuffer;
     public readonly quad: Geometries.Quad = new Geometries.Quad;
 }
 
@@ -93,19 +94,22 @@ export default class GLContext extends Context
             this._spriteBatchRenderData.vao = new GLVertexArrayObject(this._context);
             this._spriteBatchRenderData.vao.bind();
 
-            const quad: Geometries.Quad = this._spriteBatchRenderData.quad;
-
             this._spriteBatchRenderData.vb = new GLVertexBuffer(this._context, VertexBufferUsageMode.Dynamic);
             this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3));
             this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("texcoords", VertexBufferElementType.Float, 2));
             this._spriteBatchRenderData.vb.bind();
+
+            this._spriteBatchRenderData.cropBuffer = new GLVertexBuffer(this._context, VertexBufferUsageMode.Dynamic);
+            this._spriteBatchRenderData.cropBuffer.layout.push(new VertexBufferElement("crop", VertexBufferElementType.Float, 4, true, true));
+            this._spriteBatchRenderData.cropBuffer.startingElementIndex = 2;
+            this._spriteBatchRenderData.cropBuffer.bind();
 
             this._spriteBatchRenderData.transformBuffer = new GLVertexBuffer(this._context, VertexBufferUsageMode.Dynamic);
             this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
-            this._spriteBatchRenderData.transformBuffer.startingElementIndex = 2;
+            this._spriteBatchRenderData.transformBuffer.startingElementIndex = 3;
             this._spriteBatchRenderData.transformBuffer.bind();
 
             this._spriteBatchRenderData.ib = new GLIndexBuffer(this._context, IndexBufferUsageMode.Dynamic);
@@ -206,6 +210,7 @@ export default class GLContext extends Context
         // fill sprites geometries and data
         {
             let positions: Array<number> = [];
+            let crops: Array<number> = [];
             let transforms: Array<number> = [];
             let indices: Array<number> = [];
             for (let i: number = 0; i < data.length; ++i)
@@ -213,6 +218,7 @@ export default class GLContext extends Context
                 const [transform, rect] = data[i];
 
                 positions.push(...quad.data);
+                crops.push(...rect.data);
                 transforms.push(...transform.matrix().data);
 
                 for (let vertexIndex of quad.indices)
@@ -222,6 +228,7 @@ export default class GLContext extends Context
             }
 
             this._spriteBatchRenderData.vb.update(positions);
+            this._spriteBatchRenderData.cropBuffer.update(crops);
             this._spriteBatchRenderData.transformBuffer.update(transforms);
             this._spriteBatchRenderData.ib.update(indices);
         }

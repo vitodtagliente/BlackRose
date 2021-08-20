@@ -45,9 +45,9 @@ class RoseComponent extends Component
         const t3: Transform = new Transform(); t3.position.y = .5;
 
         this.app.context.drawSprites(roseTexture, [
-            [t1, new TextureRect()],
+            [t1, new TextureRect(0, 0, 0.5, 0.5)],
             [t2, new TextureRect()],
-            [t3, new TextureRect()],
+            [t3, new TextureRect(.5, .5, 1, 1)],
         ]);
         
     }
