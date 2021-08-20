@@ -1,3 +1,4 @@
+import { off } from "process";
 import VertexBuffer, { VertexBufferElementType, VertexBufferUsageMode } from "../vertex_buffer";
 
 export default class GLVertexBuffer extends VertexBuffer

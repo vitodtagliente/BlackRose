@@ -40,8 +40,14 @@ class RoseComponent extends Component
         // this.app.context.drawSprite(roseTexture, this.transform);
         // this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 1, 1));
         
+        const t1: Transform = new Transform(); t1.position.x = .5;
+        const t2: Transform = new Transform(); t2.position.x = -.5;
+        const t3: Transform = new Transform(); t3.position.y = .5;
+
         this.app.context.drawSprites(roseTexture, [
-            [this.transform, new TextureRect()]
+            [t1, new TextureRect()],
+            [t2, new TextureRect()],
+            [t3, new TextureRect()],
         ]);
         
     }
