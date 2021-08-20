@@ -22,7 +22,7 @@ const roseImg: Image = Image.load("assets/rose.png", () =>
 
 class RoseComponent extends Component
 {
-    private _moveDirection: Vector3;
+    private _sprites: Array<[Transform, TextureRect]> = [];
 
     public constructor(app: Application)
     {
@@ -33,23 +33,33 @@ class RoseComponent extends Component
     {
         //this.transform.position.set(random(-.8, .8), random(-.8, .8), 0);
         //this.transform.scale.set(random(.2, .5), random(.2, .5), 1);
+
+        const randomTranform = () =>
+        {
+            let t: Transform = new Transform;
+            t.position.set(random(-1, 1), random(-1, 1), 0);
+            t.rotation.z = random(0, 360);
+            t.scale.set(random(0.3, 0.5), random(0.3, 0.5), 0);
+            return t;
+        };
+
+        const randomTextRect = () => 
+        {
+            return new TextureRect(random(0, 0.5), random(0, 0.5), random(0, 1), random(0, 1));
+        };
+
+        for (let i = 0; i < 40; ++i)
+        {
+            this._sprites.push([randomTranform(), randomTextRect()]);
+        }
     }
 
     public update(deltaTime: number): void
     {
         // this.app.context.drawSprite(roseTexture, this.transform);
         // this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 1, 1));
-        
-        const t1: Transform = new Transform(); t1.position.x = .5;
-        const t2: Transform = new Transform(); t2.position.x = -.5;
-        const t3: Transform = new Transform(); t3.position.y = .5;
 
-        this.app.context.drawSprites(roseTexture, [
-            [t1, new TextureRect(0, 0, 0.5, 0.5)],
-            [t2, new TextureRect()],
-            [t3, new TextureRect(.5, .5, 1, 1)],
-        ]);
-        
+        this.app.context.drawSprites(roseTexture, this._sprites);
     }
 }
 
