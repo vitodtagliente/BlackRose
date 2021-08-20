@@ -1,5 +1,5 @@
-import { off } from "process";
-import VertexBuffer, { VertexBufferElementType, VertexBufferUsageMode } from "../vertex_buffer";
+import { BufferUsageMode } from "../buffer";
+import VertexBuffer, { VertexBufferElementType } from "../vertex_buffer";
 
 export default class GLVertexBuffer extends VertexBuffer
 {
@@ -8,22 +8,24 @@ export default class GLVertexBuffer extends VertexBuffer
     private _drawMode: GLenum;
     public startingElementIndex: number = 0;
 
-    public constructor(context: WebGL2RenderingContext, usageMode: VertexBufferUsageMode = VertexBufferUsageMode.Static)
+    public constructor(context: WebGL2RenderingContext, size: number, mode: BufferUsageMode)
     {
-        super(usageMode);
+        super(size, mode);
         this._context = context;
 
-        switch (this.usageMode)
+        switch (this.mode)
         {
-            case VertexBufferUsageMode.Dynamic: this._drawMode = this._context.DYNAMIC_DRAW; break;
-            case VertexBufferUsageMode.Stream: this._drawMode = this._context.STREAM_DRAW; break;
-            case VertexBufferUsageMode.Static:
+            case BufferUsageMode.Dynamic: this._drawMode = this._context.DYNAMIC_DRAW; break;
+            case BufferUsageMode.Stream: this._drawMode = this._context.STREAM_DRAW; break;
+            case BufferUsageMode.Static:
             default:
                 this._drawMode = this._context.STATIC_DRAW;
                 break;
         }
 
         this._id = context.createBuffer();
+        this.bind();
+        this._context.bufferData(this._context.ARRAY_BUFFER, size * Float32Array.BYTES_PER_ELEMENT, this._drawMode);
     }
 
     public bind(): void 
@@ -31,15 +33,25 @@ export default class GLVertexBuffer extends VertexBuffer
         this._context.bindBuffer(this._context.ARRAY_BUFFER, this._id);
     }
 
-    public update(data: Array<number>): void
+    public fillData(data: Array<number>): void 
     {
-        this.bind();
-        this._context.bufferData(this._context.ARRAY_BUFFER, new Float32Array(data), this._drawMode);
-        this._length = data.length;
-        this.updateLayout();
+        this._context.bufferSubData(
+            this._context.ARRAY_BUFFER,
+            0,
+            new Float32Array(data)
+        );       
     }
 
-    public updateLayout(): void 
+    public fillSubData(data: Array<number>, offset: number = 0): void 
+    {
+        this._context.bufferSubData(
+            this._context.ARRAY_BUFFER,
+            offset,
+            new Float32Array(data)
+        );
+    }
+
+    public activateLayout(): void 
     {
         let elementIndex: number = this.startingElementIndex;
         let offset: number = 0;

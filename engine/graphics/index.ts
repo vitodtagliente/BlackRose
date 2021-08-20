@@ -1,4 +1,5 @@
 import API from "./api"
+import Buffer, { BufferUsageMode } from "./buffer"
 import ContextFactory from "./context_factory"
 import Context from "./context"
 import Color from "./color"
@@ -10,16 +11,18 @@ import TextureCoords from "./texture_coords"
 import TextureRect from "./texture_rect"
 import Shader, { ShaderType } from "./shader"
 import ShaderProgram from "./shader_program"
-import IndexBuffer, { IndexBufferUsageMode } from "./index_buffer"
+import IndexBuffer from "./index_buffer"
+import VertexBuffer, { VertexBufferElement, VertexBufferElementType, VertexBufferLayout } from "./vertex_buffer"
 
 export
 {
     API,
+    Buffer,
+    BufferUsageMode,
     Color,
     Context,
     ContextFactory,
     IndexBuffer,
-    IndexBufferUsageMode,
     Material,
     Materials,
     Renderer,
@@ -28,5 +31,9 @@ export
     ShaderProgram,
     Texture,
     TextureCoords,
-    TextureRect
+    TextureRect,
+    VertexBuffer,
+    VertexBufferElement,
+    VertexBufferElementType,
+    VertexBufferLayout
 }

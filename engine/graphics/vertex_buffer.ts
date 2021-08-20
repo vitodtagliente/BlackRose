@@ -1,3 +1,5 @@
+import Buffer, {BufferUsageMode} from "./buffer";
+
 export enum VertexBufferElementType
 {
     Float,
@@ -66,31 +68,13 @@ export class VertexBufferLayout
     public get stride(): number { return this._stride; }
 }
 
-export enum VertexBufferUsageMode
+export default abstract class VertexBuffer extends Buffer
 {
-    Static,
-    Dynamic,
-    Stream
-}
-
-export default abstract class VertexBuffer
-{
-    private _usageMode: VertexBufferUsageMode;
-    protected _length: number;
     public layout: VertexBufferLayout;
 
-    public constructor(usageMode: VertexBufferUsageMode = VertexBufferUsageMode.Static)
+    public constructor(size: number, mode: BufferUsageMode)
     {
-        this._usageMode = usageMode;
-        this._length = 0;
+        super(size, mode);
         this.layout = new VertexBufferLayout();
     }
-
-    public abstract bind(): void;
-    public abstract update(data: Array<number>): void;
-    public abstract updateLayout(): void;
-    public abstract free(): void;
-
-    public get usageMode(): VertexBufferUsageMode { return this._usageMode; }
-    public get length(): number { return this._length; }
 }

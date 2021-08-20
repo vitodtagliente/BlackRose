@@ -1,4 +1,4 @@
-import { IndexBufferUsageMode } from "..";
+import { BufferUsageMode } from "../buffer";
 import IndexBuffer from "../index_buffer";
 
 export default class GLIndexBuffer extends IndexBuffer
@@ -7,22 +7,24 @@ export default class GLIndexBuffer extends IndexBuffer
     private _context: WebGL2RenderingContext;
     private _drawMode: GLenum;
 
-    public constructor(context: WebGL2RenderingContext, usageMode: IndexBufferUsageMode)
+    public constructor(context: WebGL2RenderingContext, size: number, mode: BufferUsageMode)
     {
-        super(usageMode);
+        super(size, mode);
         this._context = context;
 
-        switch (this.usageMode)
+        switch (this.mode)
         {
-            case IndexBufferUsageMode.Dynamic: this._drawMode = this._context.DYNAMIC_DRAW; break;
-            case IndexBufferUsageMode.Stream: this._drawMode = this._context.STREAM_DRAW; break;
-            case IndexBufferUsageMode.Static:
+            case BufferUsageMode.Dynamic: this._drawMode = this._context.DYNAMIC_DRAW; break;
+            case BufferUsageMode.Stream: this._drawMode = this._context.STREAM_DRAW; break;
+            case BufferUsageMode.Static:
             default:
                 this._drawMode = this._context.STATIC_DRAW;
                 break;
         }
 
         this._id = context.createBuffer();
+        this.bind();
+        this._context.bufferData(this._context.ELEMENT_ARRAY_BUFFER, size * Uint16Array.BYTES_PER_ELEMENT, this._drawMode);
     }
 
     public bind(): void 
@@ -30,15 +32,22 @@ export default class GLIndexBuffer extends IndexBuffer
         this._context.bindBuffer(this._context.ELEMENT_ARRAY_BUFFER, this._id);
     }
 
-    public update(data: Array<number>): void 
+    public fillData(data: Array<number>): void 
     {
-        this.bind();
-        this._context.bufferData(
+        this._context.bufferSubData(
             this._context.ELEMENT_ARRAY_BUFFER,
-            new Uint16Array(data),
-            this._drawMode
+            0,
+            new Uint16Array(data)
         );
-        this._length = data.length;
+    }
+
+    public fillSubData(data: Array<number>, offset: number = 0): void 
+    {
+        this._context.bufferSubData(
+            this._context.ELEMENT_ARRAY_BUFFER,
+            offset,
+            new Uint16Array(data)
+        );
     }
 
     public free(): void 

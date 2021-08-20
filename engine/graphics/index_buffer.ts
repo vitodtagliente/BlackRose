@@ -1,25 +1,9 @@
-export enum IndexBufferUsageMode
-{
-    Static,
-    Dynamic,
-    Stream
-}
+import Buffer, { BufferUsageMode } from "./buffer";
 
-export default abstract class IndexBuffer
+export default abstract class IndexBuffer extends Buffer
 {
-    private _usageMode: IndexBufferUsageMode;
-    protected _length: number;
-
-    public constructor(usageMode: IndexBufferUsageMode = IndexBufferUsageMode.Static)
+    public constructor(size: number, mode: BufferUsageMode)
     {
-        this._length = 0;
-        this._usageMode = usageMode;
+        super(size, mode);
     }
-
-    public get length(): number { return this._length; }
-    public get usageMode(): IndexBufferUsageMode { return this._usageMode; }
-
-    public abstract bind(): void;
-    public abstract update(data: Array<number>): void;
-    public abstract free(): void;
 }

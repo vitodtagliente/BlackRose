@@ -1,10 +1,10 @@
-import { Color, IndexBuffer, IndexBufferUsageMode, ShaderType, Texture, TextureRect } from "..";
+import { BufferUsageMode, Color, IndexBuffer, ShaderType, Texture, TextureRect } from "..";
 import { Canvas } from "../../application";
 import { Image } from "../../asset";
-import { Transform, Vector2, Vector3 } from "../../math";
+import { Transform, Vector3 } from "../../math";
 import API from "../api";
 import Context from "../context";
-import VertexBuffer, { VertexBufferUsageMode } from "../vertex_buffer";
+import VertexBuffer from "../vertex_buffer";
 import CanvasShader from "./canvas_shader";
 import CanvasShaderProgram from "./canvas_shader_program";
 import CanvasTexture from "./canvas_texture";
@@ -21,12 +21,12 @@ export default class CanvasContext extends Context
 
     public get context(): CanvasRenderingContext2D { return this._context; }
 
-    public createIndexBuffer(usageMode: IndexBufferUsageMode): IndexBuffer
+    public createIndexBuffer(size: number, mode: BufferUsageMode): IndexBuffer
     {
         return null;
     }
 
-    public createVertexBuffer(usageMode: VertexBufferUsageMode): VertexBuffer
+    public createVertexBuffer(size: number, mode: BufferUsageMode): VertexBuffer
     {
         return null;
     }

@@ -1,4 +1,4 @@
-import { Color, IndexBufferUsageMode, ShaderType, Texture, TextureRect } from "..";
+import { BufferUsageMode, Color, ShaderType, Texture, TextureRect } from "..";
 import { Canvas } from "../../application";
 import { Matrix4, Transform, Vector2, Vector3, Vector4 } from "../../math";
 import API from "../api";
@@ -13,7 +13,7 @@ import GLShaderProgram from "./gl_shader_program";
 import GLVertexArrayObject from "./gl_vertext_array_object";
 import GLVertexBuffer from "./gl_vertex_buffer";
 import GLIndexBuffer from "./gl_index_buffer";
-import { VertexBufferElement, VertexBufferElementType, VertexBufferUsageMode } from "../vertex_buffer";
+import { VertexBufferElement, VertexBufferElementType } from "../vertex_buffer";
 
 class RenderData
 {
@@ -37,6 +37,7 @@ class SpriteBatchRenderData extends RenderData
 export default class GLContext extends Context
 {
     private _context: WebGL2RenderingContext;
+    private _positionProgram: GLShaderProgram;
     private _spriteProgram: GLShaderProgram;
     private _subSpriteProgram: GLShaderProgram;
     private _spriteBatchProgram: GLShaderProgram;
@@ -53,6 +54,12 @@ export default class GLContext extends Context
         // enable the alpha blending
         this._context.enable(this._context.BLEND);
         this._context.blendFunc(this._context.SRC_ALPHA, this._context.ONE_MINUS_SRC_ALPHA);
+
+        {
+            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.PositionShader.VertexSource);
+            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.PositionShader.FragmentSource);
+            this._positionProgram = this.createShaderProgram(vs, fs);
+        }
 
         {
             const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.SpriteShader.VertexSource);
@@ -80,12 +87,13 @@ export default class GLContext extends Context
 
             const quad: Geometries.Quad = new Geometries.Quad;
 
-            this._spriteRenderData.vb = new GLVertexBuffer(this._context);
+            this._spriteRenderData.vb = new GLVertexBuffer(this._context, quad.data.length, BufferUsageMode.Static);
             quad.layout(this._spriteRenderData.vb.layout);
-            this._spriteRenderData.vb.update(quad.data);
+            this._spriteRenderData.vb.fillData(quad.data);
+            this._spriteRenderData.vb.activateLayout();
 
-            this._spriteRenderData.ib = new GLIndexBuffer(this._context, IndexBufferUsageMode.Static);
-            this._spriteRenderData.ib.update(quad.indices);
+            this._spriteRenderData.ib = new GLIndexBuffer(this._context, quad.indices.length, BufferUsageMode.Static);
+            this._spriteRenderData.ib.fillData(quad.indices);
         }
 
         // sprite batch render data
@@ -94,39 +102,35 @@ export default class GLContext extends Context
             this._spriteBatchRenderData.vao = new GLVertexArrayObject(this._context);
             this._spriteBatchRenderData.vao.bind();
 
-            this._spriteBatchRenderData.vb = new GLVertexBuffer(this._context, VertexBufferUsageMode.Dynamic);
+            this._spriteBatchRenderData.vb = this.createVertexBuffer(2000 * 5, BufferUsageMode.Dynamic);
             this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3));
             this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("texcoords", VertexBufferElementType.Float, 2));
-            this._spriteBatchRenderData.vb.bind();
 
-            this._spriteBatchRenderData.cropBuffer = new GLVertexBuffer(this._context, VertexBufferUsageMode.Dynamic);
+            this._spriteBatchRenderData.cropBuffer = this.createVertexBuffer(2000 * 2, BufferUsageMode.Dynamic);
             this._spriteBatchRenderData.cropBuffer.layout.push(new VertexBufferElement("crop", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.cropBuffer.startingElementIndex = 2;
-            this._spriteBatchRenderData.cropBuffer.bind();
 
-            this._spriteBatchRenderData.transformBuffer = new GLVertexBuffer(this._context, VertexBufferUsageMode.Dynamic);
+            this._spriteBatchRenderData.transformBuffer = this.createVertexBuffer(2000 * 16, BufferUsageMode.Dynamic);
             this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.transformBuffer.startingElementIndex = 3;
-            this._spriteBatchRenderData.transformBuffer.bind();
 
-            this._spriteBatchRenderData.ib = new GLIndexBuffer(this._context, IndexBufferUsageMode.Dynamic);
-            this._spriteRenderData.ib.bind();
+            this._spriteBatchRenderData.ib = this.createIndexBuffer(2000 * 6, BufferUsageMode.Dynamic);
         }
     }
 
     public get context(): WebGL2RenderingContext { return this._context; }
 
-    public createIndexBuffer(usageMode: IndexBufferUsageMode): GLIndexBuffer
+    public createIndexBuffer(size: number, mode: BufferUsageMode): GLIndexBuffer
     {
-        return new GLIndexBuffer(this._context, usageMode);
+        return new GLIndexBuffer(this._context, size, mode);
     }
 
-    public createVertexBuffer(usageMode: VertexBufferUsageMode): GLVertexBuffer
+    public createVertexBuffer(size: number, mode: BufferUsageMode): GLVertexBuffer
     {
-        return new GLVertexBuffer(this._context, usageMode);
+        return new GLVertexBuffer(this._context, size, mode);
     }
 
     public createTexture(image: Image): GLTexture
@@ -174,7 +178,7 @@ export default class GLContext extends Context
         // draw
         var primitiveType = this._context.TRIANGLES;
         var offset = 0;
-        var count = this._spriteRenderData.ib.length;
+        var count = 6;
         var indexType = this._context.UNSIGNED_SHORT;
         this._context.drawElements(primitiveType, count, indexType, offset);
     }
@@ -194,7 +198,7 @@ export default class GLContext extends Context
         // draw
         var primitiveType = this._context.TRIANGLES;
         var offset = 0;
-        var count = this._spriteRenderData.ib.length;
+        var count = 6;
         var indexType = this._context.UNSIGNED_SHORT;
         this._context.drawElements(primitiveType, count, indexType, offset);
     }
@@ -227,10 +231,10 @@ export default class GLContext extends Context
                 }
             }
 
-            this._spriteBatchRenderData.vb.update(positions);
-            this._spriteBatchRenderData.cropBuffer.update(crops);
-            this._spriteBatchRenderData.transformBuffer.update(transforms);
-            this._spriteBatchRenderData.ib.update(indices);
+            this._spriteBatchRenderData.vb.fillData(positions);
+            this._spriteBatchRenderData.cropBuffer.fillData(crops);
+            this._spriteBatchRenderData.transformBuffer.fillData(transforms);
+            this._spriteBatchRenderData.ib.fillData(indices);
         }
 
         this._spriteBatchProgram.use();
@@ -240,7 +244,7 @@ export default class GLContext extends Context
         // draw
         const primitiveType = this._context.TRIANGLES;
         const offset: number = 0;
-        const count: number = quad.indices.length;
+        const count: number = 6;
         const numInstances: number = data.length;
         var indexType = this._context.UNSIGNED_SHORT;
         this._context.drawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
@@ -248,6 +252,27 @@ export default class GLContext extends Context
 
     public test(): void 
     {
+        return;
 
+        const vao: GLVertexArrayObject = new GLVertexArrayObject(this._context);
+        vao.bind();
+
+        const quad: Geometries.Quad = new Geometries.Quad;
+
+        const vb: GLVertexBuffer = this.createVertexBuffer(quad.data.length, BufferUsageMode.Dynamic);
+        vb.fillData(quad.data);
+        quad.layout(vb.layout);
+        vb.activateLayout();
+
+        const ib: GLIndexBuffer = this.createIndexBuffer(quad.indices.length, BufferUsageMode.Dynamic);
+        ib.fillData(quad.indices);
+
+        this._positionProgram.use();
+
+        var primitiveType = this._context.TRIANGLES;
+        var offset = 0;
+        var count = quad.indices.length;
+        var indexType = this._context.UNSIGNED_SHORT;
+        this._context.drawElements(primitiveType, count, indexType, offset);
     }
 }
