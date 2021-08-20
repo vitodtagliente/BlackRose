@@ -1,4 +1,4 @@
-import { Color, IndexBuffer, Shader, ShaderProgram, ShaderType, Texture, TextureRect } from ".";
+import { Color, IndexBuffer, IndexBufferUsageMode, Shader, ShaderProgram, ShaderType, Texture, TextureRect } from ".";
 import { Canvas } from "../application";
 import { Image } from "../asset";
 import { Transform, Vector3 } from "../math";
@@ -19,7 +19,7 @@ export default abstract class Context
     public get api(): API { return this._api; }
     public get canvas(): Canvas { return this._canvas; }
 
-    public abstract createIndexBuffer(): IndexBuffer;
+    public abstract createIndexBuffer(usageMode: IndexBufferUsageMode): IndexBuffer;
     public abstract createVertexBuffer(usageMode: VertexBufferUsageMode): VertexBuffer;
     public abstract createTexture(image: Image): Texture;
     public abstract createShader(type: ShaderType, source: string): Shader;

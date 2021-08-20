@@ -15,19 +15,23 @@ export class VertexBufferElement
     private _size: number;
     // normalized
     private _normalized: boolean
+    // per instance?
+    private _perInstance: boolean;
 
-    public constructor(name: string, type: VertexBufferElementType, size: number, normalized: boolean = true)
+    public constructor(name: string, type: VertexBufferElementType, size: number, normalized: boolean = true, perInstance: boolean = false)
     {
         this._name = name;
         this._type = type;
         this._size = size;
         this._normalized = normalized;
+        this._perInstance = perInstance;
     }
 
     public get name(): string { return this._name; }
     public get type(): VertexBufferElementType { return this._type; }
     public get size(): number { return this._size; }
     public get normalized(): boolean { return this._normalized; }
+    public get perInstance(): boolean { return this._perInstance; }
 }
 
 export class VertexBufferLayout

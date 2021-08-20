@@ -1,14 +1,26 @@
+import { IndexBufferUsageMode } from "..";
 import IndexBuffer from "../index_buffer";
 
 export default class GLIndexBuffer extends IndexBuffer
 {
     private _id: WebGLBuffer;
     private _context: WebGL2RenderingContext;
+    private _drawMode: GLenum;
 
-    public constructor(context: WebGL2RenderingContext)
+    public constructor(context: WebGL2RenderingContext, usageMode: IndexBufferUsageMode)
     {
-        super();
+        super(usageMode);
         this._context = context;
+
+        switch (this.usageMode)
+        {
+            case IndexBufferUsageMode.Dynamic: this._drawMode = this._context.DYNAMIC_DRAW; break;
+            case IndexBufferUsageMode.Stream: this._drawMode = this._context.STREAM_DRAW; break;
+            case IndexBufferUsageMode.Static:
+            default:
+                this._drawMode = this._context.STATIC_DRAW;
+                break;
+        }
 
         this._id = context.createBuffer();
     }
@@ -24,7 +36,7 @@ export default class GLIndexBuffer extends IndexBuffer
         this._context.bufferData(
             this._context.ELEMENT_ARRAY_BUFFER,
             new Uint16Array(data),
-            this._context.STATIC_DRAW
+            this._drawMode
         );
         this._length = data.length;
     }

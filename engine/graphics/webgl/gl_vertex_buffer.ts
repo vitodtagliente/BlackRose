@@ -5,6 +5,7 @@ export default class GLVertexBuffer extends VertexBuffer
     private _id: WebGLBuffer;
     private _context: WebGL2RenderingContext;
     private _drawMode: GLenum;
+    public startingElementIndex: number = 0;
 
     public constructor(context: WebGL2RenderingContext, usageMode: VertexBufferUsageMode = VertexBufferUsageMode.Static)
     {
@@ -39,7 +40,7 @@ export default class GLVertexBuffer extends VertexBuffer
 
     public updateLayout(): void 
     {
-        let elementIndex: number = 0;
+        let elementIndex: number = this.startingElementIndex;
         let offset: number = 0;
 
         for (const element of this.layout.elements)
@@ -67,6 +68,10 @@ export default class GLVertexBuffer extends VertexBuffer
                 // start at the beginning of the buffer
                 offset * 4
             );
+            if (element.perInstance)
+            {
+                this._context.vertexAttribDivisor(elementIndex, 1);
+            }
             offset += element.size;
             ++elementIndex;
         }

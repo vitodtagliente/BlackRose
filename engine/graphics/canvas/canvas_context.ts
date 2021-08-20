@@ -1,4 +1,4 @@
-import { Color, IndexBuffer, ShaderType, Texture, TextureRect } from "..";
+import { Color, IndexBuffer, IndexBufferUsageMode, ShaderType, Texture, TextureRect } from "..";
 import { Canvas } from "../../application";
 import { Image } from "../../asset";
 import { Transform, Vector2, Vector3 } from "../../math";
@@ -21,7 +21,7 @@ export default class CanvasContext extends Context
 
     public get context(): CanvasRenderingContext2D { return this._context; }
 
-    public createIndexBuffer(): IndexBuffer
+    public createIndexBuffer(usageMode: IndexBufferUsageMode): IndexBuffer
     {
         return null;
     }
