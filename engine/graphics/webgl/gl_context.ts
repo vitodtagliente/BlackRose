@@ -93,18 +93,20 @@ export default class GLContext extends Context
             this._spriteBatchRenderData.vao = new GLVertexArrayObject(this._context);
             this._spriteBatchRenderData.vao.bind();
 
+            const quad: Geometries.Quad = this._spriteBatchRenderData.quad;
+
             this._spriteBatchRenderData.vb = new GLVertexBuffer(this._context, VertexBufferUsageMode.Dynamic);
             this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3));
             this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("texcoords", VertexBufferElementType.Float, 2));
-            this._spriteBatchRenderData.vb.bind();
+            this._spriteBatchRenderData.vb.update(quad.data);
 
             this._spriteBatchRenderData.transformBuffer = new GLVertexBuffer(this._context, VertexBufferUsageMode.Dynamic);
             this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
             this._spriteBatchRenderData.transformBuffer.startingElementIndex = 2;
-            this._spriteBatchRenderData.transformBuffer.bind();
+            this._spriteBatchRenderData.transformBuffer.update(Matrix4.identity.data);
 
             this._spriteBatchRenderData.ib = new GLIndexBuffer(this._context, IndexBufferUsageMode.Dynamic);
-            this._spriteBatchRenderData.ib.bind();
+            this._spriteRenderData.ib.update(quad.indices);
         }
     }
 
@@ -198,9 +200,10 @@ export default class GLContext extends Context
 
         this._spriteBatchRenderData.bind();
 
+        /*
         // fill sprites geometries and data
-        let positions: Array<number> = [];
         {
+        let positions: Array<number> = [];
             let transforms: Array<number> = [];
             let indices: Array<number> = [];
             for (let i: number = 0; i < data.length; ++i)
@@ -214,12 +217,13 @@ export default class GLContext extends Context
                 {
                     indices.push(i + vertexIndex);
                 }
-            }
+            }            
 
             this._spriteBatchRenderData.vb.update(positions);
             this._spriteBatchRenderData.transformBuffer.update(transforms);
             this._spriteBatchRenderData.ib.update(indices);
         }
+        */
 
         this._spriteBatchProgram.use();
         texture.bind(0);
@@ -229,7 +233,7 @@ export default class GLContext extends Context
         const primitiveType = this._context.TRIANGLES;
         const offset: number = 0;
         const count: number = quad.indices.length;
-        const numInstances: number = data.length;
+        const numInstances: number = 1; // data.length;
         var indexType = this._context.UNSIGNED_SHORT;
         this._context.drawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
     }
