@@ -171,8 +171,6 @@ export default class GLContext extends Context
     {
         if (texture == null || data.length == 0) return;
 
-        const quad: Geometries.Quad = this._spriteBatchRenderData.quad;
-
         this._spriteBatchRenderData.bind();
 
         // fill sprites geometries and data
@@ -208,6 +206,6 @@ export default class GLContext extends Context
 
     public test(): void 
     {
-        
+
     }
 }
