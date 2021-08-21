@@ -71,11 +71,11 @@ export default class GLContext extends Context
                 quad.data.length, BufferUsageMode.Static,
                 quad.indices.length, BufferUsageMode.Static
             );
-           
+
             quad.layout(this._spriteRenderData.vertexBuffer.layout);
             this._spriteRenderData.vertexBuffer.fillData(quad.data);
             this._spriteRenderData.vertexBuffer.activateLayout();
-            
+
             this._spriteRenderData.indexBuffer.fillData(quad.indices);
         }
 
@@ -83,6 +83,8 @@ export default class GLContext extends Context
         {
             this._spriteBatchRenderData = new SpriteBatchRenderData(this, 1000);
         }
+
+        this.init_test();
     }
 
     public get context(): WebGL2RenderingContext { return this._context; }
@@ -177,28 +179,20 @@ export default class GLContext extends Context
 
         // fill sprites geometries and data
         {
-            let positions: Array<number> = [];
             let crops: Array<number> = [];
             let transforms: Array<number> = [];
-            let indices: Array<number> = [];
             for (let i: number = 0; i < data.length; ++i)
             {
                 const [transform, rect] = data[i];
 
-                positions.push(...quad.data);
                 crops.push(...rect.data);
                 transforms.push(...transform.matrix().data);
-
-                for (let vertexIndex of quad.indices)
-                {
-                    indices.push(i + vertexIndex);
-                }
             }
 
-            this._spriteBatchRenderData.vertexBuffer.fillData(positions);
+            this._spriteBatchRenderData.cropBuffer.bind();
             this._spriteBatchRenderData.cropBuffer.fillData(crops);
+            this._spriteBatchRenderData.transformBuffer.bind();
             this._spriteBatchRenderData.transformBuffer.fillData(transforms);
-            this._spriteBatchRenderData.indexBuffer.fillData(indices);
         }
 
         this._spriteBatchProgram.use();
@@ -214,29 +208,13 @@ export default class GLContext extends Context
         this._context.drawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
     }
 
+    private init_test(): void 
+    {
+
+    }
+
     public test(): void 
     {
-        return;
 
-        const vao: GLVertexArrayObject = new GLVertexArrayObject(this._context);
-        vao.bind();
-
-        const quad: Geometries.Quad = new Geometries.Quad;
-
-        const vb: GLVertexBuffer = this.createVertexBuffer(quad.data.length, BufferUsageMode.Dynamic);
-        vb.fillData(quad.data);
-        quad.layout(vb.layout);
-        vb.activateLayout();
-
-        const ib: GLIndexBuffer = this.createIndexBuffer(quad.indices.length, BufferUsageMode.Dynamic);
-        ib.fillData(quad.indices);
-
-        this._positionProgram.use();
-
-        var primitiveType = this._context.TRIANGLES;
-        var offset = 0;
-        var count = quad.indices.length;
-        var indexType = this._context.UNSIGNED_SHORT;
-        this._context.drawElements(primitiveType, count, indexType, offset);
     }
 }

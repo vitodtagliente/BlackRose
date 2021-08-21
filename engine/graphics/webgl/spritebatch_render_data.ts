@@ -18,16 +18,18 @@ export default class SpriteBatchRenderData extends RenderData
     {
         super(
             context,
-            size * 5, BufferUsageMode.Stream,
-            size * 6, BufferUsageMode.Stream
+            20, BufferUsageMode.Static,
+            6, BufferUsageMode.Static
         );
         this._size = size;
 
-        const instanced: boolean = true;
+        this.quad.layout(this.vertexBuffer.layout);
+        this.vertexBuffer.fillData(this.quad.data);
+        this.vertexBuffer.activateLayout();
 
-        this.vertexBuffer.layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3));
-        this.vertexBuffer.layout.push(new VertexBufferElement("texcoords", VertexBufferElementType.Float, 2));
-        this.vertexBuffer.activateLayout(0);
+        this.indexBuffer.fillData(this.quad.indices);
+
+        const instanced: boolean = true;
 
         this._cropBuffer = context.createVertexBuffer(size * 2, BufferUsageMode.Stream);
         this._cropBuffer.layout.push(new VertexBufferElement("crop", VertexBufferElementType.Float, 4, true, instanced));

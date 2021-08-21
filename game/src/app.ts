@@ -48,21 +48,20 @@ class RoseComponent extends Component
             return new TextureRect(random(0, 0.5), random(0, 0.5), random(0, 1), random(0, 1));
         };
 
-        for (let i = 0; i < 1; ++i)
+        for (let i = 0; i < 40; ++i)
         {
             this._sprites.push([
-                new Transform(), new TextureRect()
-                //randomTranform(), randomTextRect()
+                randomTranform(), new TextureRect()
             ]);
         }
     }
 
     public update(deltaTime: number): void
     {
-        this.app.context.drawSprite(roseTexture, this.transform);
+        // this.app.context.drawSprite(roseTexture, this.transform);
         // this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 0.5, 0.5));
 
-        // this.app.context.drawSprites(roseTexture, this._sprites);
+        this.app.context.drawSprites(roseTexture, this._sprites);
     }
 }
 
