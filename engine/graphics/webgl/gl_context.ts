@@ -14,25 +14,8 @@ import GLVertexArrayObject from "./gl_vertext_array_object";
 import GLVertexBuffer from "./gl_vertex_buffer";
 import GLIndexBuffer from "./gl_index_buffer";
 import { VertexBufferElement, VertexBufferElementType } from "../vertex_buffer";
-
-class RenderData
-{
-    public vao: GLVertexArrayObject;
-    public vb: GLVertexBuffer;
-    public ib: GLIndexBuffer;
-
-    public bind(): void 
-    {
-        if (this.vao != null) this.vao.bind();
-    }
-}
-
-class SpriteBatchRenderData extends RenderData
-{
-    public transformBuffer: GLVertexBuffer;
-    public cropBuffer: GLVertexBuffer;
-    public readonly quad: Geometries.Quad = new Geometries.Quad;
-}
+import RenderData from "./render_data";
+import SpriteBatchRenderData from "./spritebatch_render_data";
 
 export default class GLContext extends Context
 {
@@ -81,43 +64,24 @@ export default class GLContext extends Context
 
         // sprite render data
         {
-            this._spriteRenderData = new RenderData;
-            this._spriteRenderData.vao = new GLVertexArrayObject(this._context);
-            this._spriteRenderData.vao.bind();
-
             const quad: Geometries.Quad = new Geometries.Quad;
 
-            this._spriteRenderData.vb = new GLVertexBuffer(this._context, quad.data.length, BufferUsageMode.Static);
-            quad.layout(this._spriteRenderData.vb.layout);
-            this._spriteRenderData.vb.fillData(quad.data);
-            this._spriteRenderData.vb.activateLayout();
-
-            this._spriteRenderData.ib = new GLIndexBuffer(this._context, quad.indices.length, BufferUsageMode.Static);
-            this._spriteRenderData.ib.fillData(quad.indices);
+            this._spriteRenderData = new RenderData(
+                this,
+                quad.data.length, BufferUsageMode.Static,
+                quad.indices.length, BufferUsageMode.Static
+            );
+           
+            quad.layout(this._spriteRenderData.vertexBuffer.layout);
+            this._spriteRenderData.vertexBuffer.fillData(quad.data);
+            this._spriteRenderData.vertexBuffer.activateLayout();
+            
+            this._spriteRenderData.indexBuffer.fillData(quad.indices);
         }
 
         // sprite batch render data
         {
-            this._spriteBatchRenderData = new SpriteBatchRenderData;
-            this._spriteBatchRenderData.vao = new GLVertexArrayObject(this._context);
-            this._spriteBatchRenderData.vao.bind();
-
-            this._spriteBatchRenderData.vb = this.createVertexBuffer(2000 * 5, BufferUsageMode.Dynamic);
-            this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3));
-            this._spriteBatchRenderData.vb.layout.push(new VertexBufferElement("texcoords", VertexBufferElementType.Float, 2));
-
-            this._spriteBatchRenderData.cropBuffer = this.createVertexBuffer(2000 * 2, BufferUsageMode.Dynamic);
-            this._spriteBatchRenderData.cropBuffer.layout.push(new VertexBufferElement("crop", VertexBufferElementType.Float, 4, true, true));
-            this._spriteBatchRenderData.cropBuffer.startingElementIndex = 2;
-
-            this._spriteBatchRenderData.transformBuffer = this.createVertexBuffer(2000 * 16, BufferUsageMode.Dynamic);
-            this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
-            this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
-            this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
-            this._spriteBatchRenderData.transformBuffer.layout.push(new VertexBufferElement("transform", VertexBufferElementType.Float, 4, true, true));
-            this._spriteBatchRenderData.transformBuffer.startingElementIndex = 3;
-
-            this._spriteBatchRenderData.ib = this.createIndexBuffer(2000 * 6, BufferUsageMode.Dynamic);
+            this._spriteBatchRenderData = new SpriteBatchRenderData(this, 1000);
         }
     }
 
@@ -231,10 +195,10 @@ export default class GLContext extends Context
                 }
             }
 
-            this._spriteBatchRenderData.vb.fillData(positions);
+            this._spriteBatchRenderData.vertexBuffer.fillData(positions);
             this._spriteBatchRenderData.cropBuffer.fillData(crops);
             this._spriteBatchRenderData.transformBuffer.fillData(transforms);
-            this._spriteBatchRenderData.ib.fillData(indices);
+            this._spriteBatchRenderData.indexBuffer.fillData(indices);
         }
 
         this._spriteBatchProgram.use();
