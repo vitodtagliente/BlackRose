@@ -48,7 +48,7 @@ class RoseComponent extends Component
             return new TextureRect(random(0, 0.5), random(0, 0.5), random(0, 1), random(0, 1));
         };
 
-        for (let i = 0; i < 100; ++i)
+        for (let i = 0; i < 400; ++i)
         {
             this._sprites.push([
                 randomTranform(), new TextureRect()

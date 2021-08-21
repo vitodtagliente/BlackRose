@@ -3,7 +3,7 @@ export default class Vector4
     public static readonly zero = new Vector4(0, 0, 0, 0);
     public static readonly one = new Vector4(1, 1, 1, 1);
 
-    public data: number[] = [4];
+    public data: Float32Array;
 
     public get x(): number { return this.data[0]; }
     public set x(value: number) { this.data[0] = value; }
@@ -16,7 +16,7 @@ export default class Vector4
 
     public constructor(x: number = 0, y: number = 0, z: number = 0, w: number = 0)
     {
-        this.data = [x, y, z, w];
+        this.data = new Float32Array([x, y, z, w]);
     }
 
     public set(x: number, y: number, z: number, w: number): void

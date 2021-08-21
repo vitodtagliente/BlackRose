@@ -13,7 +13,7 @@ export default class Matrix3
     public readonly columns: number = 3;
     public readonly size: number = 3;
 
-    public data: number[] = [9];
+    public data: Float32Array;
 
     public get m00(): number { return this.data[0]; }
     public set m00(value: number) { this.data[0] = value; }
@@ -42,11 +42,11 @@ export default class Matrix3
         a20: number = 0, a21: number = 0, a22: number = 0
     )
     {
-        this.data = [
+        this.data = new Float32Array([
             a00, a01, a02,
             a10, a11, a12,
             a20, a21, a22
-        ];
+        ]);
     }
 
     public get(i: number, j: number): number

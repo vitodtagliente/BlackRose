@@ -9,7 +9,7 @@ export default class Vector3
     public static readonly down = new Vector3(0, -1, 0);
     public static readonly forward = new Vector3(0, 0, -1);
 
-    public data: number[] = [3];
+    public data: Float32Array;
 
     public get x(): number { return this.data[0]; }
     public set x(value: number) { this.data[0] = value; }
@@ -20,7 +20,7 @@ export default class Vector3
 
     public constructor(x: number = 0, y: number = 0, z: number = 0)
     {
-        this.data = [x, y, z];
+        this.data = new Float32Array([x, y, z]);
     }
 
     public set(x: number, y: number, z: number): void

@@ -31,7 +31,9 @@ export default class GLContext extends Context
     public constructor(canvas: Canvas)
     {
         super(canvas, API.WebGL);
-        this._context = canvas.canvas.getContext(this.api) as WebGL2RenderingContext;
+        this._context = canvas.canvas.getContext(this.api, {
+            powerPreference: 'high-performance',
+        }) as WebGL2RenderingContext;
         // to prevent showing images upside down
         this._context.pixelStorei(this._context.UNPACK_FLIP_Y_WEBGL, true);
         // enable the alpha blending

@@ -10,7 +10,7 @@ export default class Matrix2
     public readonly columns: number = 2;
     public readonly size: number = 2;
 
-    public data: number[] = [4];
+    public data: Float32Array;
 
     public get m00(): number { return this.data[0]; }
     public set m00(value: number) { this.data[0] = value; }
@@ -27,7 +27,7 @@ export default class Matrix2
         a10: number = 0, a11: number = 0
     )
     {
-        this.data = [a00, a01, a10, a11];
+        this.data = new Float32Array([a00, a01, a10, a11]);
     }
 
     public get(i: number, j: number): number
