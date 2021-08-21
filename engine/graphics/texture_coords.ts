@@ -5,7 +5,7 @@ export default class TextureCoords
     public static readonly zero: TextureCoords = new TextureCoords(0, 0);
     public static readonly one: TextureCoords = new TextureCoords(1, 1);
 
-    public data: number[] = [2];
+    public data: Float32Array;
 
     public get u(): number { return this.data[0]; }
     public set u(value: number)
@@ -21,7 +21,7 @@ export default class TextureCoords
 
     public constructor(u?: number, v?: number)
     {
-        this.data = [u, v];
+        this.data = new Float32Array([u, v]);
     }
 
     public set(u: number, v: number): void 

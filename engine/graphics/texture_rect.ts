@@ -2,7 +2,7 @@ import { clamp } from "../math";
 
 export default class TextureRect
 {
-    public data: number[] = [4];
+    public data: Float32Array;
 
     public get x(): number { return this.data[0]; }
     public set x(value: number) { this.data[0] = clamp(value, 0, 1); }
@@ -15,11 +15,13 @@ export default class TextureRect
 
     public constructor(x: number = 0, y: number = 0, width: number = 1, height: number = 1)
     {
-        this.data = [clamp(x, 0, 1), clamp(y, 0, 1), clamp(width, 0, 1), clamp(height, 0, 1)]
+        this.data = new Float32Array([
+            clamp(x, 0, 1), clamp(y, 0, 1), clamp(width, 0, 1), clamp(height, 0, 1)
+        ]);
     }
 
     public copy(r: TextureRect): void 
     {
-        r.data = [...this.data];
+        r.data = new Float32Array([...this.data]);
     }
 }
