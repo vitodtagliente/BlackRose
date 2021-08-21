@@ -83,8 +83,6 @@ export default class GLContext extends Context
         {
             this._spriteBatchRenderData = new SpriteBatchRenderData(this, 1000);
         }
-
-        this.init_test();
     }
 
     public get context(): WebGL2RenderingContext { return this._context; }
@@ -208,13 +206,8 @@ export default class GLContext extends Context
         this._context.drawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
     }
 
-    private init_test(): void 
-    {
-
-    }
-
     public test(): void 
     {
-
+        
     }
 }
