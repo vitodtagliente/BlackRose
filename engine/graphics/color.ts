@@ -70,10 +70,7 @@ export default class Color
 
     public copy(c: Color): void 
     {
-        c.r = this.r;
-        c.b = this.b;
-        c.g = this.g;
-        c.a = this.a;
+        c.data = this.data.slice();
     }
 
     public get rgba(): string

@@ -28,8 +28,7 @@ export default class Vector2
 
     public copy(v: Vector2): void
     {
-        v.x = this.x;
-        v.y = this.y;
+        v.data = this.data.slice();
     }
 
     public add(v: Vector2): Vector2

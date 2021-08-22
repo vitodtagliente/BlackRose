@@ -32,7 +32,6 @@ export default class TextureCoords
 
     public copy(c: TextureCoords): void
     {
-        c.u = this.u;
-        c.v = this.v;
+        c.data = this.data.slice();
     }
 }

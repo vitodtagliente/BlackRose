@@ -59,6 +59,11 @@ export default class Matrix3
         this.data[i * this.rows + j] = value;
     }
 
+    public copy(m: Matrix3): void 
+    {
+        m.data = this.data.slice();
+    }
+
     public determinant(): number
     {
         // Sarrus law

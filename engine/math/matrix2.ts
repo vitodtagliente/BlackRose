@@ -40,6 +40,11 @@ export default class Matrix2
         this.data[i * this.rows + j] = value;
     }
 
+    public copy(m: Matrix2): void 
+    {
+        m.data = this.data.slice();
+    }
+
     public determinant(): number
     {
         return this.m00 * this.m11 - this.m01 * this.m10;

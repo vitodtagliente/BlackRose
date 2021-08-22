@@ -22,6 +22,6 @@ export default class TextureRect
 
     public copy(r: TextureRect): void 
     {
-        r.data = new Float32Array([...this.data]);
+        r.data = this.data.slice();
     }
 }

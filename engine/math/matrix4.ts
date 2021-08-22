@@ -76,6 +76,11 @@ export default class Matrix4
     public set(i: number, j: number, value: number): void 
     {
         this.data[i * this.rows + j] = value;
+    }    
+
+    public copy(m: Matrix4): void 
+    {
+        m.data = this.data.slice();
     }
 
     public determinant(): number

@@ -32,9 +32,7 @@ export default class Vector3
 
     public copy(v: Vector3): void
     {
-        v.x = this.x;
-        v.y = this.y;
-        v.z = this.z;
+        v.data = this.data.slice();
     }
 
     public add(v: Vector3): Vector3

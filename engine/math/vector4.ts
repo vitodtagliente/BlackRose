@@ -29,10 +29,7 @@ export default class Vector4
 
     public copy(v: Vector4): void
     {
-        v.x = this.x;
-        v.y = this.y;
-        v.z = this.z;
-        v.w = this.w;
+        v.data = this.data.slice();
     }
 
     public add(v: Vector4): Vector4
