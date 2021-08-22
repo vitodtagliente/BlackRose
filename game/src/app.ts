@@ -69,5 +69,6 @@ class RoseComponent extends Component
 for (let i: number = 0; i < 1; ++i)
 {
     const rose: Entity = app.world.spawn(new Entity("rose"), Vector3.zero, Quaternion.identity);
+    rose.isStatic = true;
     rose.addComponent(new RoseComponent(app));
 }

@@ -11,12 +11,16 @@ export default class Entity
     private _parent: Entity;
     private _children: Array<Entity>;
 
+    public isStatic: boolean;
+
     public constructor(name?: string)
     {
         this.name = name;
         this.transform = new Math.Transform;
         this._components = new Array<Component>();
         this._children = new Array<Entity>();
+
+        this.isStatic = false;
     }
 
     public get world(): World { return this._world; }

@@ -19,7 +19,11 @@ export default class World
         for (const entity of this._entities)
         {
             entity.update(deltaTime);
-            entity.transform.compute();
+
+            if(entity.isStatic == false)
+            {
+                entity.transform.compute();
+            }
         }
     }
 
