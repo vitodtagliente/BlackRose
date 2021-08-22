@@ -1,33 +1,69 @@
 import * as BlackRose from 'blackrose';
 import { Image } from 'blackrose/asset';
 import { SpriteComponent } from 'blackrose/components';
+import { GameMode } from 'blackrose/game';
 import { Color, Texture } from 'blackrose/graphics';
 import { Quaternion, Vector3 } from 'blackrose/math';
 import { Entity } from 'blackrose/scene';
 
-const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
-app.canvas.fullscreen();
-app.run();
-
-let texture: Texture;
-const image: Image = Image.load("assets/cat.png", () =>
+class TestGameMode extends GameMode
 {
-    texture = app.context.createTexture(image);
+    private _texture: Texture;
+    private _entities: Array<Entity>;
+    private _sprite: SpriteComponent;
+    private _animationIndex: number = 0;
+    private _animationTimer: number = 0;
 
-    init();
-});
+    private readonly _animationTime: number = 100;
 
-function init()
-{
-    for (let i: number = 0; i < 1; ++i)
+    public constructor()
     {
-        const entity: Entity = app.world.spawn(new Entity("entity" + i), Vector3.zero(), Quaternion.identity());
-        entity.transform.scale.set(0.2, 0.2, 1);
-        const sprite: SpriteComponent = entity.addComponent(new SpriteComponent(app));
-        sprite.texture = texture;
-        sprite.textureRect.width = 1 / 6;
+        super();
+        this._entities = [];
+    }
+
+    public init(): void 
+    {
+        const image: Image = Image.load("assets/cat.png", () =>
+        {
+            this._texture = app.context.createTexture(image);
+
+            for (let i: number = 0; i < 1; ++i)
+            {
+                const entity: Entity = app.world.spawn(new Entity("entity" + i), Vector3.zero(), Quaternion.identity());
+                entity.transform.scale.set(0.15, 0.15, 1);
+                this._sprite = entity.addComponent(new SpriteComponent(app));
+                this._sprite.texture = this._texture;
+                this._sprite.textureRect.width = 1 / 6;
+
+                this._entities.push(entity);
+            }
+        });
+    }
+
+    public update(deltaTime: number): void 
+    {
+        this._animationTimer -= deltaTime;
+        if (this._animationTimer <= 0)
+        {
+            this._animationIndex++;
+            if (this._animationIndex >= 6)
+            {
+                this._animationIndex = 0;
+            }
+            this._animationTimer = this._animationTime;
+
+            if (this._sprite)
+            {
+                this._sprite.textureRect.x = this._animationIndex * 1 / 6;
+            }
+        }
     }
 }
+
+const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
+app.canvas.fullscreen();
+app.run(new TestGameMode());
 
 /*
 let camera: Camera = app.world.spawn(new Camera("camera"), Vector3.zero(), Quaternion.identity());

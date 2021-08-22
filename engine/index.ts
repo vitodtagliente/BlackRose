@@ -4,6 +4,7 @@ import * as Audio from './audio';
 import * as Components from './components';
 import * as Core from './core';
 import * as Debug from './debug';
+import * as Game from './game';
 import * as Graphics from './graphics';
 import * as Input from './input';
 import * as Math from './math';
@@ -18,6 +19,7 @@ export
     Components,
     Core,
     Debug,
+    Game,
     Graphics,
     Input,
     Math,

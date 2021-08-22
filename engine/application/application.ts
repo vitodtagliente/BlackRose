@@ -1,4 +1,4 @@
-import { Core, Debug, Graphics, Input, Scene } from '..';
+import { Core, Debug, Game, Graphics, Input, Scene } from '..';
 import { Section } from '../debug';
 import { ContextFactory } from '../graphics';
 import Canvas from './canvas';
@@ -16,13 +16,15 @@ export default class Application
     private _keyboard: Input.Keyboard;
     private _mouse: Input.Mouse;
     private _touch: Input.Touch;
+    private _gameMode: Game.GameMode;
 
     public constructor(canvasId: string, api: Graphics.API)
     {
         this._canvas = new Canvas(canvasId);
         this._context = ContextFactory.get(this.canvas, api);
         this._context.viewport(this._canvas.width, this._canvas.height);
-        this._canvas.onResize.on(() => {
+        this._canvas.onResize.on(() =>
+        {
             this._context.viewport(this._canvas.width, this._canvas.height);
         });
         this._renderer = new Graphics.Renderer(this._context);
@@ -52,10 +54,14 @@ export default class Application
     public get keyboard(): Input.Keyboard { return this._keyboard; }
     public get mouse(): Input.Mouse { return this._mouse; }
     public get touch(): Input.Touch { return this._touch; }
+    public get gameMode(): Game.GameMode { return this._gameMode; }
 
-    public run(): void
+    public run(gameMode: Game.GameMode): void
     {
+        this._gameMode = gameMode;
+        this._gameMode.init();
         this.loop();
+        this._gameMode.uninit();
     }
 
     private loop(): void 
@@ -65,6 +71,7 @@ export default class Application
 
         this._renderer.begin();
         this._world.update(deltaTime);
+        this._gameMode.update(deltaTime);
         this._renderer.flush();
 
         this._stats.update();
