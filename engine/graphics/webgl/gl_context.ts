@@ -205,9 +205,4 @@ export default class GLContext extends Context
         var indexType = this._context.UNSIGNED_SHORT;
         this._context.drawElementsInstanced(primitiveType, count, indexType, offset, numInstances);
     }
-
-    public test(): void 
-    {
-
-    }
 }

@@ -67,8 +67,6 @@ export default class Application
         this._world.update(deltaTime);
         this._renderer.flush();
 
-        this._renderer.test();
-
         this._stats.update();
 
         requestAnimationFrame(() => this.loop());

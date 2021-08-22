@@ -34,6 +34,4 @@ export default abstract class Context
     public abstract drawSprite(texture: Texture, transform: Transform): void;
     public abstract drawSubSprite(texture: Texture, transform: Transform, rect: TextureRect): void;
     public abstract drawSprites(texture: Texture, data: Array<[Transform, TextureRect]>): void;
-
-    public abstract test(): void;
 }
