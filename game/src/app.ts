@@ -40,6 +40,7 @@ class RoseComponent extends Component
             t.position.set(random(-1, 1), random(-1, 1), 0);
             t.rotation.z = random(0, 360);
             t.scale.set(random(0.3, 0.5), random(0.3, 0.5), 0);
+            t.dirty();
             return t;
         };
 
@@ -48,7 +49,7 @@ class RoseComponent extends Component
             return new TextureRect(random(0, 0.5), random(0, 0.5), random(0, 1), random(0, 1));
         };
 
-        for (let i = 0; i < 400; ++i)
+        for (let i = 0; i < 200; ++i)
         {
             this._sprites.push([
                 randomTranform(), new TextureRect()
