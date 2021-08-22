@@ -20,7 +20,7 @@ const roseImg: Image = Image.load("assets/rose.png", () =>
     roseTexture = app.context.createTexture(roseImg);
 });
 
-let camera: Camera = app.world.spawn(new Camera("camera"), Vector3.zero(), Quaternion.identity);
+let camera: Camera = app.world.spawn(new Camera("camera"), Vector3.zero(), Quaternion.identity());
 camera.computeViewMatrix();
 camera.transform.compute();
 camera.compute();
@@ -64,16 +64,16 @@ class RoseComponent extends Component
 
     public update(deltaTime: number): void
     {
-        this.app.context.drawSprite(roseTexture, this.transform);
+        // this.app.context.drawSprite(roseTexture, this.transform);
         // this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 0.5, 0.5));
 
-        // this.app.context.drawSprites(roseTexture, this._sprites);
+        this.app.context.drawSprites(roseTexture, this._sprites);
     }
 }
 
 for (let i: number = 0; i < 1; ++i)
 {
-    const rose: Entity = app.world.spawn(new Entity("rose"), Vector3.zero(), Quaternion.identity);
+    const rose: Entity = app.world.spawn(new Entity("rose"), Vector3.zero(), Quaternion.identity());
     rose.isStatic = true;
     rose.addComponent(new RoseComponent(app));
 }

@@ -10,11 +10,11 @@ export default class Quad extends Geometry
         super(
             [
                 // top right
-                new VertexData(new Vector3(1, 1, 0), TextureCoords.one),
+                new VertexData(new Vector3(1, 1, 0), TextureCoords.one()),
                 // bottom right
                 new VertexData(new Vector3(1, -1, 0), new TextureCoords(1, 0)),
                 // bottom left
-                new VertexData(new Vector3(-1, -1, 0), TextureCoords.zero),
+                new VertexData(new Vector3(-1, -1, 0), TextureCoords.zero()),
                 // top left
                 new VertexData(new Vector3(-1, 1, 0), new TextureCoords(0, 1)),
             ],

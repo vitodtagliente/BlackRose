@@ -2,7 +2,7 @@ import { Matrix4, Vector3, Vector4 } from ".";
 
 export default class Quaternion
 {
-    public static readonly identity: Quaternion = new Quaternion(0, 0, 0, 1);
+    public static identity(): Quaternion { return new Quaternion(0, 0, 0, 1); }
 
     public data: number[] = [4];
 

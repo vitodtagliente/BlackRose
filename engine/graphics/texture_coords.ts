@@ -2,8 +2,8 @@ import { clamp } from "../math";
 
 export default class TextureCoords
 {
-    public static readonly zero: TextureCoords = new TextureCoords(0, 0);
-    public static readonly one: TextureCoords = new TextureCoords(1, 1);
+    public static zero(): TextureCoords { return new TextureCoords(0, 0); }
+    public static one(): TextureCoords { return new TextureCoords(1, 1); }
 
     public data: Float32Array;
 
