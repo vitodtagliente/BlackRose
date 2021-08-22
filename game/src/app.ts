@@ -21,9 +21,13 @@ const roseImg: Image = Image.load("assets/rose.png", () =>
 });
 
 let camera: Camera = app.world.spawn(new Camera("camera"), Vector3.zero(), Quaternion.identity());
+camera.viewport.x = -1;
+camera.viewport.y = -1;
 camera.computeViewMatrix();
 camera.transform.compute();
 camera.compute();
+
+app.context.camera = camera.matrix;
 
 class RoseComponent extends Component
 {
@@ -64,10 +68,31 @@ class RoseComponent extends Component
 
     public update(deltaTime: number): void
     {
-        // this.app.context.drawSprite(roseTexture, this.transform);
+        this.app.context.drawSprite(roseTexture, this.transform);
         // this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 0.5, 0.5));
 
-        this.app.context.drawSprites(roseTexture, this._sprites);
+        // this.app.context.drawSprites(roseTexture, this._sprites);
+
+        const cameraSpeed: number = 0.05;
+        if (app.keyboard.isKeysDown(KeyCode.ArrowLeft))
+        {
+            camera.transform.position.x -= cameraSpeed;
+        }
+        else if (app.keyboard.isKeysDown(KeyCode.ArrowRight))
+        {
+            camera.transform.position.x += cameraSpeed;
+        }
+        else if (app.keyboard.isKeysDown(KeyCode.ArrowUp))
+        {
+            camera.transform.position.y -= cameraSpeed;
+        }
+        else if (app.keyboard.isKeysDown(KeyCode.ArrowDown))
+        {
+            camera.transform.position.y += cameraSpeed;
+        }
+
+        camera.compute();
+        app.context.camera = camera.matrix;
     }
 }
 

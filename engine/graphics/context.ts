@@ -1,7 +1,7 @@
 import { BufferUsageMode, Color, IndexBuffer, Shader, ShaderProgram, ShaderType, Texture, TextureRect } from ".";
 import { Canvas } from "../application";
 import { Image } from "../asset";
-import { Transform, Vector3 } from "../math";
+import { Matrix4, Transform, Vector3 } from "../math";
 import API from "./api";
 import VertexBuffer from "./vertex_buffer";
 
@@ -9,11 +9,14 @@ export default abstract class Context
 {
     private _canvas: Canvas;
     private _api: API;
+    public camera: Matrix4;
 
     public constructor(canvas: Canvas, api: API)
     {
         this._canvas = canvas;
         this._api = api;
+
+        this.camera = Matrix4.identity();
     }
 
     public get api(): API { return this._api; }
