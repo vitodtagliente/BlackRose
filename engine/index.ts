@@ -1,6 +1,7 @@
 import * as Application from './application';
 import * as Asset from './asset';
 import * as Audio from './audio';
+import * as Components from './components';
 import * as Core from './core';
 import * as Debug from './debug';
 import * as Graphics from './graphics';
@@ -14,6 +15,7 @@ export
     Application,
     Asset,
     Audio,
+    Components,
     Core,
     Debug,
     Graphics,

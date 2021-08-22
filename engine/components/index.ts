@@ -1,6 +1,6 @@
-import CameraComponent from "./camera_component"
+import SpriteComponent from "./sprite_component"
 
 export 
 {
-    CameraComponent
+    SpriteComponent
 }
