@@ -12,7 +12,7 @@ export default class Renderer
     private _commands: Array<Command>;
     private _spriteBatch: SpriteBatch;
 
-    public clearColor: Color = Color.white;
+    public background: Color = Color.white;
 
     public constructor(context: Context)
     {
@@ -26,7 +26,7 @@ export default class Renderer
     public begin(): void 
     {
         // double buffering
-        this.context.clear(this.clearColor);
+        this.context.clear(this.background);
         this._spriteBatch.clear();
     }
 

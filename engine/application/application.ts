@@ -39,7 +39,7 @@ export default class Application
 
         {
             const rendererSection: Section = this._inspector.addSection('renderer');
-            rendererSection.color('clear', this._renderer.clearColor);
+            rendererSection.color('clear', this._renderer.background);
         }
     }
 

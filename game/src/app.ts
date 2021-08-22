@@ -11,7 +11,7 @@ const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics
 app.canvas.fullscreen();
 app.run();
 
-Color.white.copy(app.renderer.clearColor);
+Color.yellow.copy(app.renderer.background);
 
 let roseTexture: Texture;
 const roseImg: Image = Image.load("assets/rose.png", () =>
