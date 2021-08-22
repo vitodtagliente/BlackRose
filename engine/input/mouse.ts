@@ -16,7 +16,7 @@ export default class Mouse extends Device
     {
         super(canvas);
         this._keys = new Set<KeyCode>();
-        this._position = Vector2.zero;
+        this._position = Vector2.zero();
         this._isOutOfCanvas = false;
 
         this.onClick = new Signal<void>();

@@ -4,7 +4,7 @@ import Command from "../command";
 
 export default class TextureCommand extends Command
 {
-    public position: Vector3 = Vector3.zero;
+    public position: Vector3 = Vector3.zero();
     public texture: Texture;
     public origin: Vector2;
     public end: Vector2;

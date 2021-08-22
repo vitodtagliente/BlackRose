@@ -1,14 +1,19 @@
-import { Matrix3, radians, Vector3 } from ".";
+import Matrix3 from "./matrix3";
+import Vector3 from "./vector3";
+import { radians } from "./algo";
 
 export default class Matrix4
 {
-    public static readonly zero: Matrix4 = new Matrix4();
-    public static readonly identity: Matrix4 = new Matrix4(
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 1
-    );
+    public static zero(): Matrix4 { return new Matrix4; }
+    public static identity(): Matrix4
+    {
+        return new Matrix4(
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        )
+    };
 
     public readonly rows: number = 4;
     public readonly columns: number = 4;
@@ -199,7 +204,7 @@ export default class Matrix4
 
     public static multiplyMatrices(matrices: Array<Matrix4>): Matrix4
     {
-        if (matrices.length == 0) return Matrix4.zero;
+        if (matrices.length == 0) return Matrix4.zero();
 
         const result: Matrix4 = new Matrix4;
         matrices[0].copy(result);
@@ -247,7 +252,7 @@ export default class Matrix4
         farPlane: number
     ): Matrix4
     {
-        let m: Matrix4 = Matrix4.identity;
+        let m: Matrix4 = Matrix4.identity();
 
         m.m00 = 2 / (right - left);
         m.m11 = 2 / (top - bottom);
@@ -267,7 +272,7 @@ export default class Matrix4
         farPlane: number
     ): Matrix4
     {
-        let m: Matrix4 = Matrix4.identity;
+        let m: Matrix4 = Matrix4.identity();
 
         const top: number = nearPlane * Math.tan(fov / 2);
         const bottom: number = -top;
@@ -344,7 +349,7 @@ export default class Matrix4
 
         const c1: number = 1 - c;
 
-        let m: Matrix4 = Matrix4.identity;
+        let m: Matrix4 = Matrix4.identity();
 
         m.m00 = Math.pow(v.x, 2) * c1 + c;
         m.m01 = v.x * v.y * c1 - v.z * s;

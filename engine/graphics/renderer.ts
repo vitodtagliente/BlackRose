@@ -40,8 +40,8 @@ export default class Renderer
         const command: TextureCommand = new TextureCommand;
         command.position = position;
         command.texture = texture;
-        command.origin = Vector2.zero;
-        command.end = Vector2.one;
+        command.origin = Vector2.zero();
+        command.end = Vector2.one();
         this._commands.push(command);
     }
 

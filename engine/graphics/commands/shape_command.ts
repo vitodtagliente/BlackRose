@@ -11,9 +11,9 @@ export enum ShapeType
 export default class ShapeCommand extends Command
 {
     public shape: ShapeType = ShapeType.Circle;
-    public position: Vector3 = Vector3.zero;
+    public position: Vector3 = Vector3.zero();
     public color: Color = Color.black;
-    public size: Vector2 = Vector2.zero;
+    public size: Vector2 = Vector2.zero();
 
     public execute(context: Context): void
     {

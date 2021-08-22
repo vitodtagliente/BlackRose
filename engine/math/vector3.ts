@@ -1,13 +1,13 @@
 export default class Vector3
 {
-    public static readonly zero = new Vector3(0, 0, 0);
-    public static readonly one = new Vector3(1, 1, 1);
+    public static zero(): Vector3 { return new Vector3(0, 0, 0); }
+    public static one(): Vector3 { return new Vector3(1, 1, 1) }
 
-    public static readonly up = new Vector3(0, 1, 0);
-    public static readonly right = new Vector3(1, 0, 0);
-    public static readonly left = new Vector3(-1, 0, 0);
-    public static readonly down = new Vector3(0, -1, 0);
-    public static readonly forward = new Vector3(0, 0, -1);
+    public static up(): Vector3 { return new Vector3(0, 1, 0); }
+    public static right(): Vector3 { return new Vector3(1, 0, 0); }
+    public static left(): Vector3 { return new Vector3(-1, 0, 0); }
+    public static down(): Vector3 { return new Vector3(0, -1, 0); }
+    public static forward(): Vector3 { return new Vector3(0, 0, -1); }
 
     public data: Float32Array;
 

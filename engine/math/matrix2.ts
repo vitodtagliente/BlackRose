@@ -1,10 +1,13 @@
 export default class Matrix2
 {
-    public static readonly zero: Matrix2 = new Matrix2();
-    public static readonly identity: Matrix2 = new Matrix2(
-        1, 0,
-        0, 1
-    );
+    public static zero(): Matrix2 { return new Matrix2; }
+    public static identity(): Matrix2
+    {
+        return new Matrix2(
+            1, 0,
+            0, 1
+        )
+    };
 
     public readonly rows: number = 2;
     public readonly columns: number = 2;
@@ -102,8 +105,8 @@ export default class Matrix2
 
     public static multiplyMatrices(matrices: Array<Matrix2>): Matrix2
     {
-        if (matrices.length == 0) return Matrix2.zero;
-        
+        if (matrices.length == 0) return Matrix2.zero();
+
         const result: Matrix2 = new Matrix2;
         matrices[0].copy(result);
         for (let i = 1; i < matrices.length; ++i)

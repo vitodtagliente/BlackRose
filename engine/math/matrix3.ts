@@ -1,13 +1,16 @@
-import { Matrix2 } from ".";
+import Matrix2 from "./matrix2";
 
 export default class Matrix3
 {
-    public static readonly zero: Matrix3 = new Matrix3();
-    public static readonly identity: Matrix3 = new Matrix3(
-        1, 0, 0,
-        0, 1, 0,
-        0, 0, 1
-    );
+    public static zero(): Matrix3 { return new Matrix3; }
+    public static identity(): Matrix3
+    {
+        return new Matrix3(
+            1, 0, 0,
+            0, 1, 0,
+            0, 0, 1
+        )
+    };
 
     public readonly rows: number = 3;
     public readonly columns: number = 3;
@@ -164,7 +167,7 @@ export default class Matrix3
 
     public static multiplyMatrices(matrices: Array<Matrix3>): Matrix3
     {
-        if (matrices.length == 0) return Matrix3.zero;
+        if (matrices.length == 0) return Matrix3.zero();
 
         const result: Matrix3 = new Matrix3;
         matrices[0].copy(result);

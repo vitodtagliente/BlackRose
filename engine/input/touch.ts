@@ -15,7 +15,7 @@ export default class Touch extends Device
     {
         super(canvas);
         this._isDown = false;
-        this._position = Vector2.zero;
+        this._position = Vector2.zero();
 
         this.onTouch = new Signal<void>();
     }

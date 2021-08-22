@@ -32,7 +32,7 @@ export default class Camera extends Entity
         this.background = Color.black;
 
         this.clippingPlanes = new CameraClippingPlanes;
-        this.viewport = new Rect;
+        this.viewport = new Rect(0, 0, 1, 1);
         this._matrix = new Matrix4;
         this._viewMatrix = new Matrix4;
     }

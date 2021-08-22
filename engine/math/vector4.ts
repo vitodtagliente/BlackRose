@@ -1,7 +1,7 @@
 export default class Vector4
 {
-    public static readonly zero = new Vector4(0, 0, 0, 0);
-    public static readonly one = new Vector4(1, 1, 1, 1);
+    public static zero(): Vector4 { return new Vector4(0, 0, 0, 0); }
+    public static one(): Vector4 { return new Vector4(1, 1, 1, 1) }
 
     public data: Float32Array;
 
