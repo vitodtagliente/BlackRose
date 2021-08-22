@@ -1,4 +1,4 @@
-import Camera, { CameraMode } from "./camera"
+import Camera, { CameraClippingPlanes, CameraMode } from "./camera"
 import Component from "./component"
 import Entity from "./entity"
 import World from "./world"
@@ -6,6 +6,7 @@ import World from "./world"
 export 
 {
     Camera, 
+    CameraClippingPlanes,
     CameraMode,
     Component,
     Entity,

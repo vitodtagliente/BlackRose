@@ -3,6 +3,7 @@ import Matrix2 from "./matrix2"
 import Matrix3 from "./matrix3"
 import Matrix4 from "./matrix4"
 import Quaternion from "./quaternion"
+import Rect from "./rect"
 import Transform from "./transform"
 import { toVector2, toVector3, toVector4 } from "./vector"
 import Vector2 from "./vector2"
@@ -20,6 +21,7 @@ export
     Quaternion,
     radians,
     random,
+    Rect,
     toVector2,
     toVector3,
     toVector4,
