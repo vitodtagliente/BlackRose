@@ -147,20 +147,19 @@ export default class Matrix3
 
     public mulMatrix(m: Matrix3): Matrix3
     {
-        let result: Matrix3 = new Matrix3;
-        for (let j: number = 0; j < this.rows; ++j)
-        {
-            for (let i: number = 0; i < this.columns; ++i)
-            {
-                let sum: number = 0;
-                for (let k: number = 0; k < m.rows; ++k)
-                {
-                    sum += this.get(j, k) * m.get(k, i);
-                }
-                result.set(j, i, sum);
-            }
-        }
-        return result;
+        return new Matrix3(
+            this.data[0] * m.data[0] + this.data[1] * m.data[3] + this.data[2] * m.data[6],
+            this.data[0] * m.data[1] + this.data[1] * m.data[4] + this.data[2] * m.data[7], 
+            this.data[0] * m.data[2] + this.data[1] * m.data[5] + this.data[2] * m.data[8], 
+            
+            this.data[3] * m.data[0] + this.data[4] * m.data[3] + this.data[5] * m.data[6],
+            this.data[3] * m.data[1] + this.data[4] * m.data[4] + this.data[5] * m.data[7], 
+            this.data[3] * m.data[2] + this.data[4] * m.data[5] + this.data[5] * m.data[8],
+            
+            this.data[6] * m.data[0] + this.data[7] * m.data[3] + this.data[8] * m.data[6],
+            this.data[6] * m.data[1] + this.data[7] * m.data[4] + this.data[8] * m.data[7], 
+            this.data[6] * m.data[2] + this.data[7] * m.data[5] + this.data[8] * m.data[8],
+        );
     }
 
     public div(scalar: number): Matrix3

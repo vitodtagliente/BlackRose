@@ -92,20 +92,12 @@ export default class Matrix2
 
     public mulMatrix(m: Matrix2): Matrix2
     {
-        let result: Matrix2 = new Matrix2;
-        for (let j: number = 0; j < this.rows; ++j)
-        {
-            for (let i: number = 0; i < this.columns; ++i)
-            {
-                let sum: number = 0;
-                for (let k: number = 0; k < m.rows; ++k)
-                {
-                    sum += this.get(j, k) * m.get(k, i);
-                }
-                result.set(j, i, sum);
-            }
-        }
-        return result;
+        return new Matrix2(
+            this.data[0] * m.data[0] + this.data[1] * m.data[2], 
+            this.data[0] * m.data[1] + this.data[1] * m.data[3],
+            this.data[2] * m.data[0] + this.data[3] * m.data[2], 
+            this.data[2] * m.data[1] + this.data[3] * m.data[3],
+        );
     }
 
     public div(scalar: number): Matrix2
