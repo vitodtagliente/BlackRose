@@ -139,7 +139,7 @@ export default class GLContext extends Context
         this._spriteProgram.use();
         texture.bind(0);
         this._spriteProgram.setInt("u_texture", 0);
-        this._spriteProgram.setMat4("u_matrix", transform.matrix());
+        this._spriteProgram.setMat4("u_matrix", transform.matrix);
 
         // draw
         var primitiveType = this._context.TRIANGLES;
@@ -158,7 +158,7 @@ export default class GLContext extends Context
         this._subSpriteProgram.use();
         texture.bind(0);
         this._subSpriteProgram.setInt("u_texture", 0);
-        this._subSpriteProgram.setMat4("u_matrix", transform.matrix());
+        this._subSpriteProgram.setMat4("u_matrix", transform.matrix);
         this._subSpriteProgram.setVec4("u_crop", new Vector4(rect.x, rect.y, rect.width, rect.height));
 
         // draw
@@ -184,7 +184,7 @@ export default class GLContext extends Context
                 const [transform, rect] = data[i];
 
                 crops.push(...rect.data);
-                transforms.push(...transform.matrix().data);
+                transforms.push(...transform.matrix.data);
             }
 
             this._spriteBatchRenderData.cropBuffer.bind();

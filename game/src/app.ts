@@ -40,7 +40,7 @@ class RoseComponent extends Component
             t.position.set(random(-1, 1), random(-1, 1), 0);
             t.rotation.z = random(0, 360);
             t.scale.set(random(0.3, 0.5), random(0.3, 0.5), 0);
-            t.dirty();
+            t.compute();
             return t;
         };
 
