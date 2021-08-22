@@ -29,7 +29,7 @@ export default class Camera extends Entity
     {
         super(name);
         this._mode = CameraMode.Ortographic;
-        this.background = Color.black;
+        this.background = Color.black();
 
         this.clippingPlanes = new CameraClippingPlanes;
         this.viewport = new Rect(0, 0, 1, 1);

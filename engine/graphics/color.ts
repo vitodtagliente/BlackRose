@@ -2,15 +2,15 @@ import { random } from "../math";
 
 export default class Color
 {
-    public static readonly white: Color = new Color(1, 1, 1);
-    public static readonly black: Color = new Color(0, 0, 0);
-    public static readonly red: Color = new Color(1, 0, 0);
-    public static readonly green: Color = new Color(0, 1, 0);
-    public static readonly blue: Color = new Color(0, 0, 1);
-    public static readonly cyan: Color = new Color(0, 1, 1);
-    public static readonly yellow: Color = new Color(1, 1, 0);
-    public static readonly magenta: Color = new Color(1, 0, 1);
-    public static readonly transparent: Color = new Color(0, 0, 0, 0);
+    public static white(): Color { return new Color(1, 1, 1); }
+    public static black(): Color { return new Color(0, 0, 0); }
+    public static red(): Color { return new Color(1, 0, 0); }
+    public static green(): Color { return new Color(0, 1, 0); }
+    public static blue(): Color { return new Color(0, 0, 1); }
+    public static cyan(): Color { return new Color(0, 1, 1); }
+    public static yellow(): Color { return new Color(1, 1, 0); }
+    public static magenta(): Color { return new Color(1, 0, 1); }
+    public static transparent(): Color { return new Color(0, 0, 0, 0); }
 
     public data: number[] = [4];
 

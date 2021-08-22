@@ -12,7 +12,7 @@ export default class Renderer
     private _commands: Array<Command>;
     private _spriteBatch: SpriteBatch;
 
-    public background: Color = Color.white;
+    public background: Color = Color.white();
 
     public constructor(context: Context)
     {

@@ -1,18 +1,13 @@
 import * as BlackRose from 'blackrose';
-import { Application } from 'blackrose/application';
-import { Audio, Image } from 'blackrose/asset';
+import { Image } from 'blackrose/asset';
 import { SpriteComponent } from 'blackrose/components';
-import { Section } from 'blackrose/debug';
-import { Color, Texture, TextureRect } from 'blackrose/graphics';
-import { KeyCode } from 'blackrose/input';
-import { Matrix2, Matrix3, Quaternion, random, Transform, Vector2, Vector3 } from 'blackrose/math';
-import { Camera, CameraClippingPlanes, Component, Entity } from 'blackrose/scene';
+import { Color, Texture } from 'blackrose/graphics';
+import { Quaternion, Vector3 } from 'blackrose/math';
+import { Entity } from 'blackrose/scene';
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
 app.canvas.fullscreen();
 app.run();
-
-Color.white.copy(app.renderer.background);
 
 let texture: Texture;
 const image: Image = Image.load("assets/cat.png", () =>
