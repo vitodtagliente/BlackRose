@@ -149,17 +149,39 @@ export default class Matrix3
     {
         return new Matrix3(
             this.data[0] * m.data[0] + this.data[1] * m.data[3] + this.data[2] * m.data[6],
-            this.data[0] * m.data[1] + this.data[1] * m.data[4] + this.data[2] * m.data[7], 
-            this.data[0] * m.data[2] + this.data[1] * m.data[5] + this.data[2] * m.data[8], 
-            
+            this.data[0] * m.data[1] + this.data[1] * m.data[4] + this.data[2] * m.data[7],
+            this.data[0] * m.data[2] + this.data[1] * m.data[5] + this.data[2] * m.data[8],
+
             this.data[3] * m.data[0] + this.data[4] * m.data[3] + this.data[5] * m.data[6],
-            this.data[3] * m.data[1] + this.data[4] * m.data[4] + this.data[5] * m.data[7], 
+            this.data[3] * m.data[1] + this.data[4] * m.data[4] + this.data[5] * m.data[7],
             this.data[3] * m.data[2] + this.data[4] * m.data[5] + this.data[5] * m.data[8],
-            
+
             this.data[6] * m.data[0] + this.data[7] * m.data[3] + this.data[8] * m.data[6],
-            this.data[6] * m.data[1] + this.data[7] * m.data[4] + this.data[8] * m.data[7], 
+            this.data[6] * m.data[1] + this.data[7] * m.data[4] + this.data[8] * m.data[7],
             this.data[6] * m.data[2] + this.data[7] * m.data[5] + this.data[8] * m.data[8],
         );
+    }
+
+    public static multiplyMatrices(matrices: Array<Matrix3>): Matrix3
+    {
+        if (matrices.length == 0) return Matrix3.zero;
+
+        const result: Matrix3 = new Matrix3;
+        matrices[0].copy(result);
+        for (let i = 1; i < matrices.length; ++i)
+        {
+            const m: Matrix3 = matrices[i];
+            result.data[0] = result.data[0] * m.data[0] + result.data[1] * m.data[3] + result.data[2] * m.data[6];
+            result.data[1] = result.data[0] * m.data[1] + result.data[1] * m.data[4] + result.data[2] * m.data[7];
+            result.data[2] = result.data[0] * m.data[2] + result.data[1] * m.data[5] + result.data[2] * m.data[8];
+            result.data[3] = result.data[3] * m.data[0] + result.data[4] * m.data[3] + result.data[5] * m.data[6];
+            result.data[4] = result.data[3] * m.data[1] + result.data[4] * m.data[4] + result.data[5] * m.data[7];
+            result.data[5] = result.data[3] * m.data[2] + result.data[4] * m.data[5] + result.data[5] * m.data[8];
+            result.data[6] = result.data[6] * m.data[0] + result.data[7] * m.data[3] + result.data[8] * m.data[6];
+            result.data[7] = result.data[6] * m.data[1] + result.data[7] * m.data[4] + result.data[8] * m.data[7];
+            result.data[8] = result.data[6] * m.data[2] + result.data[7] * m.data[5] + result.data[8] * m.data[8];
+        }
+        return result;
     }
 
     public div(scalar: number): Matrix3

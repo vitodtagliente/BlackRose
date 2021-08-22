@@ -19,6 +19,7 @@ export default class World
         for (const entity of this._entities)
         {
             entity.update(deltaTime);
+            entity.transform.compute();
         }
     }
 

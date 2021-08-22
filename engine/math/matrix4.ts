@@ -75,7 +75,7 @@ export default class Matrix4
     public set(i: number, j: number, value: number): void 
     {
         this.data[i * this.rows + j] = value;
-    }    
+    }
 
     public copy(m: Matrix4): void 
     {
@@ -179,22 +179,52 @@ export default class Matrix4
             this.data[0] * m.data[1] + this.data[1] * m.data[5] + this.data[2] * m.data[9] + this.data[3] * m.data[13],
             this.data[0] * m.data[2] + this.data[1] * m.data[6] + this.data[2] * m.data[10] + this.data[3] * m.data[14],
             this.data[0] * m.data[3] + this.data[1] * m.data[7] + this.data[2] * m.data[11] + this.data[3] * m.data[15],
-            
+
             this.data[4] * m.data[0] + this.data[5] * m.data[4] + this.data[6] * m.data[8] + this.data[7] * m.data[12],
             this.data[4] * m.data[1] + this.data[5] * m.data[5] + this.data[6] * m.data[9] + this.data[7] * m.data[13],
             this.data[4] * m.data[2] + this.data[5] * m.data[6] + this.data[6] * m.data[10] + this.data[7] * m.data[14],
             this.data[4] * m.data[3] + this.data[5] * m.data[7] + this.data[6] * m.data[11] + this.data[7] * m.data[15],
-            
+
             this.data[8] * m.data[0] + this.data[9] * m.data[4] + this.data[10] * m.data[8] + this.data[11] * m.data[12],
             this.data[8] * m.data[1] + this.data[9] * m.data[5] + this.data[10] * m.data[9] + this.data[11] * m.data[13],
             this.data[8] * m.data[2] + this.data[9] * m.data[6] + this.data[10] * m.data[10] + this.data[11] * m.data[14],
             this.data[8] * m.data[3] + this.data[9] * m.data[7] + this.data[10] * m.data[11] + this.data[11] * m.data[15],
-            
+
             this.data[12] * m.data[0] + this.data[13] * m.data[4] + this.data[14] * m.data[8] + this.data[15] * m.data[12],
             this.data[12] * m.data[1] + this.data[13] * m.data[5] + this.data[14] * m.data[9] + this.data[15] * m.data[13],
             this.data[12] * m.data[2] + this.data[13] * m.data[6] + this.data[14] * m.data[10] + this.data[15] * m.data[14],
             this.data[12] * m.data[3] + this.data[13] * m.data[7] + this.data[14] * m.data[11] + this.data[15] * m.data[15],
         );
+    }
+
+    public static multiplyMatrices(matrices: Array<Matrix4>): Matrix4
+    {
+        if (matrices.length == 0) return Matrix4.zero;
+
+        const result: Matrix4 = new Matrix4;
+        matrices[0].copy(result);
+        for (let i = 1; i < matrices.length; ++i)
+        {
+            const m: Matrix4 = matrices[i];
+            result.data[0] = result.data[0] * m.data[0] + result.data[1] * m.data[4] + result.data[2] * m.data[8] + result.data[3] * m.data[12];
+            result.data[1] = result.data[0] * m.data[1] + result.data[1] * m.data[5] + result.data[2] * m.data[9] + result.data[3] * m.data[13];
+            result.data[2] = result.data[0] * m.data[2] + result.data[1] * m.data[6] + result.data[2] * m.data[10] + result.data[3] * m.data[14];
+            result.data[3] = result.data[0] * m.data[3] + result.data[1] * m.data[7] + result.data[2] * m.data[11] + result.data[3] * m.data[15];
+            result.data[4] = result.data[4] * m.data[0] + result.data[5] * m.data[4] + result.data[6] * m.data[8] + result.data[7] * m.data[12];
+            result.data[5] = result.data[4] * m.data[1] + result.data[5] * m.data[5] + result.data[6] * m.data[9] + result.data[7] * m.data[13];
+            result.data[6] = result.data[4] * m.data[2] + result.data[5] * m.data[6] + result.data[6] * m.data[10] + result.data[7] * m.data[14];
+            result.data[7] = result.data[4] * m.data[3] + result.data[5] * m.data[7] + result.data[6] * m.data[11] + result.data[7] * m.data[15];
+            result.data[8] = result.data[8] * m.data[0] + result.data[9] * m.data[4] + result.data[10] * m.data[8] + result.data[11] * m.data[12];
+            result.data[9] = result.data[8] * m.data[1] + result.data[9] * m.data[5] + result.data[10] * m.data[9] + result.data[11] * m.data[13];
+            result.data[10] = result.data[8] * m.data[2] + result.data[9] * m.data[6] + result.data[10] * m.data[10] + result.data[11] * m.data[14];
+            result.data[11] = result.data[8] * m.data[3] + result.data[9] * m.data[7] + result.data[10] * m.data[11] + result.data[11] * m.data[15];
+            result.data[12] = result.data[12] * m.data[0] + result.data[13] * m.data[4] + result.data[14] * m.data[8] + result.data[15] * m.data[12];
+            result.data[13] = result.data[12] * m.data[1] + result.data[13] * m.data[5] + result.data[14] * m.data[9] + result.data[15] * m.data[13];
+            result.data[14] = result.data[12] * m.data[2] + result.data[13] * m.data[6] + result.data[14] * m.data[10] + result.data[15] * m.data[14];
+            result.data[15] = result.data[12] * m.data[3] + result.data[13] * m.data[7] + result.data[14] * m.data[11] + result.data[15] * m.data[15];
+
+        }
+        return result;
     }
 
     public div(scalar: number): Matrix4

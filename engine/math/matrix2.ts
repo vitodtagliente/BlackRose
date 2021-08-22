@@ -93,11 +93,28 @@ export default class Matrix2
     public mulMatrix(m: Matrix2): Matrix2
     {
         return new Matrix2(
-            this.data[0] * m.data[0] + this.data[1] * m.data[2], 
+            this.data[0] * m.data[0] + this.data[1] * m.data[2],
             this.data[0] * m.data[1] + this.data[1] * m.data[3],
-            this.data[2] * m.data[0] + this.data[3] * m.data[2], 
+            this.data[2] * m.data[0] + this.data[3] * m.data[2],
             this.data[2] * m.data[1] + this.data[3] * m.data[3],
         );
+    }
+
+    public static multiplyMatrices(matrices: Array<Matrix2>): Matrix2
+    {
+        if (matrices.length == 0) return Matrix2.zero;
+        
+        const result: Matrix2 = new Matrix2;
+        matrices[0].copy(result);
+        for (let i = 1; i < matrices.length; ++i)
+        {
+            const m: Matrix2 = matrices[i];
+            result.data[0] = result.data[0] * m.data[0] + result.data[1] * m.data[2];
+            result.data[1] = result.data[0] * m.data[1] + result.data[1] * m.data[3];
+            result.data[2] = result.data[2] * m.data[0] + result.data[3] * m.data[2];
+            result.data[3] = result.data[2] * m.data[1] + result.data[3] * m.data[3];
+        }
+        return result;
     }
 
     public div(scalar: number): Matrix2
