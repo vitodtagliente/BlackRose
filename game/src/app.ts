@@ -68,11 +68,6 @@ class RoseComponent extends Component
 
     public update(deltaTime: number): void
     {
-        // this.app.context.drawSprite(roseTexture, this.transform);
-        // this.app.context.drawSubSprite(roseTexture, this.transform, new TextureRect(0, 0, 0.5, 0.5));
-
-        // this.app.context.drawSprites(roseTexture, this._sprites);
-
         this.app.renderer.drawSprite(roseTexture, this.transform, new TextureRect());
 
         const cameraSpeed: number = 0.05;
