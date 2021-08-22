@@ -1,3 +1,4 @@
+import * as Animation from './animation';
 import * as Application from './application';
 import * as Asset from './asset';
 import * as Audio from './audio';
@@ -13,6 +14,7 @@ import * as Scene from './scene';
 
 export
 {
+    Animation,
     Application,
     Asset,
     Audio,

@@ -1,25 +1,19 @@
 import * as BlackRose from 'blackrose';
+import { SpriteAnimation, SpriteAnimator } from 'blackrose/animation';
 import { Image } from 'blackrose/asset';
 import { SpriteComponent } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
-import { Color, Texture } from 'blackrose/graphics';
+import { Color, Texture, TextureRect } from 'blackrose/graphics';
 import { Quaternion, Vector3 } from 'blackrose/math';
 import { Entity } from 'blackrose/scene';
 
 class TestGameMode extends GameMode
 {
     private _texture: Texture;
-    private _entities: Array<Entity>;
-    private _sprite: SpriteComponent;
-    private _animationIndex: number = 0;
-    private _animationTimer: number = 0;
-
-    private readonly _animationTime: number = 100;
 
     public constructor()
     {
         super();
-        this._entities = [];
     }
 
     public init(): void 
@@ -32,32 +26,25 @@ class TestGameMode extends GameMode
             {
                 const entity: Entity = app.world.spawn(new Entity("entity" + i), Vector3.zero(), Quaternion.identity());
                 entity.transform.scale.set(0.15, 0.15, 1);
-                this._sprite = entity.addComponent(new SpriteComponent(app));
-                this._sprite.texture = this._texture;
-                this._sprite.textureRect.width = 1 / 6;
+                const sprite = entity.addComponent(new SpriteComponent(app));
+                sprite.texture = this._texture;
+                sprite.textureRect.width = 1 / 6;
 
-                this._entities.push(entity);
+                const animator = entity.addComponent(new SpriteAnimator(app));
+                {
+                    const walk: SpriteAnimation = new SpriteAnimation;
+                    const size: number = 1/6;
+                    walk.add(new TextureRect(0 * size, 0, size, 1), 100);
+                    walk.add(new TextureRect(1 * size, 0, size, 1), 100);
+                    walk.add(new TextureRect(2 * size, 0, size, 1), 100);
+                    walk.add(new TextureRect(3 * size, 0, size, 1), 100);
+                    walk.add(new TextureRect(4 * size, 0, size, 1), 100);
+                    walk.add(new TextureRect(5 * size, 0, size, 1), 100);
+                    animator.add("walk", walk);
+                }
+                animator.play("walk", true);
             }
         });
-    }
-
-    public update(deltaTime: number): void 
-    {
-        this._animationTimer -= deltaTime;
-        if (this._animationTimer <= 0)
-        {
-            this._animationIndex++;
-            if (this._animationIndex >= 6)
-            {
-                this._animationIndex = 0;
-            }
-            this._animationTimer = this._animationTime;
-
-            if (this._sprite)
-            {
-                this._sprite.textureRect.x = this._animationIndex * 1 / 6;
-            }
-        }
     }
 }
 
