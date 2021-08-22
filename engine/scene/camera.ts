@@ -52,7 +52,7 @@ export default class Camera extends Entity
 
     public compute(): void
     {
-        this._matrix = Matrix4.multiplyMatrices([this._viewMatrix, this.transform.matrix]);
+        Matrix4.multiplyMatrices([this._viewMatrix, this.transform.matrix]).copy(this._matrix);
     }
 
     public computeViewMatrix(): void 

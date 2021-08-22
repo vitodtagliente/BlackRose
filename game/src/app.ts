@@ -92,7 +92,6 @@ class RoseComponent extends Component
         }
 
         camera.compute();
-        app.context.camera = camera.matrix;
     }
 }
 
