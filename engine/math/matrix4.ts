@@ -1,4 +1,3 @@
-import { assert } from "console";
 import { Matrix3, radians, Vector3 } from ".";
 
 export default class Matrix4
