@@ -31,7 +31,7 @@ export default class SpriteBatchRenderData extends RenderData
 
         const instanced: boolean = true;
 
-        this._cropBuffer = context.createVertexBuffer(size * 2, BufferUsageMode.Stream);
+        this._cropBuffer = context.createVertexBuffer(size * 4, BufferUsageMode.Stream);
         this._cropBuffer.layout.push(new VertexBufferElement("crop", VertexBufferElementType.Float, 4, true, instanced));
         this._cropBuffer.activateLayout(2);
 
