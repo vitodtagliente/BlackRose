@@ -83,7 +83,7 @@ export default class GLContext extends Context
 
         // sprite batch render data
         {
-            this._spriteBatchRenderData = new SpriteBatchRenderData(this, 1000);
+            this._spriteBatchRenderData = new SpriteBatchRenderData(this, 2000);
         }
     }
 

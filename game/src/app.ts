@@ -22,7 +22,7 @@ class TestGameMode extends GameMode
         {
             this._texture = app.context.createTexture(image);
 
-            for (let i: number = 0; i < 40; ++i)
+            for (let i: number = 0; i < 100; ++i)
             {
                 const entity: Entity = app.world.spawn(new Entity("entity" + i), Vector3.zero(), Quaternion.identity());
                 entity.transform.position.set(random(-.9, .9), random(-.9, .9), 0);

@@ -18,7 +18,7 @@ export default class Renderer
     {
         this._context = context;
         this._commands = new Array<Command>();
-        this._spriteBatch = new SpriteBatch(1000);
+        this._spriteBatch = new SpriteBatch(2000);
     }
 
     public get context(): Context { return this._context; }
