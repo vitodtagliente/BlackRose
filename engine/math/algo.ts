@@ -24,5 +24,5 @@ export function clamp(value: number, min: number, max: number): number
 /// @param max inclusive
 export function random(min: number, max: number): number
 {
-    return Math.random() * (max + 1 - min) + min;
+    return Math.random() * (max - min) + min;
 }
