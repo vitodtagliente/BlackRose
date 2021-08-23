@@ -35,6 +35,11 @@ export default class Vector3
         v.data = this.data.slice();
     }
 
+    public equals(v: Vector3): boolean
+    {
+        return this.x == v.x && this.y == v.y && this.z == v.z;
+    }
+
     public add(v: Vector3): Vector3
     {
         return new Vector3(this.x + v.x, this.y + v.y, this.z + v.z);

@@ -22,11 +22,10 @@ class TestGameMode extends GameMode
         {
             this._texture = app.context.createTexture(image);
 
-            for (let i: number = 0; i < 100; ++i)
+            for (let i: number = 0; i < 40; ++i)
             {
                 const entity: Entity = app.world.spawn(new Entity("entity" + i), Vector3.zero(), Quaternion.identity());
-                entity.transform.position.set(random(-.5, .5), random(-.5, .5), 0);
-                console.log(entity.transform.position.data);
+                entity.transform.position.set(random(-.9, .9), random(-.9, .9), 0);
                 entity.transform.scale.set(0.15, 0.15, 1);
                 const sprite = entity.addComponent(new SpriteComponent(app));
                 sprite.texture = this._texture;

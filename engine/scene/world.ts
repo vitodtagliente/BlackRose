@@ -1,5 +1,5 @@
-import { Entity } from ".";
-import { Vector3, Quaternion } from "../math";
+import Entity from "./entity";
+import { Vector3, Quaternion, Transform } from "../math";
 
 export default class World
 {
@@ -19,11 +19,6 @@ export default class World
         for (const entity of this._entities)
         {
             entity.update(deltaTime);
-
-            if(entity.isStatic == false)
-            {
-                entity.transform.compute();
-            }
         }
     }
 

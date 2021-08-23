@@ -73,6 +73,14 @@ export default class Color
         c.data = this.data.slice();
     }
 
+    public set(r: number, g: number, b: number, a: number): void
+    {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.a = a;
+    }
+
     public get rgba(): string
     {
         return `rgba(${this.r * 255},${this.g * 255},${this.b * 255},${this.a * 255})`;

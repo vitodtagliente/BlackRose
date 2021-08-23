@@ -1,31 +1,71 @@
 import { Component, World } from '.';
 import *  as Math from '../math';
 
+class TransformState
+{
+    private _position: Math.Vector3;
+    private _rotation: Math.Vector3;
+    private _scale: Math.Vector3;
+
+    public constructor()
+    {
+        this._position = Math.Vector3.zero();
+        this._rotation = Math.Vector3.zero();
+        this._scale = Math.Vector3.one();
+    }
+
+    public update(transform: Math.Transform): boolean 
+    {
+        const isChanged: boolean = !this._position.equals(transform.position)
+            || !this._rotation.equals(transform.rotation)
+            || !this._scale.equals(transform.scale);
+
+        transform.position.copy(this._position);
+        transform.rotation.copy(this._rotation);
+        transform.scale.copy(this._scale);
+
+        return isChanged;
+    }
+}
+
 export default class Entity
 {
+    private _id: string;
     public name: string;
     public tag: string;
     public transform: Math.Transform;
+    private _transformState: TransformState;
     private _world: World;
     private _components: Array<Component>;
     private _parent: Entity;
     private _children: Array<Entity>;
-
-    public isStatic: boolean;
+    private _isStatic: boolean;
 
     public constructor(name?: string)
     {
+        this._id = name + global.Math.random().toString(36).substr(2, 9);
         this.name = name;
         this.transform = new Math.Transform;
+        this._transformState = new TransformState;
         this._components = new Array<Component>();
         this._children = new Array<Entity>();
 
-        this.isStatic = false;
+        this._isStatic = false;
     }
 
+    public get id(): string { return this._id; }
     public get world(): World { return this._world; }
     public get parent(): Entity { return this._parent; }
     public get children(): Array<Entity> { return this._children; }
+    public get isStatic(): boolean { return this._isStatic; }
+    public set isStatic(value: boolean)
+    {
+        if (value && !this._isStatic)
+        {
+            this._isStatic = value;
+            this.transform.compute();
+        }
+    }
 
     public prepareSpawn(world: World): void 
     {
@@ -52,6 +92,12 @@ export default class Entity
         for (const component of this._components)
         {
             component.update(deltaTime);
+        }
+
+        // recompute the transform matrix
+        if (!this.isStatic && this._transformState.update(this.transform))
+        {
+            this.transform.compute();
         }
     }
 
