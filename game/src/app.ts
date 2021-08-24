@@ -5,8 +5,29 @@ import { SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
 import { Quaternion, random, Vector3 } from 'blackrose/math';
-import { Entity } from 'blackrose/scene';
+import { Component, Entity } from 'blackrose/scene';
 import * as Editor from 'blackrose-editor';
+import { Application } from 'blackrose/application';
+import { KeyCode } from 'blackrose/input';
+
+class PlayerComponent extends Component
+{
+    private _speed: number = .001;
+
+    public constructor(app: Application)
+    {
+        super(app);
+    }
+
+    public update(deltaTime: number): void 
+    {
+        let h: number = 0;
+        if (app.keyboard.isKeysDown(KeyCode.ArrowLeft)) h = -1;
+        else if (app.keyboard.isKeysDown(KeyCode.ArrowRight)) h = 1;
+
+        this.transform.position.x += h * this._speed * deltaTime;
+    }
+}
 
 class TestGameMode extends GameMode
 {
@@ -23,15 +44,28 @@ class TestGameMode extends GameMode
         {
             this._texture = app.context.createTexture(image);
 
-            for (let i: number = 0; i < 1; ++i)
+            // player 
             {
-                const entity: Entity = app.world.spawn(new Entity("entity" + i), Vector3.zero(), Quaternion.identity());
+                const entity: Entity = app.world.spawn(new Entity("player"), Vector3.zero(), Quaternion.identity());
                 // entity.transform.position.set(random(-.9, .9), random(-.9, .9), 0);
                 entity.transform.scale.set(0.1, 0.1, 1);
                 const sprite = entity.addComponent(new SpriteRenderer(app));
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 9, size * 10, size, size);
+
+                entity.addComponent(new PlayerComponent(app));
+            }
+
+            for (let i: number = 0; i < 10; ++i)
+            {
+                const entity: Entity = app.world.spawn(new Entity("block" + i), Vector3.zero(), Quaternion.identity());
+                entity.transform.position.set(i * .2, -.2, 0);
+                entity.transform.scale.set(0.1, 0.1, 1);
+                const sprite = entity.addComponent(new SpriteRenderer(app));
+                sprite.texture = this._texture;
+                const size: number = 1 / 11;
+                sprite.textureRect.set(size * 1, 0, size, size);
             }
         });
     }
