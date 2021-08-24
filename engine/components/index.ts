@@ -1,6 +1,6 @@
-import SpriteComponent from "./sprite_component"
+import SpriteRenderer from "./sprite_renderer"
 
 export 
 {
-    SpriteComponent
+    SpriteRenderer
 }

@@ -1,6 +1,6 @@
 import { SpriteAnimation } from ".";
 import { Application } from "../application";
-import { SpriteComponent } from "../components";
+import { SpriteRenderer } from "../components";
 import { Component } from "../scene";
 
 class PlayingState 
@@ -13,7 +13,7 @@ class PlayingState
 
 export default class SpriteAnimator extends Component
 {
-    private _sprite: SpriteComponent;
+    private _sprite: SpriteRenderer;
     private _animations: Map<string, SpriteAnimation>;
     private _isPlaying: boolean;
     private _state: PlayingState;
@@ -30,7 +30,7 @@ export default class SpriteAnimator extends Component
 
     public init(): void 
     {
-        this._sprite = this.owner.findComponent(SpriteComponent);
+        this._sprite = this.owner.findComponent(SpriteRenderer);
     }
 
     public add(name: string, animation: SpriteAnimation)

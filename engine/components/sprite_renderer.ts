@@ -2,7 +2,7 @@ import { Application } from "../application";
 import { Texture, TextureRect } from "../graphics";
 import { Component } from "../scene";
 
-export default class SpriteComponent extends Component
+export default class SpriteRenderer extends Component
 {
     public texture: Texture;
     public textureRect: TextureRect;

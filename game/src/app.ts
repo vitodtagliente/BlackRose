@@ -1,11 +1,12 @@
 import * as BlackRose from 'blackrose';
 import { SpriteAnimation, SpriteAnimator } from 'blackrose/animation';
 import { Image } from 'blackrose/asset';
-import { SpriteComponent } from 'blackrose/components';
+import { SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
 import { Quaternion, random, Vector3 } from 'blackrose/math';
 import { Entity } from 'blackrose/scene';
+import * as Editor from 'blackrose-editor';
 
 class TestGameMode extends GameMode
 {
@@ -27,7 +28,7 @@ class TestGameMode extends GameMode
                 const entity: Entity = app.world.spawn(new Entity("entity" + i), Vector3.zero(), Quaternion.identity());
                 entity.transform.position.set(random(-.9, .9), random(-.9, .9), 0);
                 entity.transform.scale.set(0.15, 0.15, 1);
-                const sprite = entity.addComponent(new SpriteComponent(app));
+                const sprite = entity.addComponent(new SpriteRenderer(app));
                 sprite.texture = this._texture;
                 sprite.textureRect.width = 1 / 6;
 
@@ -48,6 +49,9 @@ class TestGameMode extends GameMode
         });
     }
 }
+
+const editor: Editor.Editor = new Editor.Editor();
+editor.startup();
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
 app.canvas.fullscreen();
