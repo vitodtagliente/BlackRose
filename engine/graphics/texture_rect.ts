@@ -24,4 +24,12 @@ export default class TextureRect
     {
         r.data = this.data.slice();
     }
+
+    public set(x: number, y: number, width: number, height: number): void 
+    {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
 }

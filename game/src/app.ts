@@ -19,32 +19,19 @@ class TestGameMode extends GameMode
 
     public init(): void 
     {
-        const image: Image = Image.load("assets/cat.png", () =>
+        const image: Image = Image.load("assets/spritesheet_default.png", () =>
         {
             this._texture = app.context.createTexture(image);
 
-            for (let i: number = 0; i < 100; ++i)
+            for (let i: number = 0; i < 1; ++i)
             {
                 const entity: Entity = app.world.spawn(new Entity("entity" + i), Vector3.zero(), Quaternion.identity());
-                entity.transform.position.set(random(-.9, .9), random(-.9, .9), 0);
-                entity.transform.scale.set(0.15, 0.15, 1);
+                // entity.transform.position.set(random(-.9, .9), random(-.9, .9), 0);
+                entity.transform.scale.set(0.1, 0.1, 1);
                 const sprite = entity.addComponent(new SpriteRenderer(app));
                 sprite.texture = this._texture;
-                sprite.textureRect.width = 1 / 6;
-
-                const animator = entity.addComponent(new SpriteAnimator(app));
-                {
-                    const walk: SpriteAnimation = new SpriteAnimation;
-                    const size: number = 1 / 6;
-                    walk.add(new TextureRect(0 * size, 0, size, 1), 100);
-                    walk.add(new TextureRect(1 * size, 0, size, 1), 100);
-                    walk.add(new TextureRect(2 * size, 0, size, 1), 100);
-                    walk.add(new TextureRect(3 * size, 0, size, 1), 100);
-                    walk.add(new TextureRect(4 * size, 0, size, 1), 100);
-                    walk.add(new TextureRect(5 * size, 0, size, 1), 100);
-                    animator.add("walk", walk);
-                }
-                animator.play("walk", true);
+                const size: number = 1 / 11;
+                sprite.textureRect.set(size * 9, size * 10, size, size);
             }
         });
     }
