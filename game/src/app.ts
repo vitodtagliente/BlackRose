@@ -4,8 +4,8 @@ import { Image } from 'blackrose/asset';
 import { SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
-import { Quaternion, random, Vector3 } from 'blackrose/math';
-import { Component, Entity } from 'blackrose/scene';
+import { Quaternion, random, Rect, Vector3 } from 'blackrose/math';
+import { CameraClippingPlanes, Component, Entity, OrtographicCamera } from 'blackrose/scene';
 import * as Editor from 'blackrose-editor';
 import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
@@ -44,6 +44,17 @@ class TestGameMode extends GameMode
         {
             this._texture = app.context.createTexture(image);
 
+            // camera
+            {
+                const camera: OrtographicCamera = app.world.spawn(
+                    new OrtographicCamera("camera", new Rect(0, 0, 1, 1), new CameraClippingPlanes),
+                    Vector3.zero(),
+                    Quaternion.identity()
+                );
+
+                app.context.camera = camera.matrix;
+            }
+
             // player 
             {
                 const entity: Entity = app.world.spawn(new Entity("player"), Vector3.zero(), Quaternion.identity());
@@ -77,14 +88,3 @@ editor.startup();
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
 app.canvas.fullscreen();
 app.run(new TestGameMode());
-
-/*
-let camera: Camera = app.world.spawn(new Camera("camera"), Vector3.zero(), Quaternion.identity());
-camera.viewport.x = -1;
-camera.viewport.y = -1;
-camera.computeViewMatrix();
-camera.transform.compute();
-camera.compute();
-
-app.context.camera = camera.matrix;
-*/
