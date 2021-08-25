@@ -20,6 +20,7 @@ export default abstract class Camera extends Entity
         super(name);
         this._mode = mode;
         this.background = Color.black();
+        this._matrix = Matrix4.identity();
         this._view = Matrix4.identity();
     }
 

@@ -51,8 +51,7 @@ class TestGameMode extends GameMode
                     Vector3.zero(),
                     Quaternion.identity()
                 );
-
-                app.context.camera = camera.matrix;
+                app.camera = camera;
             }
 
             // player 

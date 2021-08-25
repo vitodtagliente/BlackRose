@@ -9,18 +9,25 @@ export default abstract class Context
 {
     private _canvas: Canvas;
     private _api: API;
-    public camera: Matrix4;
+    private _camera: Matrix4;
 
     public constructor(canvas: Canvas, api: API)
     {
         this._canvas = canvas;
         this._api = api;
 
-        this.camera = Matrix4.identity();
+        this._camera = Matrix4.identity();
     }
 
     public get api(): API { return this._api; }
     public get canvas(): Canvas { return this._canvas; }
+
+    public get camera(): Matrix4 { return this._camera; }
+    public set camera(value: Matrix4)
+    {
+        if (value) value.copy(this._camera);
+        Matrix4.identity().copy(this._camera);
+    }
 
     public abstract createIndexBuffer(size: number, mode: BufferUsageMode): IndexBuffer;
     public abstract createVertexBuffer(size: number, mode: BufferUsageMode): VertexBuffer;

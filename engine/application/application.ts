@@ -1,6 +1,7 @@
 import { Core, Debug, Game, Graphics, Input, Scene } from '..';
 import { Section } from '../debug';
 import { ContextFactory } from '../graphics';
+import { Camera } from '../scene';
 import Canvas from './canvas';
 import Stats from './stats';
 
@@ -17,6 +18,7 @@ export default class Application
     private _mouse: Input.Mouse;
     private _touch: Input.Touch;
     private _gameMode: Game.GameMode;
+    public camera: Camera;
 
     public constructor(canvasId: string, api: Graphics.API)
     {
@@ -72,6 +74,11 @@ export default class Application
         this._renderer.begin();
         this._world.update(deltaTime);
         this._gameMode.update(deltaTime);
+        if (this.camera)
+        {
+            this.camera.compute();
+            this._context.camera = this.camera.matrix;
+        }
         this._renderer.flush();
 
         this._stats.update();

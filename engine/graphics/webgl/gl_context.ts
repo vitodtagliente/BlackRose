@@ -196,6 +196,7 @@ export default class GLContext extends Context
         this._spriteBatchProgram.use();
         texture.bind(0);
         this._spriteBatchProgram.setInt("u_texture", 0);
+        this._spriteBatchProgram.setMat4("u_matrix", this.camera);
 
         // draw
         const primitiveType = this._context.TRIANGLES;
