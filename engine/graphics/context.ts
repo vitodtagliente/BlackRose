@@ -26,7 +26,7 @@ export default abstract class Context
     public set camera(value: Matrix4)
     {
         if (value) value.copy(this._camera);
-        Matrix4.identity().copy(this._camera);
+        else Matrix4.identity().copy(this._camera);
     }
 
     public abstract createIndexBuffer(size: number, mode: BufferUsageMode): IndexBuffer;
