@@ -4,8 +4,14 @@ import Camera from "./camera";
 
 export class CameraClippingPlanes
 {
-    public near: number = -30;
-    public far: number = 1000;
+    public near: number;
+    public far: number;
+
+    public constructor(near: number = -30, far: number = 1000)
+    {
+        this.near = near;
+        this.far = far;
+    }
 }
 
 export default class OrtographicCamera extends Camera

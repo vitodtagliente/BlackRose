@@ -50,7 +50,7 @@ class TestGameMode extends GameMode
                     new OrtographicCamera(
                         "camera",
                         new Rect(-1, -1, 1, 1),
-                        new CameraClippingPlanes
+                        new CameraClippingPlanes()
                     ),
                     Vector3.zero(),
                     Quaternion.identity()
@@ -61,8 +61,8 @@ class TestGameMode extends GameMode
             // player 
             {
                 const entity: Entity = app.world.spawn(new Entity("player"), Vector3.zero(), Quaternion.identity());
-                entity.transform.scale.set(0.1, 0.1, 1);
                 const sprite = entity.addComponent(new SpriteRenderer(app));
+                entity.transform.scale.set(64 / app.canvas.width, 64 / app.canvas.height, 1);
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 9, size * 10, size, size);
@@ -70,11 +70,12 @@ class TestGameMode extends GameMode
                 entity.addComponent(new PlayerComponent(app));
             }
 
+            // blocks
             for (let i: number = 0; i < 10; ++i)
             {
                 const entity: Entity = app.world.spawn(new Entity("block" + i), Vector3.zero(), Quaternion.identity());
-                entity.transform.position.set(i * .2, -.2, 0);
-                entity.transform.scale.set(0.1, 0.1, 1);
+                entity.transform.position.set(i * 128 / app.canvas.width, -128 / app.canvas.height, 0);
+                entity.transform.scale.set(64 / app.canvas.width, 64 / app.canvas.height, 1);
                 const sprite = entity.addComponent(new SpriteRenderer(app));
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
