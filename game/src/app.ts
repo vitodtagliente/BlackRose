@@ -11,7 +11,7 @@ import { KeyCode } from 'blackrose/input';
 
 class PlayerComponent extends Component
 {
-    private _speed: number = .001;
+    private _speed: number = 1;
 
     public constructor(app: Application)
     {
@@ -84,8 +84,8 @@ class TestGameMode extends GameMode
             for (let i: number = 0; i < 10; ++i)
             {
                 const entity: Entity = app.world.spawn(new Entity("block" + i), Vector3.zero(), Quaternion.identity());
-                entity.transform.position.set(i * 128 / app.canvas.width, -128 / app.canvas.height, 0);
-                entity.transform.scale.set(64 / app.canvas.width, 64 / app.canvas.height, 1);
+                entity.transform.position.set(i * 64, -64, 0);
+                entity.transform.scale.set(32, 32, 1);
                 const sprite = entity.addComponent(new SpriteRenderer(app));
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
