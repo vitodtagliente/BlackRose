@@ -94,7 +94,11 @@ class TestGameMode extends GameMode
         });
     }
 }
+let app: BlackRose.Application.Application;
 
-const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
-app.canvas.fullscreen();
-app.run(new TestGameMode());
+window.onload = () =>
+{
+    app = new BlackRose.Application.Application('game', BlackRose.Graphics.API.WebGL);
+    app.canvas.fullscreen();
+    app.run(new TestGameMode());
+}
