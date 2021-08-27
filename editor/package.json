@@ -1,24 +1,21 @@
 {
-  "name": "blackrose-editor",
-  "version": "1.0.0",
-  "description": "",
+  "name": "blackrose",
+  "version": "0.0.0",
+  "description": "BlackRose Game Engine",
+  "main": "index.js",
+  "author": {
+    "name": ""
+  },
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server"
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
   },
-  "keywords": [],
-  "author": "Vito Domenico Tagliente",
-  "license": "MIT",
   "devDependencies": {
-    "clean-webpack-plugin": "^3.0.0",
-    "html-webpack-plugin": "^3.2.0",
-    "ts-loader": "^6.0.4",
-    "typescript": "^3.6.2",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.8.0"
+    "@types/dat.gui": "^0.7.7",
+    "@types/node": "^14.14.7",
+    "@types/stats.js": "^0.17.0",
+    "blackrose": "file:../engine",
+    "typescript": "^4.0.5"
   },
-  "dependencies": {
-    "blackrose": "file:../engine"
-  }
+  "dependencies": {}
 }
