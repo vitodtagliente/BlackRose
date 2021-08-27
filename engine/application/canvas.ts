@@ -45,7 +45,8 @@ export default class Canvas
     public get isFullscreen(): boolean { return this._isFullscreen; }
     public get isValid(): boolean { return this.canvas != null; }
 
-    public get width(): number { return this.canvas.width; }
-    public get height(): number { return this.canvas.height; }
+    public get width(): number { return this.canvas.clientWidth; }
+    public get height(): number { return this.canvas.clientHeight; }
     public get size(): Vector2 { return new Vector2(this.width, this.height); }
+    public get pixelRatio(): number { return window.devicePixelRatio; }
 }
