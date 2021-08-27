@@ -46,6 +46,7 @@ class TestGameMode extends GameMode
 
             // camera
             {
+
                 const camera: OrtographicCamera = app.world.spawn(
                     new OrtographicCamera(
                         "camera",
@@ -59,11 +60,20 @@ class TestGameMode extends GameMode
                 app.camera = camera;
             }
 
+            {
+                app.canvas.onResize.on(() =>
+                {
+                    (app.camera as OrtographicCamera).viewport.set(-app.canvas.width / 2, -app.canvas.height / 2, app.canvas.width / 2, app.canvas.height / 2);
+                    app.camera.computeViewMatrix();
+                    app.camera.compute();
+                });
+            }
+
             // player 
             {
                 const entity: Entity = app.world.spawn(new Entity("player"), Vector3.zero(), Quaternion.identity());
                 const sprite = entity.addComponent(new SpriteRenderer(app));
-                entity.transform.scale.set(64, 64, 1);
+                entity.transform.scale.set(32, 32, 1);
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 9, size * 10, size, size);
