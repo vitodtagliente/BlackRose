@@ -6,7 +6,6 @@ import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
 import { Quaternion, random, Rect, Vector3 } from 'blackrose/math';
 import { CameraClippingPlanes, Component, Entity, OrtographicCamera } from 'blackrose/scene';
-import * as Editor from 'blackrose-editor';
 import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
 
@@ -95,9 +94,6 @@ class TestGameMode extends GameMode
         });
     }
 }
-
-const editor: Editor.Editor = new Editor.Editor();
-editor.startup();
 
 const app = new BlackRose.Application.Application('mycanvas', BlackRose.Graphics.API.WebGL);
 app.canvas.fullscreen();
