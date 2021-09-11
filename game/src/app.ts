@@ -1,4 +1,5 @@
 import * as BlackRose from 'blackrose';
+import * as BlackRoseEditor from 'blackrose-editor';
 import { SpriteAnimation, SpriteAnimator } from 'blackrose/animation';
 import { Image } from 'blackrose/asset';
 import { SpriteRenderer } from 'blackrose/components';
@@ -11,7 +12,7 @@ import { KeyCode } from 'blackrose/input';
 
 class PlayerComponent extends Component
 {
-    private _speed: number = .05;
+    private _speed: number = .005;
 
     public constructor(app: Application)
     {
@@ -63,7 +64,9 @@ class TestGameMode extends GameMode
             {
                 app.canvas.onResize.on(() =>
                 {
-                    (app.camera as OrtographicCamera).viewport.set(-app.canvas.width / 2, -app.canvas.height / 2, app.canvas.width / 2, app.canvas.height / 2);
+                    const w: number = app.canvas.width / 2 / 32;
+                    const h: number = app.canvas.height / 2 / 32;
+                    (app.camera as OrtographicCamera).viewport.set(-w, -h, w, h);
                     app.camera.computeViewMatrix();
                     app.camera.compute();
                 });
@@ -93,10 +96,15 @@ class TestGameMode extends GameMode
         });
     }
 }
+
 let app: BlackRose.Application.Application;
+let editor: BlackRoseEditor.Editor;
 
 window.onload = () =>
 {
+    editor = new BlackRoseEditor.Editor();
+    editor.open();
+
     app = new BlackRose.Application.Application('game', BlackRose.Graphics.API.WebGL);
     app.canvas.fullscreen();
     app.run(new TestGameMode());

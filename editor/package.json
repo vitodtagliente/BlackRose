@@ -1,7 +1,7 @@
 {
-  "name": "blackrose",
+  "name": "blackrose-editor",
   "version": "0.0.0",
-  "description": "BlackRose Game Engine",
+  "description": "BlackRose Game Engine Editor",
   "main": "index.js",
   "author": {
     "name": ""
@@ -16,6 +16,5 @@
     "@types/stats.js": "^0.17.0",
     "blackrose": "file:../engine",
     "typescript": "^4.0.5"
-  },
-  "dependencies": {}
+  }
 }
