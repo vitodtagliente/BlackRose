@@ -11,7 +11,7 @@ import { KeyCode } from 'blackrose/input';
 
 class PlayerComponent extends Component
 {
-    private _speed: number = 1;
+    private _speed: number = .05;
 
     public constructor(app: Application)
     {
@@ -45,11 +45,12 @@ class TestGameMode extends GameMode
 
             // camera
             {
-
+                const w: number = app.canvas.width / 2 / 32;
+                const h: number = app.canvas.height / 2 / 32;
                 const camera: OrtographicCamera = app.world.spawn(
                     new OrtographicCamera(
                         "camera",
-                        new Rect(-app.canvas.width / 2, -app.canvas.height / 2, app.canvas.width / 2, app.canvas.height / 2),
+                        new Rect(-w, -h, w, h),
                         // new Rect(-1, -1, 1, 1),
                         new CameraClippingPlanes()
                     ),
@@ -72,7 +73,6 @@ class TestGameMode extends GameMode
             {
                 const entity: Entity = app.world.spawn(new Entity("player"), Vector3.zero(), Quaternion.identity());
                 const sprite = entity.addComponent(new SpriteRenderer(app));
-                entity.transform.scale.set(32, 32, 1);
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 9, size * 10, size, size);
@@ -84,8 +84,7 @@ class TestGameMode extends GameMode
             for (let i: number = 0; i < 10; ++i)
             {
                 const entity: Entity = app.world.spawn(new Entity("block" + i), Vector3.zero(), Quaternion.identity());
-                entity.transform.position.set(i * 64, -64, 0);
-                entity.transform.scale.set(32, 32, 1);
+                entity.transform.position.set(i * 2, -2, 0);
                 const sprite = entity.addComponent(new SpriteRenderer(app));
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
