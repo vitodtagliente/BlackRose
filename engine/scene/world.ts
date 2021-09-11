@@ -1,15 +1,22 @@
 import Entity from "./entity";
 import { Vector3, Quaternion, Transform } from "../math";
+import { Signal } from "../core";
 
 export default class World
 {
     public name: string;
     private _entities: Array<Entity>;
+    
+    public onEntitySpawn: Signal<Entity>;
+    public onEntityDestroy: Signal<Entity>;
 
     public constructor(name?: string)
     {
         this.name = name;
         this._entities = new Array<Entity>();
+
+        this.onEntitySpawn = new Signal<Entity>();
+        this.onEntityDestroy = new Signal<Entity>();
     }
 
     public get entities(): Array<Entity> { return this._entities; }
@@ -29,6 +36,8 @@ export default class World
         entity.prepareSpawn(this);
         this._entities.push(entity);
 
+        this.onEntitySpawn.emit(entity);
+
         return entity;
     }
 
@@ -38,6 +47,9 @@ export default class World
         if (index >= 0 && index < this._entities.length)
         {
             this._entities[index].prepareDestroy();
+
+            this.onEntityDestroy.emit(this._entities[index]);
+
             delete this._entities[index];
             this._entities.splice(index, 1);
         }

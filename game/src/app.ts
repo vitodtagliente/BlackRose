@@ -26,6 +26,16 @@ class PlayerComponent extends Component
         else if (app.keyboard.isKeysDown(KeyCode.ArrowRight)) h = 1;
 
         this.transform.position.x += h * this._speed * deltaTime;
+
+        if (app.keyboard.isKeyPressed(KeyCode.D))
+        {
+            app.world.destroy(this.owner);
+        }
+
+        if (app.keyboard.isKeyPressed(KeyCode.J))
+        {
+            // test
+        }
     }
 }
 
@@ -102,10 +112,10 @@ let editor: BlackRoseEditor.Editor;
 
 window.onload = () =>
 {
-    editor = new BlackRoseEditor.Editor();
-    editor.open();
-
     app = new BlackRose.Application.Application('game', BlackRose.Graphics.API.WebGL);
     app.canvas.fullscreen();
     app.run(new TestGameMode());
+
+    editor = new BlackRoseEditor.Editor();
+    editor.open(app);
 }
