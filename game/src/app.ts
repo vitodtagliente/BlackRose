@@ -36,6 +36,11 @@ class PlayerComponent extends Component
         {
             // test
         }
+
+        if (app.keyboard.isKeyPressed(KeyCode.C))
+        {
+            app.world.spawn(new Entity("verylargenameforanentity"), Vector3.zero(), Quaternion.identity());
+        }
     }
 }
 
