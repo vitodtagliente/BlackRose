@@ -34,7 +34,7 @@ class PlayerComponent extends Component
 
         if (app.keyboard.isKeyPressed(KeyCode.J))
         {
-            // test
+            console.log(this.owner.stringify());
         }
 
         if (app.keyboard.isKeyPressed(KeyCode.C))

@@ -1,5 +1,5 @@
 import Entity from "./entity";
-import { Vector3, Quaternion, Transform } from "../math";
+import { Vector3, Quaternion } from "../math";
 import { Signal } from "../core";
 
 export default class World
@@ -33,7 +33,7 @@ export default class World
     {
         position.copy(entity.transform.position);
         entity.transform.rotation.set(rotation.x, rotation.y, rotation.z);
-        entity.prepareSpawn(this);
+        entity.prepareSpawn();
         this._entities.push(entity);
 
         this.onEntitySpawn.emit(entity);

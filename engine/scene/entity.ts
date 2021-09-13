@@ -1,4 +1,4 @@
-import { Component, World } from '.';
+import { Component } from '.';
 import *  as Math from '../math';
 
 class TransformState
@@ -35,7 +35,6 @@ export default class Entity
     public tag: string;
     public transform: Math.Transform;
     private _transformState: TransformState;
-    private _world: World;
     private _components: Array<Component>;
     private _parent: Entity;
     private _children: Array<Entity>;
@@ -54,7 +53,6 @@ export default class Entity
     }
 
     public get id(): string { return this._id; }
-    public get world(): World { return this._world; }
     public get parent(): Entity { return this._parent; }
     public get children(): Array<Entity> { return this._children; }
     public get isStatic(): boolean { return this._isStatic; }
@@ -67,9 +65,9 @@ export default class Entity
         }
     }
 
-    public prepareSpawn(world: World): void 
+    public prepareSpawn(): void 
     {
-        this._world = world;
+
     }
 
     public prepareDestroy(): void 
@@ -142,5 +140,12 @@ export default class Entity
             }
         }
         this._components = result;
+    }
+
+    public stringify(): string
+    {
+        return JSON.stringify(this, [
+            'id', 'name', 'tag', 'transform', 'parent', 'children', 'isStatic'
+        ]);
     }
 }
