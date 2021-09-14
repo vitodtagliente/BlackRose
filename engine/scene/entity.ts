@@ -1,5 +1,6 @@
 import { Component } from '.';
 import *  as Math from '../math';
+import World from './world';
 
 class TransformState
 {
@@ -65,7 +66,7 @@ export default class Entity
         }
     }
 
-    public prepareSpawn(): void 
+    public prepareSpawn(world: World): void 
     {
 
     }

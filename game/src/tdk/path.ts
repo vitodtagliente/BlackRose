@@ -1,21 +1,30 @@
 import * as BlackRose from "blackrose";
 
-export default class Path 
+export default class Path extends BlackRose.Scene.Entity
 {
-    private _name: string;
-    private _points: Array<BlackRose.Math.Vector3>;
+    private _steps: Array<BlackRose.Math.Vector3>;
 
-    public constructor(name: string)
+    public constructor(name?: string)
     {
-        this._name = name;
-        this._points = [];
+        super(name);
+        this._steps = [];
     }
 
-    public get name(): string { return this._name; }
-    public get points(): Array<BlackRose.Math.Vector3> { return this._points; }
+    public get steps(): Array<BlackRose.Math.Vector3> { return this._steps; }
 
-    public static findOrRandom(name: string): Path 
+    public static findOrRandom(world: BlackRose.Scene.World, name: string): Path 
     {
-        return null;
+        const paths: Array<Path> = world.findEntities(Path);
+        if (paths.length == 0)
+            return null;
+
+        for (const path of paths)
+        {
+            if (path.name == name)
+                return path;
+        }
+
+        const index: number = BlackRose.Math.random(0, paths.length);
+        return paths[index];
     }
 }

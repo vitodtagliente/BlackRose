@@ -33,7 +33,7 @@ export default class World
     {
         position.copy(entity.transform.position);
         entity.transform.rotation.set(rotation.x, rotation.y, rotation.z);
-        entity.prepareSpawn();
+        entity.prepareSpawn(this);
         this._entities.push(entity);
 
         this.onEntitySpawn.emit(entity);
