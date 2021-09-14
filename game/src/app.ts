@@ -11,40 +11,6 @@ import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
 import { Minion, Path } from './tdk';
 
-class PlayerComponent extends Component
-{
-    private _speed: number = .005;
-
-    public constructor(app: Application)
-    {
-        super(app);
-    }
-
-    public update(deltaTime: number): void 
-    {
-        let h: number = 0;
-        if (app.keyboard.isKeysDown(KeyCode.ArrowLeft)) h = -1;
-        else if (app.keyboard.isKeysDown(KeyCode.ArrowRight)) h = 1;
-
-        this.transform.position.x += h * this._speed * deltaTime;
-
-        if (app.keyboard.isKeyPressed(KeyCode.D))
-        {
-            app.world.destroy(this.owner);
-        }
-
-        if (app.keyboard.isKeyPressed(KeyCode.J))
-        {
-            console.log(this.owner.stringify());
-        }
-
-        if (app.keyboard.isKeyPressed(KeyCode.C))
-        {
-            app.world.spawn(new Entity("verylargenameforanentity"), Vector3.zero(), Quaternion.identity());
-        }
-    }
-}
-
 class TestGameMode extends GameMode
 {
     private _texture: Texture;
@@ -88,7 +54,7 @@ class TestGameMode extends GameMode
                 });
             }
 
-            // blocks
+            // Paths
             const path: Path = app.world.spawn(new Path("path1"), Vector3.zero(), Quaternion.identity());
             for (let i: number = 0; i < 10; ++i)
             {
@@ -102,15 +68,18 @@ class TestGameMode extends GameMode
                 path.push(entity.transform.position);
             }
 
-            // player 
+            // Minion 
             {
                 const entity: Minion = app.world.spawn(new Minion("player"), Vector3.zero(), Quaternion.identity());
                 const sprite = entity.addComponent(new SpriteRenderer(app));
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 9, size * 10, size, size);
+            }
 
-                entity.addComponent(new PlayerComponent(app));
+            // Towers
+            {
+                
             }
         });
     }

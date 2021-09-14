@@ -7,5 +7,10 @@ export default class Tower extends BlackRose.Scene.Entity
         super(name);
     }
 
-    
+    public update(deltaTime: number): void 
+    {
+        super.update(deltaTime);
+
+        
+    }
 }
