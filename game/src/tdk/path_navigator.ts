@@ -17,10 +17,12 @@ export default class PathNavigator
     {
         if (this._path)
         {
-            return this._stepIndex < this._path.steps.length;
+            return this._stepIndex >= this._path.steps.length;
         }
         return false;
     }
+
+    public get isValid(): boolean { return this._path != null; }
 
     public follow(path: Path): void 
     {

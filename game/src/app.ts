@@ -9,6 +9,7 @@ import { Quaternion, random, Rect, Vector3 } from 'blackrose/math';
 import { CameraClippingPlanes, Component, Entity, OrtographicCamera } from 'blackrose/scene';
 import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
+import { Minion, Path } from './tdk';
 
 class PlayerComponent extends Component
 {
@@ -87,18 +88,8 @@ class TestGameMode extends GameMode
                 });
             }
 
-            // player 
-            {
-                const entity: Entity = app.world.spawn(new Entity("player"), Vector3.zero(), Quaternion.identity());
-                const sprite = entity.addComponent(new SpriteRenderer(app));
-                sprite.texture = this._texture;
-                const size: number = 1 / 11;
-                sprite.textureRect.set(size * 9, size * 10, size, size);
-
-                entity.addComponent(new PlayerComponent(app));
-            }
-
             // blocks
+            const path: Path = app.world.spawn(new Path("path1"), Vector3.zero(), Quaternion.identity());
             for (let i: number = 0; i < 10; ++i)
             {
                 const entity: Entity = app.world.spawn(new Entity("block" + i), Vector3.zero(), Quaternion.identity());
@@ -107,6 +98,19 @@ class TestGameMode extends GameMode
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 1, 0, size, size);
+
+                path.push(entity.transform.position);
+            }
+
+            // player 
+            {
+                const entity: Minion = app.world.spawn(new Minion("player"), Vector3.zero(), Quaternion.identity());
+                const sprite = entity.addComponent(new SpriteRenderer(app));
+                sprite.texture = this._texture;
+                const size: number = 1 / 11;
+                sprite.textureRect.set(size * 9, size * 10, size, size);
+
+                entity.addComponent(new PlayerComponent(app));
             }
         });
     }
