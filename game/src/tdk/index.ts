@@ -4,6 +4,7 @@ import PathNavigator from "./path_navigator"
 import Pawn from "./pawn"
 import Projectile from "./projectile"
 import Tower from "./tower"
+import WaveManager from "./wave_manager"
 
 export
 {
@@ -12,5 +13,6 @@ export
     PathNavigator,
     Pawn,
     Projectile,
-    Tower
+    Tower,
+    WaveManager
 }
