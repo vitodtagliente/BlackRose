@@ -6,13 +6,15 @@ in vec4 a_position;
 in vec4 a_color;
 
 out vec4 v_color;
+
+uniform mat4 u_matrix;
  
 // all shaders have a main function
 void main() {
  
   // gl_Position is a special variable a vertex shader
   // is responsible for setting
-  gl_Position = a_position;
+  gl_Position = u_matrix * a_position;
   v_color = a_color;
 }
 `;
@@ -28,7 +30,7 @@ out vec4 outColor;
  
 void main() {
   // Just set the output to a constant reddish-purple
-  outColor = vec4(1, 0, 0.5, 1);
+  outColor = v_color;
 }
 `;
 

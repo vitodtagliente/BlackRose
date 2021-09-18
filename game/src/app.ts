@@ -11,7 +11,7 @@ import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
 import { Minion, Path } from './tdk';
 
-const renderSprites: boolean = false;
+const renderSprites: boolean = true;
 
 class TestGameMode extends GameMode
 {

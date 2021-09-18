@@ -197,7 +197,7 @@ export default class GLContext extends Context
                 const [position, color] = data[i];
 
                 vertices.push(...position.data);
-                // vertices.push(...color.data);
+                vertices.push(...color.data);
             }
 
             this._gizmosBatchRenderData.vertexBuffer.bind();
@@ -205,6 +205,7 @@ export default class GLContext extends Context
         }
 
         this._gizmosBatchProgram.use();
+        this._gizmosBatchProgram.setMat4("u_matrix", this.camera);
 
         // draw
         const primitiveType = this._context.LINES;
