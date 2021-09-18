@@ -11,7 +11,7 @@ export default class Path extends BlackRose.Scene.Entity
     }
 
     public get steps(): Array<BlackRose.Math.Vector3> { return this._steps; }
-
+    
     public push(position: BlackRose.Math.Vector3): void 
     {
         this._steps.push(position);
