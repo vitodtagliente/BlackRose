@@ -79,6 +79,7 @@ export default class Application
             this.camera.compute();
             this._context.camera = this.camera.matrix;
         }
+        this._world.render(this._renderer);
         this._renderer.flush();
 
         this._stats.update();

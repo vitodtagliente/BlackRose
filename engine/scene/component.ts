@@ -1,5 +1,6 @@
 import { Entity } from ".";
 import { Application } from "../application";
+import { Renderer } from "../graphics";
 import { Transform } from "../math";
 
 export default abstract class Component
@@ -34,4 +35,5 @@ export default abstract class Component
     public init(): void { }
     public unint(): void { }
     public update(deltaTime: number): void { }
+    public render(renderer: Renderer): void { }
 }

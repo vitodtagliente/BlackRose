@@ -1,6 +1,7 @@
 import Entity from "./entity";
 import { Vector3, Quaternion } from "../math";
 import { Signal } from "../core";
+import { Renderer } from "../graphics";
 
 export default class World
 {
@@ -26,6 +27,14 @@ export default class World
         for (const entity of this._entities)
         {
             entity.update(deltaTime);
+        }
+    }
+
+    public render(renderer: Renderer): void 
+    {
+        for (const entity of this._entities)
+        {
+            entity.render(renderer);
         }
     }
 

@@ -1,4 +1,5 @@
 import { Component } from '.';
+import { Renderer } from '../graphics';
 import *  as Math from '../math';
 import World from './world';
 
@@ -98,6 +99,15 @@ export default class Entity
         if (!this.isStatic && this._transformState.update(this.transform))
         {
             this.transform.compute();
+        }
+    }
+
+    public render(renderer: Renderer): void 
+    {
+        for (const component of this._components)
+        {
+            if (!component.enabled) continue;
+            component.render(renderer);
         }
     }
 
