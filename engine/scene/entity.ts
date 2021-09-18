@@ -90,6 +90,7 @@ export default class Entity
     {
         for (const component of this._components)
         {
+            if (!component.enabled) continue;
             component.update(deltaTime);
         }
 

@@ -11,6 +11,8 @@ import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
 import { Minion, Path } from './tdk';
 
+const renderSprites: boolean = false;
+
 class TestGameMode extends GameMode
 {
     private _texture: Texture;
@@ -69,6 +71,8 @@ class TestGameMode extends GameMode
 
                 path.push(entity.transform.position);
 
+                sprite.enabled = renderSprites;
+
                 this._points.push(entity.transform.position);
             }
 
@@ -79,6 +83,8 @@ class TestGameMode extends GameMode
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 9, size * 10, size, size);
+
+                sprite.enabled = renderSprites;
             }
 
             // Towers

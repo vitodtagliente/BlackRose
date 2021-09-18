@@ -7,6 +7,8 @@ export default abstract class Component
     private _app: Application;
     private _owner: Entity;
 
+    public enabled: boolean = true;
+
     public constructor(app: Application)
     {
         this._app = app;
