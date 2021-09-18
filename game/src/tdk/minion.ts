@@ -49,6 +49,7 @@ export default class Minion extends Pawn
     {
         super.render(renderer);
 
-        renderer.gizmos.rect(this.transform.position, 1, Color.blue());
+        renderer.gizmos.rect(this.transform.position, 1, 1, Color.blue());
+        renderer.gizmos.circle(this.transform.position, 1, Color.red());
     }
 }
