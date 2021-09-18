@@ -16,6 +16,7 @@ import GLIndexBuffer from "./gl_index_buffer";
 import { VertexBufferElement, VertexBufferElementType } from "../vertex_buffer";
 import RenderData from "./render_data";
 import SpriteBatchRenderData from "./spritebatch_render_data";
+import GizmosBatchRenderData from "./gizmosbatch_render_data";
 
 export default class GLContext extends Context
 {
@@ -24,9 +25,11 @@ export default class GLContext extends Context
     private _spriteProgram: GLShaderProgram;
     private _subSpriteProgram: GLShaderProgram;
     private _spriteBatchProgram: GLShaderProgram;
+    private _gizmosBatchProgram: GLShaderProgram;
 
     private _spriteRenderData: RenderData;
     private _spriteBatchRenderData: SpriteBatchRenderData;
+    private _gizmosBatchRenderData: GizmosBatchRenderData;
 
     public constructor(canvas: Canvas)
     {
@@ -64,6 +67,12 @@ export default class GLContext extends Context
             this._spriteBatchProgram = this.createShaderProgram(vs, fs);
         }
 
+        {
+            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.ColorShader.VertexSource);
+            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.ColorShader.FragmentSource);
+            this._gizmosBatchProgram = this.createShaderProgram(vs, fs);
+        }
+
         // sprite render data
         {
             const quad: Geometries.Quad = new Geometries.Quad;
@@ -84,6 +93,11 @@ export default class GLContext extends Context
         // sprite batch render data
         {
             this._spriteBatchRenderData = new SpriteBatchRenderData(this, 2000);
+        }
+
+        // gizmos batch render data
+        {
+            this._gizmosBatchRenderData = new GizmosBatchRenderData(this, 2000);
         }
     }
 
@@ -167,6 +181,36 @@ export default class GLContext extends Context
         var count = 6;
         var indexType = this._context.UNSIGNED_SHORT;
         this._context.drawElements(primitiveType, count, indexType, offset);
+    }
+
+    public drawLines(data: Array<[Vector3, Color]>): void 
+    {
+        if (data.length == 0) return;
+
+        this._gizmosBatchRenderData.bind();
+
+        // fill sprites geometries and data
+        {
+            let vertices: Array<number> = [];
+            for (let i: number = 0; i < data.length; ++i)
+            {
+                const [position, color] = data[i];
+
+                vertices.push(...position.data);
+                vertices.push(...color.data);
+            }
+
+            this._spriteBatchRenderData.vertexBuffer.bind();
+            this._spriteBatchRenderData.vertexBuffer.fillData(vertices);
+        }
+
+        this._gizmosBatchProgram.use();
+
+        // draw
+        const primitiveType = this._context.LINES;
+        const offset: number = 0;
+        const count: number = data.length;
+        this._context.drawArrays(primitiveType, offset, count);
     }
 
     public drawSprites(texture: Texture, data: Array<[Transform, TextureRect]>): void

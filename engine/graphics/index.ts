@@ -13,6 +13,7 @@ import Shader, { ShaderType } from "./shader"
 import ShaderProgram from "./shader_program"
 import IndexBuffer from "./index_buffer"
 import VertexBuffer, { VertexBufferElement, VertexBufferElementType, VertexBufferLayout } from "./vertex_buffer"
+import Gizmos from "./gizmos"
 
 export
 {
@@ -23,6 +24,7 @@ export
     Context,
     ContextFactory,
     IndexBuffer,
+    Gizmos,
     Material,
     Materials,
     Renderer,
