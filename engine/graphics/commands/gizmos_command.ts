@@ -15,6 +15,6 @@ export default class GizmosCommand extends Command
 
     public execute(context: Context): void
     {
-        // context.drawSprites(this._texture, this._data);
+        context.drawLines(this._data);
     }
 }
