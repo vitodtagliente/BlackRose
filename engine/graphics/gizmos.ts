@@ -22,4 +22,9 @@ export default class Gizmos
         this._batch.add(a, color);
         this._batch.add(b, color);
     }
+
+    public clear(): void 
+    {
+        this._batch.clear();
+    }
 }

@@ -68,8 +68,8 @@ export default class GLContext extends Context
         }
 
         {
-            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.ColorShader.VertexSource);
-            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.ColorShader.FragmentSource);
+            const vs: GLShader = this.createShader(ShaderType.Vertex, Shaders.GizmosBatchShader.VertexSource);
+            const fs: GLShader = this.createShader(ShaderType.Fragment, Shaders.GizmosBatchShader.FragmentSource);
             this._gizmosBatchProgram = this.createShaderProgram(vs, fs);
         }
 
@@ -197,11 +197,11 @@ export default class GLContext extends Context
                 const [position, color] = data[i];
 
                 vertices.push(...position.data);
-                vertices.push(...color.data);
+                // vertices.push(...color.data);
             }
 
-            this._spriteBatchRenderData.vertexBuffer.bind();
-            this._spriteBatchRenderData.vertexBuffer.fillData(vertices);
+            this._gizmosBatchRenderData.vertexBuffer.bind();
+            this._gizmosBatchRenderData.vertexBuffer.fillData(vertices);
         }
 
         this._gizmosBatchProgram.use();

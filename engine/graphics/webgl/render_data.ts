@@ -19,7 +19,10 @@ export default class RenderData
         this._vao.bind();
 
         this._vertexBuffer = context.createVertexBuffer(vSize, vMode);
-        this._indexBuffer = context.createIndexBuffer(iSize, iMode);
+        if (iSize > 0)
+        {
+            this._indexBuffer = context.createIndexBuffer(iSize, iMode);
+        }
     }
 
     public get vertexBuffer(): GLVertexBuffer { return this._vertexBuffer; }

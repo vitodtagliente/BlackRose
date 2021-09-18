@@ -11,13 +11,13 @@ export default class GizmosBatchRenderData extends RenderData
     {
         super(
             context,
-            7, BufferUsageMode.Stream,
+            size * 7, BufferUsageMode.Stream,
             0, BufferUsageMode.Static
         );
         this._size = size;
 
         this.vertexBuffer.layout.push(new VertexBufferElement("position", VertexBufferElementType.Float, 3, true));
-        this.vertexBuffer.layout.push(new VertexBufferElement("color", VertexBufferElementType.Float, 4, true));
+        // this.vertexBuffer.layout.push(new VertexBufferElement("color", VertexBufferElementType.Float, 4, true));
         this.vertexBuffer.activateLayout();
     }
 

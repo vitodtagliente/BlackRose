@@ -32,6 +32,7 @@ export default class Renderer
         // double buffering
         this.context.clear(this.background);
         this._spriteBatch.clear();
+        this.gizmos.clear();
     }
 
     public flush(): void 
