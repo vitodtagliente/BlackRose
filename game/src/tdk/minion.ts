@@ -1,4 +1,5 @@
 import * as BlackRose from 'blackrose';
+import { Color, Renderer } from 'blackrose/graphics';
 import Path from './path';
 import PathNavigator from './path_navigator';
 import Pawn from './pawn';
@@ -42,5 +43,12 @@ export default class Minion extends Pawn
                 );
             }
         }
+    }
+
+    public render(renderer: Renderer): void 
+    {
+        super.render(renderer);
+
+        renderer.gizmos.rect(this.transform.position, 1, Color.blue());
     }
 }

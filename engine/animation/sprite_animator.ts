@@ -18,9 +18,9 @@ export default class SpriteAnimator extends Component
     private _isPlaying: boolean;
     private _state: PlayingState;
 
-    public constructor(app: Application)
+    public constructor()
     {
-        super(app);
+        super();
         this._animations = new Map<string, SpriteAnimation>();
         this._state = new PlayingState();
         this._isPlaying = false;

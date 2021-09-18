@@ -5,17 +5,15 @@ import { Transform } from "../math";
 
 export default abstract class Component
 {
-    private _app: Application;
     private _owner: Entity;
 
     public enabled: boolean = true;
 
-    public constructor(app: Application)
+    public constructor()
     {
-        this._app = app;
+
     }
 
-    public get app(): Application { return this._app; }
     public get owner(): Entity { return this._owner; }
     public get isAttached(): boolean { return this._owner != null; }
     public get transform(): Transform { return this.owner.transform; }

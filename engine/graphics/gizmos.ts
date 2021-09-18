@@ -23,6 +23,21 @@ export default class Gizmos
         this._batch.add(b, color);
     }
 
+    public rect(position: Vector3, size: number, color: Color): void 
+    {
+        this._batch.add(position.add(new Vector3(size, size, 0)), color);
+        this._batch.add(position.add(new Vector3(-size, size, 0)), color);
+
+        this._batch.add(position.add(new Vector3(-size, size, 0)), color);
+        this._batch.add(position.add(new Vector3(-size, -size, 0)), color);
+        
+        this._batch.add(position.add(new Vector3(-size, -size, 0)), color);
+        this._batch.add(position.add(new Vector3(size, -size, 0)), color);
+        
+        this._batch.add(position.add(new Vector3(size, -size, 0)), color);
+        this._batch.add(position.add(new Vector3(size, size, 0)), color);
+    }
+
     public clear(): void 
     {
         this._batch.clear();

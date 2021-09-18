@@ -1,5 +1,5 @@
 import { Application } from "../application";
-import { Texture, TextureRect } from "../graphics";
+import { Renderer, Texture, TextureRect } from "../graphics";
 import { Component } from "../scene";
 
 export default class SpriteRenderer extends Component
@@ -7,17 +7,17 @@ export default class SpriteRenderer extends Component
     public texture: Texture;
     public textureRect: TextureRect;
 
-    public constructor(app: Application)
+    public constructor()
     {
-        super(app);
+        super();
         this.textureRect = new TextureRect();
     }
 
-    public update(deltaTime: number): void 
+    public render(renderer: Renderer): void 
     {
         if (this.texture != null)
         {
-            this.app.renderer.drawSprite(this.texture, this.transform, this.textureRect);
+            renderer.drawSprite(this.texture, this.transform, this.textureRect);
         }
     }
 }

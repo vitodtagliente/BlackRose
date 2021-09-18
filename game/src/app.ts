@@ -62,7 +62,7 @@ class TestGameMode extends GameMode
             {
                 const entity: Entity = app.world.spawn(new Entity("block" + i), Vector3.zero(), Quaternion.identity());
                 entity.transform.position.set(i * 2, -2, 0);
-                const sprite = entity.addComponent(new SpriteRenderer(app));
+                const sprite = entity.addComponent(new SpriteRenderer());
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 1, 0, size, size);
@@ -75,7 +75,7 @@ class TestGameMode extends GameMode
             // Minion 
             {
                 const entity: Minion = app.world.spawn(new Minion("player"), Vector3.zero(), Quaternion.identity());
-                const sprite = entity.addComponent(new SpriteRenderer(app));
+                const sprite = entity.addComponent(new SpriteRenderer());
                 sprite.texture = this._texture;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 9, size * 10, size, size);
