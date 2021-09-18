@@ -14,10 +14,12 @@ import { Minion, Path } from './tdk';
 class TestGameMode extends GameMode
 {
     private _texture: Texture;
+    private _points: Array<Vector3>;
 
     public constructor()
     {
         super();
+        this._points = [];
     }
 
     public init(): void 
@@ -66,6 +68,8 @@ class TestGameMode extends GameMode
                 sprite.textureRect.set(size * 1, 0, size, size);
 
                 path.push(entity.transform.position);
+
+                this._points.push(entity.transform.position);
             }
 
             // Minion 
@@ -79,9 +83,17 @@ class TestGameMode extends GameMode
 
             // Towers
             {
-                
+
             }
         });
+    }
+
+    public update(deltaTime: number): void 
+    {
+        for (let i = 0; i < this._points.length - 1; i++)
+        {
+            app.renderer.gizmos.line(this._points[i], this._points[i + 1], Color.red());
+        }
     }
 }
 
