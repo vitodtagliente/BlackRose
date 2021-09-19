@@ -17,10 +17,10 @@ export default class TargetFinder
 
     public check(world: World, position: Vector3): void 
     {
+        this._target = null;
         const minions: Array<Minion> = world.findEntities(Minion);
         if (minions.length == 0)
         {
-            this._target = null;
             return;
         }
 

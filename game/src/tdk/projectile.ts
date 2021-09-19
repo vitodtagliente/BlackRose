@@ -1,4 +1,6 @@
 import * as BlackRose from 'blackrose';
+import { Color, Renderer } from 'blackrose/graphics';
+import { World } from 'blackrose/scene';
 
 export default class Projectile extends BlackRose.Scene.Entity
 {
@@ -7,5 +9,16 @@ export default class Projectile extends BlackRose.Scene.Entity
         super(name);
     }
 
-    
+    public update(world: World, deltaTime: number): void 
+    {
+        super.update(world, deltaTime);
+
+    }
+
+    public render(renderer: Renderer): void 
+    {
+        super.render(renderer);
+
+        renderer.gizmos.circle(this.transform.position, 1, Color.red());
+    }
 }

@@ -22,6 +22,14 @@ export default class Path extends BlackRose.Scene.Entity
         for (let i: number = 0; i < this.steps.length - 1; ++i)
         {
             renderer.gizmos.line(this._steps[i], this._steps[i + 1], this.color);
+            if (i == 0)
+            {
+                renderer.gizmos.circle(this._steps[i], .2, this.color);
+            }
+            else if (i == this._steps.length - 2)
+            {
+                renderer.gizmos.circle(this._steps[i + 1], .2, this.color);
+            }
         }
     }
 
