@@ -19,6 +19,10 @@ export default class Projectile extends BlackRose.Scene.Entity
     {
         super.render(renderer);
 
-        renderer.gizmos.circle(this.transform.position, 1, Color.red());
+        renderer.gizmos.circle(
+            this.transform.position, 
+            Math.max(this.transform.scale.x, this.transform.scale.y), 
+            Color.red()
+        );
     }
 }

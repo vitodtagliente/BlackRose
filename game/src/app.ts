@@ -2,7 +2,7 @@ import * as BlackRose from 'blackrose';
 import * as BlackRoseEditor from 'blackrose-editor';
 import { SpriteAnimation, SpriteAnimator } from 'blackrose/animation';
 import { Image } from 'blackrose/asset';
-import { SpriteRenderer } from 'blackrose/components';
+import { CameraController2D, SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
 import { Quaternion, random, Rect, Vector3 } from 'blackrose/math';
@@ -42,7 +42,7 @@ class TestGameMode extends GameMode
                     Vector3.zero(),
                     Quaternion.identity()
                 );
-                camera.transform.position.x = -.4;
+                camera.addComponent(new CameraController2D());
                 app.camera = camera;
             }
 
