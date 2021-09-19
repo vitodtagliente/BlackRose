@@ -87,12 +87,12 @@ export default class Entity
         this._parent = entity;
     }
 
-    public update(deltaTime: number): void 
+    public update(world: World, deltaTime: number): void 
     {
         for (const component of this._components)
         {
             if (!component.enabled) continue;
-            component.update(deltaTime);
+            component.update(world, deltaTime);
         }
 
         // recompute the transform matrix

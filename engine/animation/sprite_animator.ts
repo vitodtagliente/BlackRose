@@ -1,7 +1,7 @@
 import { SpriteAnimation } from ".";
 import { Application } from "../application";
 import { SpriteRenderer } from "../components";
-import { Component } from "../scene";
+import { Component, World } from "../scene";
 
 class PlayingState 
 {
@@ -38,7 +38,7 @@ export default class SpriteAnimator extends Component
         this._animations.set(name, animation);
     }
 
-    public update(deltaTime: number): void 
+    public update(world: World, deltaTime: number): void 
     {
         if (this._isPlaying)
         {

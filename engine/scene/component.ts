@@ -1,4 +1,4 @@
-import { Entity } from ".";
+import { Entity, World } from ".";
 import { Application } from "../application";
 import { Renderer } from "../graphics";
 import { Transform } from "../math";
@@ -32,6 +32,6 @@ export default abstract class Component
 
     public init(): void { }
     public unint(): void { }
-    public update(deltaTime: number): void { }
+    public update(world: World, deltaTime: number): void { }
     public render(renderer: Renderer): void { }
 }
