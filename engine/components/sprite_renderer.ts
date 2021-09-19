@@ -1,4 +1,3 @@
-import { Application } from "../application";
 import { Renderer, Texture, TextureRect } from "../graphics";
 import { Component } from "../scene";
 
@@ -15,6 +14,8 @@ export default class SpriteRenderer extends Component
 
     public render(renderer: Renderer): void 
     {
+        super.render(renderer);
+        
         if (this.texture != null)
         {
             renderer.drawSprite(this.texture, this.transform, this.textureRect);

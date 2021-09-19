@@ -1,6 +1,8 @@
+import CameraController2D from "./camera_controller_2d"
 import SpriteRenderer from "./sprite_renderer"
 
 export 
 {
-    SpriteRenderer
+    CameraController2D,
+    SpriteRenderer,
 }
