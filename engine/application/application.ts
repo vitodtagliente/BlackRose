@@ -7,6 +7,9 @@ import Stats from './stats';
 
 export default class Application
 {
+    private static _main: Application;
+    public static get main(): Application { return Application._main; }
+
     private _canvas: Canvas;
     private _context: Graphics.Context;
     private _renderer: Graphics.Renderer;
@@ -22,6 +25,8 @@ export default class Application
 
     public constructor(canvasId: string, api: Graphics.API)
     {
+        Application._main = this;
+        
         this._canvas = new Canvas(canvasId);
         this._context = ContextFactory.get(this.canvas, api);
         this._context.viewport(this._canvas.width, this._canvas.height);

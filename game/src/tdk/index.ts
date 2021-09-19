@@ -3,6 +3,7 @@ import Path from "./path"
 import PathNavigator from "./path_navigator"
 import Pawn from "./pawn"
 import Projectile from "./projectile"
+import TargetFinder, { TargetFinderMode } from "./target_finder"
 import Tower from "./tower"
 import WaveManager from "./wave_manager"
 
@@ -13,6 +14,8 @@ export
     PathNavigator,
     Pawn,
     Projectile,
+    TargetFinder,
+    TargetFinderMode,
     Tower,
     WaveManager
 }
