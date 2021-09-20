@@ -9,7 +9,7 @@ export default class CameraController2D extends Component
     private _isDragging: boolean;
     private _dragPosition: Vector2;
 
-    public constructor(speed: number = .0001)
+    public constructor(speed: number = .2)
     {
         super();
         this.speed = speed;

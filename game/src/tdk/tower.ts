@@ -1,10 +1,10 @@
 import * as BlackRose from 'blackrose';
+import { Timer } from 'blackrose/core';
 import { Color, Renderer } from 'blackrose/graphics';
 import { Quaternion, Vector3 } from 'blackrose/math';
 import { World } from 'blackrose/scene';
 import { Projectile } from '.';
 import TargetFinder from './target_finder';
-import Timer from './timer';
 
 export default class Tower extends BlackRose.Scene.Entity
 {
@@ -15,7 +15,7 @@ export default class Tower extends BlackRose.Scene.Entity
     {
         super(name);
         this._finder = new TargetFinder();
-        this._timer = new Timer(600);
+        this._timer = new Timer(1);
     }
 
     public update(world: World, deltaTime: number): void 

@@ -11,7 +11,7 @@ export default class Projectile extends BlackRose.Scene.Entity
     public constructor(name?: string)
     {
         super(name);
-        this.speed = 0.01;
+        this.speed = 5;
     }
 
     public get hasTarget(): boolean { return this._target != null; }

@@ -8,7 +8,7 @@ import Pawn from './pawn';
 export default class Minion extends Pawn
 {
     private _navigator: PathNavigator;
-    private _speed: number = 0.01;
+    private _speed: number = 5;
 
     public constructor(name?: string)
     {
