@@ -40,8 +40,8 @@ export default class CameraController2D extends Component
             {
                 const direction: Vector2 = mouse.position.sub(this._dragPosition);
                 this.transform.position.set(
-                    this.transform.position.x - direction.x * this.speed * deltaTime,
-                    this.transform.position.y + direction.y * this.speed * deltaTime,
+                    this.transform.position.x + direction.x * this.speed * deltaTime,
+                    this.transform.position.y - direction.y * this.speed * deltaTime,
                     this.transform.position.z
                 );
                 mouse.position.copy(this._dragPosition);
