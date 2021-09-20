@@ -75,7 +75,12 @@ export default class Vector2
 
     public normalize(): Vector2
     {
-        return this.div(this.magnitude);
+        const mag: number = this.magnitude;
+        if (mag > 0)
+        {
+            return this.div(this.magnitude);
+        }
+        else return new Vector2(this.x, this.y);
     }
 
     public distance(v: Vector2): number

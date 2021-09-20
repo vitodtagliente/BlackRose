@@ -77,7 +77,12 @@ export default class Vector3
 
     public normalize(): Vector3
     {
-        return this.div(this.magnitude);
+        const mag: number = this.magnitude;
+        if (mag > 0)
+        {
+            return this.div(this.magnitude);
+        }
+        else return new Vector3(this.x, this.y, this.z);
     }
 
     public distance(v: Vector3): number

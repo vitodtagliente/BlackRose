@@ -60,7 +60,12 @@ export default class Vector4
 
     public normalize(): Vector4
     {
-        return this.div(this.magnitude);
+        const mag: number = this.magnitude;
+        if (mag > 0)
+        {
+            return this.div(this.magnitude);
+        }
+        else return new Vector4(this.x, this.y, this.z, this.w);
     }
 
     public distance(v: Vector4): number
