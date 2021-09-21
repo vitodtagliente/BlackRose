@@ -62,10 +62,11 @@ export default class WaveManager extends BlackRose.Scene.Entity
 
     private async _spawnWave(wave: Wave): Promise<void> 
     {
+        console.log("spawning wave " + this.waveIndex);
         for (let i: number = 0; i < wave.numOfMinions; ++i)
         {
             console.log(i);
-            await delay(1000);
+            await delay(wave.perMinionSpawnDelay);
         }
     }
 }

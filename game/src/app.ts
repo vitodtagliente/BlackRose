@@ -95,9 +95,12 @@ class TestGameMode extends GameMode
                 const manager: WaveManager = app.world.spawn(new WaveManager("waveManager"), Vector3.zero(), Quaternion.identity());
                 let wave: Wave = new Wave;
                 {
-                    wave.duration = 20;
+                    wave.duration = 10;
                     wave.numOfMinions = 10;
+                    wave.perMinionSpawnDelay = 500;
                 }
+                manager.push(wave);
+                manager.push(wave);
                 manager.push(wave);
                 manager.start();
             }
