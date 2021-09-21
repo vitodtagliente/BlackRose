@@ -43,6 +43,11 @@ export default class Minion extends Pawn
                     this.transform.position.z
                 );
             }
+            else 
+            {
+                world.destroy(this);
+                // TODO score
+            }
         }
     }
 

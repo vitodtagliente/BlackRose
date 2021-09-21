@@ -1,5 +1,5 @@
 import * as BlackRose from "blackrose";
-import { Timer } from "blackrose/core";
+import { delay, Timer } from "blackrose/core";
 import { World } from "blackrose/scene";
 import { Wave } from ".";
 
@@ -15,7 +15,7 @@ export default class WaveManager extends BlackRose.Scene.Entity
         super(name);
         this._active = false;
         this._waves = [];
-        this._waveIndex = 0;
+        this._waveIndex = -1;
         this._timer = new Timer(0);
     }
 
@@ -58,17 +58,14 @@ export default class WaveManager extends BlackRose.Scene.Entity
     public start(): void
     {
         this._active = true;
-        this._waveIndex = 0;
-        const firstWave: Wave = this.currentWave;
-        if (firstWave)
-        {
-            this._timer.configure(firstWave.duration);
-            this._spawnWave(firstWave);
-        }
     }
 
-    private _spawnWave(wave: Wave): void 
+    private async _spawnWave(wave: Wave): Promise<void> 
     {
-
+        for (let i: number = 0; i < wave.numOfMinions; ++i)
+        {
+            console.log(i);
+            await delay(1000);
+        }
     }
 }

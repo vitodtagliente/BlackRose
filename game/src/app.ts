@@ -9,7 +9,7 @@ import { Quaternion, random, Rect, Vector3 } from 'blackrose/math';
 import { CameraClippingPlanes, Component, Entity, OrtographicCamera } from 'blackrose/scene';
 import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
-import { Minion, Path, Tower } from './tdk';
+import { Minion, Path, Tower, Wave, WaveManager } from './tdk';
 
 const renderSprites: boolean = true;
 
@@ -88,6 +88,18 @@ class TestGameMode extends GameMode
             {
                 app.world.spawn(new Tower("tower"), new Vector3(4, 0, 0), Quaternion.identity());
                 app.world.spawn(new Tower("tower1"), new Vector3(12, -4, 0), Quaternion.identity()); 
+            }
+
+            // wave manager
+            {
+                const manager: WaveManager = app.world.spawn(new WaveManager("waveManager"), Vector3.zero(), Quaternion.identity());
+                let wave: Wave = new Wave;
+                {
+                    wave.duration = 20;
+                    wave.numOfMinions = 10;
+                }
+                manager.push(wave);
+                manager.start();
             }
         });
     }
