@@ -5,6 +5,7 @@ import Pawn from "./pawn"
 import Projectile from "./projectile"
 import TargetFinder, { TargetFinderMode } from "./target_finder"
 import Tower from "./tower"
+import Wave from "./wave"
 import WaveManager from "./wave_manager"
 
 export
@@ -17,5 +18,6 @@ export
     TargetFinder,
     TargetFinderMode,
     Tower,
+    Wave,
     WaveManager
 }

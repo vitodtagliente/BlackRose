@@ -43,4 +43,10 @@ export default class Timer
         this._timer = this._time;
         this._canTick = false;
     }
+
+    public configure(time: number): void 
+    {
+        this._time = time;
+        this._timer = time;
+    }
 }
