@@ -1,7 +1,10 @@
 import * as BlackRose from "blackrose";
+import { Application } from "blackrose/application";
+import { SpriteRenderer } from "blackrose/components";
 import { delay, Timer } from "blackrose/core";
+import { Quaternion, Vector3 } from "blackrose/math";
 import { World } from "blackrose/scene";
-import { Wave } from ".";
+import { Minion, Wave } from ".";
 
 export default class WaveManager extends BlackRose.Scene.Entity
 {
@@ -65,7 +68,10 @@ export default class WaveManager extends BlackRose.Scene.Entity
         console.log("spawning wave " + this.waveIndex);
         for (let i: number = 0; i < wave.numOfMinions; ++i)
         {
-            console.log(i);
+            let position: Vector3 = Vector3.zero();
+            wave.spawnPosition.copy(position);
+            const entity: Minion = Application.main.world.spawn(new Minion("player"), position, Quaternion.identity());
+                        
             await delay(wave.perMinionSpawnDelay);
         }
     }
