@@ -4,12 +4,12 @@ export default class Video extends Asset
 {
     private _data: HTMLVideoElement;
 
-    public constructor(id: string, onLoadCallback: AssetLoadEvent = () => { })
+    public constructor(filename: string, onLoadCallback: AssetLoadEvent = () => { })
     {
-        super(AssetType.Video, id);
+        super(AssetType.Video, filename);
         // this._data = new window.v();
         this._data.onload = onLoadCallback;
-        this._data.src = id;
+        this._data.src = filename;
     }
 
     public get data(): HTMLVideoElement { return this._data; }

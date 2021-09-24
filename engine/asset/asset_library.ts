@@ -17,7 +17,7 @@ class AssetCache
     {
         if (asset.type == this.type)
         {
-            this._assets.set(asset.id, asset);
+            this._assets.set(asset.filename, asset);
             return true;
         }
         return false;

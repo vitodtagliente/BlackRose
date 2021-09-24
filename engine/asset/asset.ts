@@ -10,16 +10,16 @@ export type AssetLoadEvent = () => void;
 
 export default class Asset
 {
-    private _id: string;
+    private _filename: string;
     private _type: AssetType;
 
-    public constructor(type: AssetType, id: string)
+    public constructor(type: AssetType, filename: string)
     {
-        this._id = id;
+        this._filename = filename;
         this._type = type;
     }
 
-    public get id(): string { return this._id; }
+    public get filename(): string { return this._filename; }
     public get type(): AssetType { return this._type; }
 
     public isReady(): boolean { return true; }

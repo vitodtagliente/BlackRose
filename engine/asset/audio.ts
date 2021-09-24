@@ -4,12 +4,12 @@ export default class Audio extends Asset
 {
     private _data: HTMLAudioElement;
 
-    public constructor(id: string, onLoadCallback: AssetLoadEvent = () => { })
+    public constructor(filename: string, onLoadCallback: AssetLoadEvent = () => { })
     {
-        super(AssetType.Audio, id);
+        super(AssetType.Audio, filename);
         this._data = new window.Audio();
         this._data.onload = onLoadCallback;
-        this._data.src = id;
+        this._data.src = filename;
     }
 
     public get data(): HTMLAudioElement { return this._data; }

@@ -4,9 +4,9 @@ export default class Frefab extends Asset
 {
     private _data: JSON;
 
-    public constructor(id: string, onLoadCallback: AssetLoadEvent = () => { })
+    public constructor(filename: string, onLoadCallback: AssetLoadEvent = () => { })
     {
-        super(AssetType.Prefab, id);
+        super(AssetType.Prefab, filename);
     }
 
     public get data(): JSON { return this._data; }

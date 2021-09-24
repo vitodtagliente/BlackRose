@@ -4,12 +4,12 @@ export default class Image extends Asset
 {
     private _data: HTMLImageElement;
 
-    public constructor(id: string, onLoadCallback: AssetLoadEvent = () => { })
+    public constructor(filename: string, onLoadCallback: AssetLoadEvent = () => { })
     {
-        super(AssetType.Image, id);
+        super(AssetType.Image, filename);
         this._data = new window.Image();
         this._data.onload = onLoadCallback;
-        this._data.src = id;
+        this._data.src = filename;
     }
 
     public get data(): HTMLImageElement { return this._data; }
