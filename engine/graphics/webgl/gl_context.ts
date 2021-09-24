@@ -7,7 +7,6 @@ import * as Shaders from "../shaders";
 import Geometry from "../geometry";
 import * as Geometries from "../geometries";
 import { default as GLTexture } from "./gl_texture";
-import { Image } from "../../asset";
 import GLShader from "./gl_shader";
 import GLShaderProgram from "./gl_shader_program";
 import GLVertexArrayObject from "./gl_vertext_array_object";
@@ -113,7 +112,7 @@ export default class GLContext extends Context
         return new GLVertexBuffer(this._context, size, mode);
     }
 
-    public createTexture(image: Image): GLTexture
+    public createTexture(image: HTMLImageElement): GLTexture
     {
         return new GLTexture(this._context, image);
     }

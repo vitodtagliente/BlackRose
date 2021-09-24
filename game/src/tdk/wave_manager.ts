@@ -1,5 +1,6 @@
 import * as BlackRose from "blackrose";
 import { Application } from "blackrose/application";
+import { AssetLibrary, AssetType, Image } from "blackrose/asset";
 import { SpriteRenderer } from "blackrose/components";
 import { delay, Timer } from "blackrose/core";
 import { Quaternion, Vector3 } from "blackrose/math";
@@ -71,7 +72,11 @@ export default class WaveManager extends BlackRose.Scene.Entity
             let position: Vector3 = Vector3.zero();
             wave.spawnPosition.copy(position);
             const entity: Minion = Application.main.world.spawn(new Minion("player"), position, Quaternion.identity());
-                        
+            const sprite = entity.addComponent(new SpriteRenderer());
+            sprite.texture = (AssetLibrary.main.get(AssetType.Image, "assets/spritesheet_default.png") as Image).data;
+            const size: number = 1 / 11;
+            sprite.textureRect.set(size * 9, size * 9, size, size);
+
             await delay(wave.perMinionSpawnDelay);
         }
     }

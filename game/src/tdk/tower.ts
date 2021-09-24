@@ -3,7 +3,7 @@ import { Timer } from 'blackrose/core';
 import { Color, Renderer } from 'blackrose/graphics';
 import { Quaternion, Vector3 } from 'blackrose/math';
 import { World } from 'blackrose/scene';
-import { Projectile } from '.';
+import { Projectile, TargetFinderMode } from '.';
 import TargetFinder from './target_finder';
 
 export default class Tower extends BlackRose.Scene.Entity
@@ -14,7 +14,7 @@ export default class Tower extends BlackRose.Scene.Entity
     public constructor(name?: string)
     {
         super(name);
-        this._finder = new TargetFinder();
+        this._finder = new TargetFinder(TargetFinderMode.FIFO);
         this._timer = new Timer(1);
     }
 

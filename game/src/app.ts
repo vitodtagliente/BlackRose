@@ -27,7 +27,7 @@ class TestGameMode extends GameMode
         const image: Image = new Image("assets/spritesheet_default.png", () =>
         {
             AssetLibrary.main.add(image);
-            this._texture = app.context.createTexture(image);
+            this._texture = image.data;
 
             // camera
             {
@@ -88,7 +88,7 @@ class TestGameMode extends GameMode
             // Towers
             {
                 app.world.spawn(new Tower("tower"), new Vector3(4, 0, 0), Quaternion.identity());
-                app.world.spawn(new Tower("tower1"), new Vector3(12, -4, 0), Quaternion.identity()); 
+                app.world.spawn(new Tower("tower1"), new Vector3(12, -4, 0), Quaternion.identity());
             }
 
             // wave manager
@@ -99,6 +99,7 @@ class TestGameMode extends GameMode
                     wave.duration = 10;
                     wave.numOfMinions = 10;
                     wave.perMinionSpawnDelay = 500;
+                    wave.spawnPosition = new Vector3(-4, 0, 0);
                 }
                 manager.push(wave);
                 manager.push(wave);

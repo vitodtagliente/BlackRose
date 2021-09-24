@@ -1,4 +1,3 @@
-import { Image } from "../../asset";
 import Texture from "../texture";
 
 export default class GLTexture extends Texture
@@ -6,7 +5,7 @@ export default class GLTexture extends Texture
     private _id: WebGLTexture;
     private _context: WebGL2RenderingContext;
 
-    public constructor(context: WebGL2RenderingContext, image: Image)
+    public constructor(context: WebGL2RenderingContext, image: HTMLImageElement)
     {
         super(image);
         this._context = context;
@@ -37,7 +36,7 @@ export default class GLTexture extends Texture
             internalFormat,
             srcFormat,
             srcType,
-            image.data
+            image
         );
     }
 
