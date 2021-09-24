@@ -154,6 +154,11 @@ export default class Entity
         this._components = result;
     }
 
+    public copy(entity: Entity): void 
+    {
+        
+    }
+
     public stringify(): string
     {
         return JSON.stringify(this, [

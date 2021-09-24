@@ -1,26 +1,24 @@
-type ImageLoadEvent = () => void;
+import Asset, { AssetLoadEvent, AssetType } from "./asset";
 
-export default class Image 
+export default class Image extends Asset
 {
     private _data: HTMLImageElement;
 
-    public constructor(data: HTMLImageElement)
+    public constructor(id: string, onLoadCallback: AssetLoadEvent = () => { })
     {
-        this._data = data;
+        super(AssetType.Image, id);
+        this._data = new window.Image();
+        this._data.onload = onLoadCallback;
+        this._data.src = id;
     }
 
     public get data(): HTMLImageElement { return this._data; }
-    public get filename(): string { return this._data.src; }
     public get width(): number { return this._data.naturalWidth; }
     public get height(): number { return this._data.naturalHeight; }
 
-    public get isLoaded(): boolean { return this._data.complete && this.height !== 0; }
-
-    public static load(filename: string, onLoadCallback: ImageLoadEvent = () => { }): Image 
+    public isReady(): boolean { return this._data.complete && this.height !== 0; }
+    public dispose(): void 
     {
-        const img: HTMLImageElement = new window.Image();
-        img.onload = onLoadCallback;
-        img.src = filename;
-        return new Image(img);
+        this._data = null;
     }
 }

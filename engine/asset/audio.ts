@@ -1,35 +1,31 @@
-type AudioLoadEvent = () => void;
+import Asset, { AssetLoadEvent, AssetType } from "./asset";
 
-export default class Audio 
+export default class Audio extends Asset
 {
     private _data: HTMLAudioElement;
 
-    public constructor(data: HTMLAudioElement)
+    public constructor(id: string, onLoadCallback: AssetLoadEvent = () => { })
     {
-        this._data = data;
+        super(AssetType.Audio, id);
+        this._data = new window.Audio();
+        this._data.onload = onLoadCallback;
+        this._data.src = id;
     }
 
     public get data(): HTMLAudioElement { return this._data; }
-    public get filename(): string { return this._data.src; }
-
-    public get isLoaded(): boolean { return this._data.networkState == this._data.NETWORK_IDLE; }
+    public get isPlaying(): boolean { return this._data.paused == false; }
 
     public play(): void 
     {
         if (this.isPlaying == false)
+        {
             this._data.play();
+        }
     }
 
-    public get isPlaying(): boolean
+    public isReady(): boolean { return this._data.networkState == this._data.NETWORK_IDLE; }
+    public dispose(): void 
     {
-        return this._data.paused == false;
-    }
-
-    public static load(filename: string, onLoadCallback: AudioLoadEvent = () => { }): Audio 
-    {
-        const audio: HTMLAudioElement = new window.Audio();
-        audio.onload = onLoadCallback;
-        audio.src = filename;
-        return new Audio(audio);
+        this._data = null;
     }
 }

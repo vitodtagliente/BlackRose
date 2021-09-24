@@ -1,8 +1,19 @@
-import { Entity } from "../scene";
+import Asset, { AssetLoadEvent, AssetType } from "./asset";
 
-export default class Prefab
+export default class Frefab extends Asset
 {
-    public name: string;
-    public filename: string;
-    public entity: Entity;
+    private _data: JSON;
+
+    public constructor(id: string, onLoadCallback: AssetLoadEvent = () => { })
+    {
+        super(AssetType.Prefab, id);
+    }
+
+    public get data(): JSON { return this._data; }
+
+    public isReady(): boolean { return true; }
+    public dispose(): void 
+    {
+        this._data = null;
+    }
 }

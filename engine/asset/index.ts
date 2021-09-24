@@ -1,14 +1,18 @@
+import Asset, { AssetType, AssetLoadEvent } from "./asset"
+import AssetLibrary from "./asset_library"
 import Audio from "./audio"
 import Image from "./image"
-import Loader from "./loader"
 import Prefab from "./prefab"
 import Video from "./video"
 
 export 
 {
+    Asset,
+    AssetLibrary,
+    AssetLoadEvent,
+    AssetType,
     Audio,
     Image,
-    Loader,
     Prefab,
     Video
 }

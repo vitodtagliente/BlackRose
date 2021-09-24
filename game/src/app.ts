@@ -1,7 +1,7 @@
 import * as BlackRose from 'blackrose';
 import * as BlackRoseEditor from 'blackrose-editor';
 import { SpriteAnimation, SpriteAnimator } from 'blackrose/animation';
-import { Image } from 'blackrose/asset';
+import { AssetLibrary, Image } from 'blackrose/asset';
 import { CameraController2D, SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
@@ -24,8 +24,9 @@ class TestGameMode extends GameMode
 
     public init(): void 
     {
-        const image: Image = Image.load("assets/spritesheet_default.png", () =>
+        const image: Image = new Image("assets/spritesheet_default.png", () =>
         {
+            AssetLibrary.main.add(image);
             this._texture = app.context.createTexture(image);
 
             // camera
