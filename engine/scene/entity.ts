@@ -1,4 +1,5 @@
 import { Component } from '.';
+import { serializable, Serializable } from '../core';
 import { Renderer } from '../graphics';
 import *  as Math from '../math';
 import World from './world';
@@ -30,18 +31,8 @@ class TransformState
     }
 }
 
-interface DataSource
-{
-    id: string;
-    classId: string;
-    name: string;
-    tag: string;
-    isStatic: boolean;
-    transform: Object;
-    components: Array<Object>;
-}
-
-export default class Entity
+@serializable
+export default class Entity extends Serializable
 {
     private _id: string;
     public name: string;
@@ -55,6 +46,7 @@ export default class Entity
 
     public constructor(name?: string)
     {
+        super();
         this._id = name + global.Math.random().toString(36).substr(2, 9);
         this.name = name;
         this.transform = new Math.Transform;
@@ -169,38 +161,5 @@ export default class Entity
     public copy(entity: Entity): void 
     {
 
-    }
-
-    public toJSON(): Object
-    {
-        let components: Array<Object> = [];
-        for (const component of this._components)
-        {
-            components.push(component.toJSON());
-        }
-        
-        const data: DataSource = {
-            id: this.id,
-            classId: this.classId,
-            name: this.name,
-            tag: this.tag,
-            isStatic: this.isStatic,
-            transform: this.transform.toJSON(),
-            components: components
-        };
-        return data;
-    }
-
-    public serialize(): string
-    {
-        return JSON.stringify(this.toJSON());
-    }
-
-    public static deserialize(world: World, json: string): Entity
-    {
-        const data: DataSource = JSON.parse(json) as DataSource;
-        console.log(data);
-        
-        return null;
     }
 }

@@ -10,6 +10,7 @@ import { CameraClippingPlanes, Component, Entity, OrtographicCamera, World } fro
 import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
 import { Minion, Path, Tower, Wave, WaveManager } from './tdk';
+import { Serializable } from 'blackrose/core';
 
 const renderSprites: boolean = true;
 
@@ -84,7 +85,8 @@ class TestGameMode extends GameMode
 
                 const serialization: string = entity.serialize();
                 console.log(serialization);
-                Entity.deserialize(Application.main.world, serialization);
+                const e: Entity = Serializable.deserialize(serialization) as Entity;
+                console.log(e);
             }
 
             // Towers
