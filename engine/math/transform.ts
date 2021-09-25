@@ -1,7 +1,9 @@
+import { serializable, Serializable } from "../core";
 import Matrix4 from "./matrix4";
 import Vector3 from "./vector3";
 
-export default class Transform
+@serializable
+export default class Transform extends Serializable
 {
     public position: Vector3;
     public rotation: Vector3;
@@ -10,6 +12,7 @@ export default class Transform
 
     public constructor()
     {
+        super();
         this.position = new Vector3(0, 0, 0);
         this.rotation = new Vector3(0, 0, 0);
         this.scale = new Vector3(1, 1, 1);
@@ -29,14 +32,5 @@ export default class Transform
     public get matrix(): Matrix4
     {
         return this._matrix;
-    }
-
-    public toJSON(): Object
-    {
-        return {
-            position: [this.position.x, this.position.y, this.position.z],
-            rotation: [this.rotation.x, this.rotation.y, this.rotation.z],
-            scale: [this.scale.x, this.scale.y, this.scale.z]
-        };
     }
 }

@@ -1,8 +1,10 @@
 import Matrix3 from "./matrix3";
 import Vector3 from "./vector3";
 import { radians } from "./algo";
+import { Serializable, serializable } from "../core";
 
-export default class Matrix4
+@serializable
+export default class Matrix4 extends Serializable
 {
     public static zero(): Matrix4 { return new Matrix4; }
     public static identity(): Matrix4
@@ -64,6 +66,7 @@ export default class Matrix4
         a30: number = 0, a31: number = 0, a32: number = 0, a33: number = 0
     )
     {
+        super();
         this.data = new Float32Array([
             a00, a01, a02, a03,
             a10, a11, a12, a13,

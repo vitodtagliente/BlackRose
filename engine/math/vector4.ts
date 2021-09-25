@@ -1,4 +1,7 @@
-export default class Vector4
+import { serializable, Serializable } from "../core";
+
+@serializable
+export default class Vector4 extends Serializable
 {
     public static zero(): Vector4 { return new Vector4(0, 0, 0, 0); }
     public static one(): Vector4 { return new Vector4(1, 1, 1, 1) }
@@ -16,6 +19,7 @@ export default class Vector4
 
     public constructor(x: number = 0, y: number = 0, z: number = 0, w: number = 0)
     {
+        super();
         this.data = new Float32Array([x, y, z, w]);
     }
 

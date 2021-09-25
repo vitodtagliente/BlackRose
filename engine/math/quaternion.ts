@@ -1,6 +1,8 @@
 import { Matrix4, Vector3, Vector4 } from ".";
+import { serializable, Serializable } from "../core";
 
-export default class Quaternion
+@serializable
+export default class Quaternion extends Serializable
 {
     public static identity(): Quaternion { return new Quaternion(0, 0, 0, 1); }
 
@@ -15,8 +17,9 @@ export default class Quaternion
     public get w(): number { return this.data[3]; }
     public set w(value: number) { this.data[3] = value; }
 
-    public constructor(x: number, y: number, z: number, w: number = 1)
+    public constructor(x: number = 0, y: number = 0, z: number = 0, w: number = 1)
     {
+        super();
         this.data = [x, y, z, w];
     }
 

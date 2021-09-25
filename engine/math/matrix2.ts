@@ -1,4 +1,7 @@
-export default class Matrix2
+import { serializable, Serializable } from "../core";
+
+@serializable
+export default class Matrix2 extends Serializable
 {
     public static zero(): Matrix2 { return new Matrix2; }
     public static identity(): Matrix2
@@ -30,6 +33,7 @@ export default class Matrix2
         a10: number = 0, a11: number = 0
     )
     {
+        super();
         this.data = new Float32Array([a00, a01, a10, a11]);
     }
 
