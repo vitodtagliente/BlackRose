@@ -1,8 +1,9 @@
 import { Entity, World } from ".";
+import { Serializable } from "../core";
 import { Renderer } from "../graphics";
 import { Transform } from "../math";
 
-export default abstract class Component
+export default abstract class Component extends Serializable
 {
     private _owner: Entity;
 
@@ -10,7 +11,7 @@ export default abstract class Component
 
     public constructor()
     {
-
+        super();
     }
 
     public get classId(): string { return this.constructor.name; }

@@ -34,7 +34,6 @@ export function serializable<T extends ISerializable>(constructor: T)
 {
     const instance = new constructor();
     const className: string = instance.className;
-    console.log(`registering serilizable class ${className}`);
     registry[className] = constructor;
     return constructor;
 }
