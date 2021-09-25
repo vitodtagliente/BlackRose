@@ -26,6 +26,7 @@ export default class Audio extends Asset
     public isReady(): boolean { return this._data.networkState == this._data.NETWORK_IDLE; }
     public dispose(): void 
     {
+        super.dispose();
         this._data = null;
     }
 }

@@ -16,6 +16,7 @@ import { VertexBufferElement, VertexBufferElementType } from "../vertex_buffer";
 import RenderData from "./render_data";
 import SpriteBatchRenderData from "./spritebatch_render_data";
 import GizmosBatchRenderData from "./gizmosbatch_render_data";
+import { Image } from "../../asset";
 
 export default class GLContext extends Context
 {
@@ -112,7 +113,7 @@ export default class GLContext extends Context
         return new GLVertexBuffer(this._context, size, mode);
     }
 
-    public createTexture(image: HTMLImageElement): GLTexture
+    public createTexture(image: Image): GLTexture
     {
         return new GLTexture(this._context, image);
     }

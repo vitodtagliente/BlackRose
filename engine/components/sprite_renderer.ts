@@ -1,9 +1,10 @@
+import { Image } from "../asset";
 import { Renderer, Texture, TextureRect } from "../graphics";
 import { Component } from "../scene";
 
 export default class SpriteRenderer extends Component
 {
-    public texture: Texture;
+    public image: Image;
     public textureRect: TextureRect;
 
     public constructor()
@@ -16,9 +17,9 @@ export default class SpriteRenderer extends Component
     {
         super.render(renderer);
         
-        if (this.texture != null)
+        if (this.image != null)
         {
-            renderer.drawSprite(this.texture, this.transform, this.textureRect);
+            renderer.drawSprite(renderer.textureLibrary.get(this.image), this.transform, this.textureRect);
         }
     }
 }

@@ -1,39 +1,26 @@
-import { Application } from "../application";
-import { Texture } from "../graphics";
 import Asset, { AssetLoadEvent, AssetType } from "./asset";
 
 export default class Image extends Asset
 {
-    private _data: Texture;
+    private _data: HTMLImageElement;
 
     public constructor(filename: string, onLoadCallback: AssetLoadEvent = () => { })
     {
         super(AssetType.Image, filename);
-        let source: HTMLImageElement = new window.Image();
-        source.onload = () =>
-        {
-            if (Application.main.context)
-            {
-                this._data = Application.main.context.createTexture(source);
-            }
-            onLoadCallback();
-        };
-        source.src = filename;
+        this._data = new window.Image();
+        this._data.onload = onLoadCallback;
+        this._data.src = filename;
     }
 
-    public get data(): Texture { return this._data; }
-    public get width(): number { return this._data.image.naturalWidth; }
-    public get height(): number { return this._data.image.naturalHeight; }
+    public get data(): HTMLImageElement { return this._data; }
+    public get width(): number { return this._data.naturalWidth; }
+    public get height(): number { return this._data.naturalHeight; }
 
-    public isReady(): boolean 
-    {
-        return this._data
-            && this._data.image.complete
-            && this.height !== 0;
-    }
+    public isReady(): boolean { return this._data.complete && this.height !== 0; }
 
     public dispose(): void 
     {
+        super.dispose();
         this._data = null;
     }
 }

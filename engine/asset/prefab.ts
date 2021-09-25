@@ -14,6 +14,7 @@ export default class Frefab extends Asset
     public isReady(): boolean { return true; }
     public dispose(): void 
     {
+        super.dispose();
         this._data = null;
     }
 }

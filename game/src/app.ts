@@ -15,7 +15,7 @@ const renderSprites: boolean = true;
 
 class TestGameMode extends GameMode
 {
-    private _texture: Texture;
+    private _image: Image;
 
     public constructor()
     {
@@ -24,11 +24,9 @@ class TestGameMode extends GameMode
 
     public init(): void 
     {
-        const image: Image = new Image("assets/spritesheet_default.png", () =>
+        this._image = new Image("assets/spritesheet_default.png", () =>
         {
-            AssetLibrary.main.add(image);
-            this._texture = image.data;
-
+            AssetLibrary.main.add(this._image);
             // camera
             {
                 const w: number = app.canvas.width / 2 / 32;
@@ -65,7 +63,7 @@ class TestGameMode extends GameMode
                 const entity: Entity = app.world.spawn(new Entity("block" + i), Vector3.zero(), Quaternion.identity());
                 entity.transform.position.set(i * 2, -2, 0);
                 const sprite = entity.addComponent(new SpriteRenderer());
-                sprite.texture = this._texture;
+                sprite.image = this._image;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 1, 0, size, size);
 
@@ -78,7 +76,7 @@ class TestGameMode extends GameMode
             {
                 const entity: Minion = app.world.spawn(new Minion("player"), Vector3.zero(), Quaternion.identity());
                 const sprite = entity.addComponent(new SpriteRenderer());
-                sprite.texture = this._texture;
+                sprite.image = this._image;
                 const size: number = 1 / 11;
                 sprite.textureRect.set(size * 9, size * 10, size, size);
 

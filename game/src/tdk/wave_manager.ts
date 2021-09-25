@@ -73,7 +73,7 @@ export default class WaveManager extends BlackRose.Scene.Entity
             wave.spawnPosition.copy(position);
             const entity: Minion = Application.main.world.spawn(new Minion("player"), position, Quaternion.identity());
             const sprite = entity.addComponent(new SpriteRenderer());
-            sprite.texture = (AssetLibrary.main.get(AssetType.Image, "assets/spritesheet_default.png") as Image).data;
+            sprite.image = AssetLibrary.main.get(AssetType.Image, "assets/spritesheet_default.png") as Image;
             const size: number = 1 / 11;
             sprite.textureRect.set(size * 9, size * 9, size, size);
 
