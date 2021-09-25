@@ -6,7 +6,7 @@ import { CameraController2D, SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
 import { Quaternion, random, Rect, Vector3 } from 'blackrose/math';
-import { CameraClippingPlanes, Component, Entity, OrtographicCamera } from 'blackrose/scene';
+import { CameraClippingPlanes, Component, Entity, OrtographicCamera, World } from 'blackrose/scene';
 import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
 import { Minion, Path, Tower, Wave, WaveManager } from './tdk';
@@ -81,6 +81,10 @@ class TestGameMode extends GameMode
                 sprite.textureRect.set(size * 9, size * 10, size, size);
 
                 sprite.enabled = renderSprites;
+
+                const serialization: string = entity.serialize();
+                console.log(serialization);
+                Entity.deserialize(Application.main.world, serialization);
             }
 
             // Towers

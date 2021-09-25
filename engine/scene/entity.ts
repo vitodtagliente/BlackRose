@@ -30,6 +30,17 @@ class TransformState
     }
 }
 
+interface DataSource
+{
+    id: string;
+    classId: string;
+    name: string;
+    tag: string;
+    isStatic: boolean;
+    transform: Object;
+    components: Array<Object>;
+}
+
 export default class Entity
 {
     private _id: string;
@@ -55,6 +66,7 @@ export default class Entity
     }
 
     public get id(): string { return this._id; }
+    public get classId(): string { return this.constructor.name; }
     public get parent(): Entity { return this._parent; }
     public get children(): Array<Entity> { return this._children; }
     public get isStatic(): boolean { return this._isStatic; }
@@ -156,13 +168,39 @@ export default class Entity
 
     public copy(entity: Entity): void 
     {
-        
+
     }
 
-    public stringify(): string
+    public toJSON(): Object
     {
-        return JSON.stringify(this, [
-            'id', 'name', 'tag', 'transform', 'parent', 'children', 'isStatic'
-        ]);
+        let components: Array<Object> = [];
+        for (const component of this._components)
+        {
+            components.push(component.toJSON());
+        }
+        
+        const data: DataSource = {
+            id: this.id,
+            classId: this.classId,
+            name: this.name,
+            tag: this.tag,
+            isStatic: this.isStatic,
+            transform: this.transform.toJSON(),
+            components: components
+        };
+        return data;
+    }
+
+    public serialize(): string
+    {
+        return JSON.stringify(this.toJSON());
+    }
+
+    public static deserialize(world: World, json: string): Entity
+    {
+        const data: DataSource = JSON.parse(json) as DataSource;
+        console.log(data);
+        
+        return null;
     }
 }

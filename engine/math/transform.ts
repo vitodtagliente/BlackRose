@@ -30,4 +30,13 @@ export default class Transform
     {
         return this._matrix;
     }
+
+    public toJSON(): Object
+    {
+        return {
+            position: [this.position.x, this.position.y, this.position.z],
+            rotation: [this.rotation.x, this.rotation.y, this.rotation.z],
+            scale: [this.scale.x, this.scale.y, this.scale.z]
+        };
+    }
 }

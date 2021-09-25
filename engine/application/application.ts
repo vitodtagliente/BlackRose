@@ -78,7 +78,7 @@ export default class Application
 
         this._renderer.begin();
         this._world.update(deltaTime);
-        this._gameMode.update(deltaTime);
+        this._gameMode.update(this.world, deltaTime);
         if (this.camera)
         {
             this.camera.compute();
