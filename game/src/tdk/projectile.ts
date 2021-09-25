@@ -1,16 +1,18 @@
 import * as BlackRose from 'blackrose';
+import { serializable } from 'blackrose/core';
 import { Color, Renderer } from 'blackrose/graphics';
 import { Vector3 } from 'blackrose/math';
 import { World } from 'blackrose/scene';
 
+@serializable
 export default class Projectile extends BlackRose.Scene.Entity
 {
     private _target: Vector3;
     public speed: number;
 
-    public constructor(name?: string)
+    public constructor()
     {
-        super(name);
+        super();
         this.speed = 5;
     }
 

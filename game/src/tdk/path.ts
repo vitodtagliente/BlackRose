@@ -1,16 +1,18 @@
 import * as BlackRose from "blackrose";
+import { serializable } from "blackrose/core";
 import { Color, Renderer } from "blackrose/graphics";
 
+@serializable
 export default class Path extends BlackRose.Scene.Entity
 {
     public color: Color;
     private _steps: Array<BlackRose.Math.Vector3>;
 
-    public constructor(name?: string, color: Color = Color.red())
+    public constructor()
     {
-        super(name);
+        super();
         this._steps = [];
-        this.color = color;
+        this.color = Color.red();
     }
 
     public get steps(): Array<BlackRose.Math.Vector3> { return this._steps; }

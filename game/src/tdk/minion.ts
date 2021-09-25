@@ -1,19 +1,20 @@
 import * as BlackRose from 'blackrose';
+import { serializable } from 'blackrose/core';
 import { Color, Renderer } from 'blackrose/graphics';
 import { World } from 'blackrose/scene';
 import Path from './path';
 import PathNavigator from './path_navigator';
 import Pawn from './pawn';
 
+@serializable
 export default class Minion extends Pawn
 {
     private _navigator: PathNavigator;
     private _speed: number = 5;
 
-    public constructor(name?: string)
+    public constructor()
     {
-        super(name);
-
+        super();
         this._navigator = new PathNavigator();
     }
 

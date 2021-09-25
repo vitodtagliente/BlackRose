@@ -21,7 +21,8 @@ export default class OrtographicCamera extends Camera
 
     public constructor(name: string, viewport: Rect, clippingPlanes: CameraClippingPlanes)
     {
-        super(name, CameraMode.Ortographic);
+        super();
+        this._mode = CameraMode.Ortographic;
         this.viewport = viewport;
         this.clippingPlanes = clippingPlanes;
 

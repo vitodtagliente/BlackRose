@@ -1,19 +1,20 @@
 import * as BlackRose from 'blackrose';
-import { Timer } from 'blackrose/core';
+import { serializable, Timer } from 'blackrose/core';
 import { Color, Renderer } from 'blackrose/graphics';
 import { Quaternion, Vector3 } from 'blackrose/math';
 import { World } from 'blackrose/scene';
 import { Projectile, TargetFinderMode } from '.';
 import TargetFinder from './target_finder';
 
+@serializable
 export default class Tower extends BlackRose.Scene.Entity
 {
     private _finder: TargetFinder;
     private _timer: Timer;
 
-    public constructor(name?: string)
+    public constructor()
     {
-        super(name);
+        super();
         this._finder = new TargetFinder(TargetFinderMode.FIFO);
         this._timer = new Timer(1);
     }
@@ -29,7 +30,7 @@ export default class Tower extends BlackRose.Scene.Entity
         {
             let position: Vector3 = Vector3.zero();
             this.transform.position.copy(position);
-            const projectile: Projectile = world.spawn(new Projectile("projectile"), position, Quaternion.identity());
+            const projectile: Projectile = world.spawn(new Projectile(), position, Quaternion.identity());
             projectile.Follow(this._finder.target.transform.position);
             this._timer.reset();
         }

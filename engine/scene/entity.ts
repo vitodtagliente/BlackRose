@@ -44,21 +44,19 @@ export default class Entity extends Serializable
     private _children: Array<Entity>;
     private _isStatic: boolean;
 
-    public constructor(name?: string)
+    public constructor()
     {
         super();
-        this._id = name + global.Math.random().toString(36).substr(2, 9);
-        this.name = name;
+        this._id = this.className + global.Math.random().toString(36).substr(2, 9);
+        this.name = this.id;
         this.transform = new Math.Transform;
         this._transformState = new TransformState;
         this._components = new Array<Component>();
         this._children = new Array<Entity>();
-
         this._isStatic = false;
     }
 
     public get id(): string { return this._id; }
-    public get classId(): string { return this.constructor.name; }
     public get parent(): Entity { return this._parent; }
     public get children(): Array<Entity> { return this._children; }
     public get isStatic(): boolean { return this._isStatic; }

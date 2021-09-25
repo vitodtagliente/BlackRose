@@ -2,11 +2,12 @@ import * as BlackRose from "blackrose";
 import { Application } from "blackrose/application";
 import { AssetLibrary, AssetType, Image } from "blackrose/asset";
 import { SpriteRenderer } from "blackrose/components";
-import { delay, Timer } from "blackrose/core";
+import { delay, serializable, Timer } from "blackrose/core";
 import { Quaternion, Vector3 } from "blackrose/math";
 import { World } from "blackrose/scene";
 import { Minion, Wave } from ".";
 
+@serializable
 export default class WaveManager extends BlackRose.Scene.Entity
 {
     private _active: boolean;
@@ -16,7 +17,7 @@ export default class WaveManager extends BlackRose.Scene.Entity
 
     public constructor(name?: string)
     {
-        super(name);
+        super();
         this._active = false;
         this._waves = [];
         this._waveIndex = -1;
@@ -71,7 +72,7 @@ export default class WaveManager extends BlackRose.Scene.Entity
         {
             let position: Vector3 = Vector3.zero();
             wave.spawnPosition.copy(position);
-            const entity: Minion = Application.main.world.spawn(new Minion("player"), position, Quaternion.identity());
+            const entity: Minion = Application.main.world.spawn(new Minion, position, Quaternion.identity());
             const sprite = entity.addComponent(new SpriteRenderer());
             sprite.image = AssetLibrary.main.get(AssetType.Image, "assets/spritesheet_default.png") as Image;
             const size: number = 1 / 11;

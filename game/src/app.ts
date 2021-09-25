@@ -58,10 +58,11 @@ class TestGameMode extends GameMode
             }
 
             // Paths
-            const path: Path = app.world.spawn(new Path("path1"), Vector3.zero(), Quaternion.identity());
+            const path: Path = app.world.spawn(new Path, Vector3.zero(), Quaternion.identity());
             for (let i: number = 0; i < 10; ++i)
             {
-                const entity: Entity = app.world.spawn(new Entity("block" + i), Vector3.zero(), Quaternion.identity());
+                const entity: Entity = app.world.spawn(new Entity(), Vector3.zero(), Quaternion.identity());
+                entity.name = "block" + i;
                 entity.transform.position.set(i * 2, -2, 0);
                 const sprite = entity.addComponent(new SpriteRenderer());
                 sprite.image = this._image;
@@ -75,7 +76,8 @@ class TestGameMode extends GameMode
 
             // Minion 
             {
-                const entity: Minion = app.world.spawn(new Minion("player"), Vector3.zero(), Quaternion.identity());
+                const entity: Minion = app.world.spawn(new Minion(), Vector3.zero(), Quaternion.identity());
+                entity.name = "player";
                 const sprite = entity.addComponent(new SpriteRenderer());
                 sprite.image = this._image;
                 const size: number = 1 / 11;
@@ -85,14 +87,14 @@ class TestGameMode extends GameMode
 
                 const serialization: string = entity.serialize();
                 console.log(serialization);
-                const e: Entity = Serializable.deserialize(serialization) as Entity;
-                console.log(e);
+                //const e: Entity = Serializable.deserialize(serialization) as Entity;
+                // console.log(e);
             }
 
             // Towers
             {
-                app.world.spawn(new Tower("tower"), new Vector3(4, 0, 0), Quaternion.identity());
-                app.world.spawn(new Tower("tower1"), new Vector3(12, -4, 0), Quaternion.identity());
+                app.world.spawn(new Tower, new Vector3(4, 0, 0), Quaternion.identity());
+                app.world.spawn(new Tower, new Vector3(12, -4, 0), Quaternion.identity());
             }
 
             // wave manager
