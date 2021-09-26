@@ -22,6 +22,11 @@ export default class Serializable
         };
     }
 
+    public fromSerializationData(data: any): void
+    {
+        Object.assign(this, data);
+    }
+
     public static deserialize(json: string): Object
     {
         return JSON.parse(json, Serializable.reviver);
@@ -31,7 +36,9 @@ export default class Serializable
     {
         if ((typeof v === "object") && ("className" in v) && (v.className in registry))
         {
-            return Object.assign(registry[v.className], v);
+            const instance = new registry[v.className]() as Serializable;
+            instance.fromSerializationData(v);
+            return instance;
         }
         return v;
     }

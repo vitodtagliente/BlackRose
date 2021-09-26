@@ -127,12 +127,12 @@ export default class Entity extends Serializable
         }
 
         let components: Array<any> = [];
-        for(const component of this._components)
+        for (const component of this._components)
         {
             components.push(component.toSerializationData());
         }
 
-        let data: any = super.toSerializationData();
+        let data: SerializationData = super.toSerializationData();
         data.id = this.id;
         data.name = this.name;
         data.tag = this.tag;
@@ -142,4 +142,30 @@ export default class Entity extends Serializable
         data.components = components;
         return data;
     }
+
+    public fromSerializationData(data: SerializationData): void 
+    {
+        if (data)
+        {
+            this._id = data.id;
+            this.name = data.name;
+            this.tag = data.tag;
+            // console.log(data.transform);
+            // data.transform.copy(this.transform);
+            // parent
+            // children
+            // components
+        }
+    }
+}
+
+interface SerializationData
+{
+    id: string;
+    name: string;
+    tag: string;
+    transform: Math.Transform;
+    parent: string;
+    children: Array<string>;
+    components: Array<any>;
 }

@@ -83,6 +83,14 @@ export default class Transform extends Serializable
         return this._matrix;
     }
 
+    public copy(other: Transform): void
+    {
+        this.position.copy(other.position);
+        this.rotation.copy(other.rotation);
+        this.scale.copy(other.scale);
+        other.isStatic = this.isStatic;
+    }
+
     public toSerializationData(): any
     {
         let data: any = super.toSerializationData();

@@ -84,11 +84,6 @@ class TestGameMode extends GameMode
                 sprite.textureRect.set(size * 9, size * 10, size, size);
 
                 sprite.enabled = renderSprites;
-
-                const serialization: string = entity.serialize();
-                console.log(serialization);
-                //const e: Entity = Serializable.deserialize(serialization) as Entity;
-                // console.log(e);
             }
 
             // Towers
@@ -111,6 +106,16 @@ class TestGameMode extends GameMode
                 manager.push(wave);
                 manager.push(wave);
                 manager.start();
+            }
+
+            // tests 
+            {
+                const entity = app.world.spawn(new Entity, Vector3.zero(), Quaternion.identity());
+
+                const serialization: string = entity.serialize();
+                console.log(serialization);
+                const e: Entity = Serializable.deserialize(serialization) as Entity;
+                console.log(e);
             }
         });
     }

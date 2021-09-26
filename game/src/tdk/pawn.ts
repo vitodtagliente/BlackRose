@@ -4,7 +4,7 @@ import { serializable } from 'blackrose/core';
 @serializable
 export default class Pawn extends BlackRose.Scene.Entity
 {
-    public constructor(name?: string)
+    public constructor()
     {
         super();
     }
