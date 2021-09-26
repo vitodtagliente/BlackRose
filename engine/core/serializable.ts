@@ -12,7 +12,14 @@ export default class Serializable
 
     public serialize(): string
     {
-        return JSON.stringify(this);
+        return JSON.stringify(this.toSerializationData());
+    }
+
+    public toSerializationData(): any
+    {
+        return {
+            className: this.className
+        };
     }
 
     public static deserialize(json: string): Object

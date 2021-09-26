@@ -4,33 +4,6 @@ import { Renderer } from '../graphics';
 import *  as Math from '../math';
 import World from './world';
 
-class TransformState
-{
-    private _position: Math.Vector3;
-    private _rotation: Math.Vector3;
-    private _scale: Math.Vector3;
-
-    public constructor()
-    {
-        this._position = Math.Vector3.zero();
-        this._rotation = Math.Vector3.zero();
-        this._scale = Math.Vector3.one();
-    }
-
-    public update(transform: Math.Transform): boolean 
-    {
-        const isChanged: boolean = !this._position.equals(transform.position)
-            || !this._rotation.equals(transform.rotation)
-            || !this._scale.equals(transform.scale);
-
-        transform.position.copy(this._position);
-        transform.rotation.copy(this._rotation);
-        transform.scale.copy(this._scale);
-
-        return isChanged;
-    }
-}
-
 @serializable
 export default class Entity extends Serializable
 {
@@ -38,11 +11,9 @@ export default class Entity extends Serializable
     public name: string;
     public tag: string;
     public transform: Math.Transform;
-    private _transformState: TransformState;
     private _components: Array<Component>;
     private _parent: Entity;
     private _children: Array<Entity>;
-    private _isStatic: boolean;
 
     public constructor()
     {
@@ -50,24 +21,13 @@ export default class Entity extends Serializable
         this._id = this.className + global.Math.random().toString(36).substr(2, 9);
         this.name = this.id;
         this.transform = new Math.Transform;
-        this._transformState = new TransformState;
         this._components = new Array<Component>();
         this._children = new Array<Entity>();
-        this._isStatic = false;
     }
 
     public get id(): string { return this._id; }
     public get parent(): Entity { return this._parent; }
     public get children(): Array<Entity> { return this._children; }
-    public get isStatic(): boolean { return this._isStatic; }
-    public set isStatic(value: boolean)
-    {
-        if (value && !this._isStatic)
-        {
-            this._isStatic = value;
-            this.transform.compute();
-        }
-    }
 
     public prepareSpawn(world: World): void 
     {
@@ -98,10 +58,7 @@ export default class Entity extends Serializable
         }
 
         // recompute the transform matrix
-        if (!this.isStatic && this._transformState.update(this.transform))
-        {
-            this.transform.compute();
-        }
+        this.transform.compute();
     }
 
     public render(renderer: Renderer): void 
@@ -159,5 +116,30 @@ export default class Entity extends Serializable
     public copy(entity: Entity): void 
     {
 
+    }
+
+    public toSerializationData(): any
+    {
+        let children: Array<string> = [];
+        for (const child of this.children)
+        {
+            children.push(child.id);
+        }
+
+        let components: Array<any> = [];
+        for(const component of this._components)
+        {
+            components.push(component.toSerializationData());
+        }
+
+        let data: any = super.toSerializationData();
+        data.id = this.id;
+        data.name = this.name;
+        data.tag = this.tag;
+        data.transform = this.transform.toSerializationData();
+        data.parent = this.parent ? this.parent.id : undefined;
+        data.children = children;
+        data.components = components;
+        return data;
     }
 }

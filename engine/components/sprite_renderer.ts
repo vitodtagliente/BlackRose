@@ -1,7 +1,9 @@
 import { Image } from "../asset";
-import { Renderer, Texture, TextureRect } from "../graphics";
+import { serializable } from "../core";
+import { Renderer, TextureRect } from "../graphics";
 import { Component } from "../scene";
 
+@serializable
 export default class SpriteRenderer extends Component
 {
     public image: Image;

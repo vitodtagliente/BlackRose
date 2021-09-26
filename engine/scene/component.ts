@@ -6,7 +6,6 @@ import { Transform } from "../math";
 export default abstract class Component extends Serializable
 {
     private _owner: Entity;
-
     public enabled: boolean = true;
 
     public constructor()
@@ -14,7 +13,6 @@ export default abstract class Component extends Serializable
         super();
     }
 
-    public get classId(): string { return this.constructor.name; }
     public get owner(): Entity { return this._owner; }
     public get isAttached(): boolean { return this._owner != null; }
     public get transform(): Transform { return this.owner.transform; }
@@ -36,10 +34,10 @@ export default abstract class Component extends Serializable
     public update(world: World, deltaTime: number): void { }
     public render(renderer: Renderer): void { }
 
-    public toJSON(): Object
+    public toSerializationData(): any
     {
-        return {
-            classId: this.classId
-        };
+        let data: any = super.toSerializationData();
+        data.enabled = this.enabled;
+        return data;
     }
 }
