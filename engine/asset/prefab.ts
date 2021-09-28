@@ -10,6 +10,7 @@ export default class Frefab extends Asset
     public constructor()
     {
         super(AssetType.Prefab);
+        this._data = new Entity();
     }
 
     public load(filename: string, onLoadCallback: AssetLoadEvent = () => { }): void 
@@ -18,6 +19,13 @@ export default class Frefab extends Asset
     }
 
     public get data(): Entity { return this._data; }
+    public set data(entity: Entity) 
+    {
+        if (entity)
+        {
+            entity.copy(this.data);
+        }
+    }
 
     public isReady(): boolean { return true; }
     public dispose(): void 
