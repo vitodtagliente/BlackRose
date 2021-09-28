@@ -1,19 +1,26 @@
+import { serializable } from "../core";
 import Asset, { AssetLoadEvent, AssetType } from "./asset";
 
+@serializable
 export default class Video extends Asset
 {
     private _data: HTMLVideoElement;
 
-    public constructor(filename: string, onLoadCallback: AssetLoadEvent = () => { })
+    public constructor()
     {
-        super(AssetType.Video, filename);
+        super(AssetType.Video);
         // this._data = new window.v();
-        this._data.onload = onLoadCallback;
-        this._data.src = filename;
     }
 
     public get data(): HTMLVideoElement { return this._data; }
     public get isPlaying(): boolean { return this._data.paused == false; }
+
+    public load(filename: string, onLoadCallback: AssetLoadEvent = () => { }): void 
+    {
+        super.load(filename, onLoadCallback);
+        this._data.onload = onLoadCallback;
+        this._data.src = filename;
+    }
 
     public play(): void 
     {

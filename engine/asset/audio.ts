@@ -1,19 +1,26 @@
+import { serializable } from "../core";
 import Asset, { AssetLoadEvent, AssetType } from "./asset";
 
+@serializable
 export default class Audio extends Asset
 {
     private _data: HTMLAudioElement;
 
-    public constructor(filename: string, onLoadCallback: AssetLoadEvent = () => { })
+    public constructor()
     {
-        super(AssetType.Audio, filename);
+        super(AssetType.Audio);
         this._data = new window.Audio();
-        this._data.onload = onLoadCallback;
-        this._data.src = filename;
     }
 
     public get data(): HTMLAudioElement { return this._data; }
     public get isPlaying(): boolean { return this._data.paused == false; }
+
+    public load(filename: string, onLoadCallback: AssetLoadEvent = () => { }): void 
+    {
+        super.load(filename, onLoadCallback);
+        this._data.onload = onLoadCallback;
+        this._data.src = filename;
+    }
 
     public play(): void 
     {

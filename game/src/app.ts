@@ -25,9 +25,12 @@ class TestGameMode extends GameMode
 
     public init(): void 
     {
-        this._image = new Image("assets/spritesheet_default.png", () =>
+        this._image = new Image;
+        this._image.load("assets/spritesheet_default.png", () =>
         {
             AssetLibrary.main.add(this._image);
+            console.log(this._image.serialize());
+
             // camera
             {
                 const w: number = app.canvas.width / 2 / 32;
