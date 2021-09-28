@@ -110,7 +110,7 @@ class TestGameMode extends GameMode
 
             // tests 
             {
-                const entity = app.world.spawn(new Entity, Vector3.zero(), Quaternion.identity());
+                const entity = app.world.spawn(new Entity, new Vector3(0, 0, 3), Quaternion.identity());
 
                 const serialization: string = entity.serialize();
                 console.log(serialization);

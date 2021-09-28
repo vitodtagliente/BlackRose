@@ -135,7 +135,7 @@ export default class Entity extends Serializable
         let data: SerializationData = super.toSerializationData();
         data.id = this.id;
         data.name = this.name;
-        data.tag = this.tag;
+        data.tag = this.tag || "";
         data.transform = this.transform.toSerializationData();
         data.parent = this.parent ? this.parent.id : undefined;
         data.children = children;
@@ -150,8 +150,7 @@ export default class Entity extends Serializable
             this._id = data.id;
             this.name = data.name;
             this.tag = data.tag;
-            // console.log(data.transform);
-            // data.transform.copy(this.transform);
+            data.transform.copy(this.transform);
             // parent
             // children
             // components
