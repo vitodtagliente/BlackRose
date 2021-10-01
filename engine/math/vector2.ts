@@ -93,4 +93,18 @@ export default class Vector2 extends Serializable
     }
 
     public get magnitude(): number { return Math.sqrt(this.x * this.x + this.y * this.y); }
+
+    public serialize(): any 
+    {
+        let data: any = super.serialize();
+        data["x"] = this.x;
+        data["y"] = this.y;
+        return data;
+    }
+
+    public deserialize(data: any): void 
+    {
+        this.x = data["x"] ? data["x"] as number : 0;
+        this.y = data["y"] ? data["y"] as number : 0;
+    }
 }

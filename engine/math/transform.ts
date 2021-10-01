@@ -90,4 +90,34 @@ export default class Transform extends Serializable
         this.scale.copy(other.scale);
         other.isStatic = this.isStatic;
     }
+
+    public serialize(): any 
+    {
+        let data: any = super.serialize();
+        data["position"] = this.position.serialize();
+        data["rotation"] = this.rotation.serialize();
+        data["scale"] = this.scale.serialize();
+        return data;
+    }
+
+    public deserialize(data: any): void 
+    {
+        const position: any = data["position"];
+        if (position)
+        {
+            this.position.set(position.x, position.y, position.z);
+        }
+        
+        const rotation: any = data["rotation"];
+        if (rotation)
+        {
+            this.rotation.set(rotation.x, rotation.y, rotation.z);
+        }
+        
+        const scale: any = data["scale"];
+        if (scale)
+        {
+            this.scale.set(scale.x, scale.y, scale.z);
+        }
+    }
 }

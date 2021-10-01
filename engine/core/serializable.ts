@@ -21,6 +21,25 @@ export default class Serializable
     {
 
     }
+
+    public static stringify(data: Serializable): string
+    {
+        return JSON.stringify(data.serialize());
+    }
+
+    public static fromString(str: string): Serializable
+    {
+        const data: any = JSON.parse(str);
+        if ((typeof data === "object")
+            && ("className" in data)
+            && (data.className in registry))
+        {
+            const instance = new registry[data.className]() as Serializable;
+            instance.deserialize(data);
+            return instance;
+        }
+        return null;
+    }
 }
 
 export function serializable<T extends ISerializable>(constructor: T)
@@ -29,53 +48,4 @@ export function serializable<T extends ISerializable>(constructor: T)
     const className: string = instance.className;
     registry[className] = constructor;
     return constructor;
-}
-
-export class Archive
-{
-    private _data: any;
-
-    public constructor(data: any = {})
-    {
-        this._data = data;
-    }
-
-    public get data(): any { return this._data; }
-
-    public write(key: string, value: any | Serializable)
-    {
-        if (value instanceof Serializable)
-        {
-            this._data[key] = value.serialize();
-        }
-        else 
-        {
-            this._data[key] = value;
-        }
-    }
-
-    public read(key: string): any
-    {
-        const value = this._data[key];
-        if ((typeof value === "object")
-            && ("className" in value)
-            && (value.className in registry))
-        {
-            const instance = new registry[value.className]() as Serializable;
-            instance.deserialize(value);
-            return instance;
-        }
-        return value;
-    }
-
-    public static fromJson(json: string): Archive
-    {
-        const data: any = JSON.parse(json);
-        return new Archive(data);
-    }
-
-    public static toJson(archive: Archive): string
-    {
-        return JSON.stringify(archive.data);
-    }
 }

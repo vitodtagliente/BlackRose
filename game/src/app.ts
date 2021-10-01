@@ -5,12 +5,12 @@ import { AssetLibrary, Image } from 'blackrose/asset';
 import { CameraController2D, SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
-import { Quaternion, random, Rect, Vector3 } from 'blackrose/math';
+import { Quaternion, random, Rect, Transform, Vector3 } from 'blackrose/math';
 import { CameraClippingPlanes, Component, Entity, OrtographicCamera, World } from 'blackrose/scene';
 import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
 import { Minion, Path, Tower, Wave, WaveManager } from './tdk';
-import { Archive, serializable, Serializable } from 'blackrose/core';
+import { serializable, Serializable } from 'blackrose/core';
 
 const renderSprites: boolean = true;
 
@@ -108,6 +108,17 @@ class TestGameMode extends GameMode
                 manager.push(wave);
                 manager.push(wave);
                 manager.start();
+            }
+
+            // Tests
+            {
+                const transform: Transform = new Transform;
+                transform.position.x = 5;
+                transform.scale.x = 3;
+
+                console.log(Serializable.stringify(transform));
+                let t = Serializable.fromString(Serializable.stringify(transform));
+                console.log(t);
             }
         });
     }
