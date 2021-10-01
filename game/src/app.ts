@@ -112,12 +112,16 @@ class TestGameMode extends GameMode
 
             // Tests
             {
-                const transform: Transform = new Transform;
+                const entity: Entity = app.world.spawn(new Entity, Vector3.zero(), Quaternion.identity());
+                entity.name = "player";
+                entity.tag = "mytag";
+
+                const transform: Transform = entity.transform;
                 transform.position.x = 5;
                 transform.scale.x = 3;
 
-                console.log(Serializable.stringify(transform));
-                let t = Serializable.fromString(Serializable.stringify(transform));
+                console.log(Serializable.stringify(entity));
+                let t = Serializable.fromString(Serializable.stringify(entity));
                 console.log(t);
             }
         });

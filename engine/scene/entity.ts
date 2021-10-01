@@ -117,4 +117,23 @@ export default class Entity extends Serializable
     {
 
     }
+
+    public serialize(): any 
+    {
+        let data: any = super.serialize();
+        data["transform"] = this.transform.serialize();
+        return data;
+    }
+
+    public deserialize(data: any): void 
+    {
+        for (const key of Object.keys(data))
+        {
+            switch (key)
+            {
+                case "transform": this.transform.deserialize(data[key]); break;
+                default: break;
+            }
+        }
+    }
 }

@@ -102,22 +102,15 @@ export default class Transform extends Serializable
 
     public deserialize(data: any): void 
     {
-        const position: any = data["position"];
-        if (position)
+        for (const key of Object.keys(data))
         {
-            this.position.set(position.x, position.y, position.z);
-        }
-        
-        const rotation: any = data["rotation"];
-        if (rotation)
-        {
-            this.rotation.set(rotation.x, rotation.y, rotation.z);
-        }
-        
-        const scale: any = data["scale"];
-        if (scale)
-        {
-            this.scale.set(scale.x, scale.y, scale.z);
+            switch (key)
+            {
+                case "position": this.position.deserialize(data[key]); break;
+                case "rotation": this.rotation.deserialize(data[key]); break;
+                case "scale": this.scale.deserialize(data[key]); break;
+                default: break;
+            }
         }
     }
 }
