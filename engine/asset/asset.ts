@@ -40,27 +40,4 @@ export default class Asset extends Serializable
     {
         this.onDispose.emit(this);
     }
-
-    public toSerializationData(): any
-    {
-        let data: SerializationData = super.toSerializationData();
-        data.filename = this.filename;
-        data.type = this.type;
-        return data;
-    }
-
-    public fromSerializationData(data: SerializationData): void 
-    {
-        if (data)
-        {
-            this._filename = data.filename;
-            this._type = data.type;
-        }
-    }
-}
-
-interface SerializationData
-{
-    filename: string;
-    type: AssetType;
 }

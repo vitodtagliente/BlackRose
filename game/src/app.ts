@@ -10,7 +10,7 @@ import { CameraClippingPlanes, Component, Entity, OrtographicCamera, World } fro
 import { Application } from 'blackrose/application';
 import { KeyCode } from 'blackrose/input';
 import { Minion, Path, Tower, Wave, WaveManager } from './tdk';
-import { Serializable } from 'blackrose/core';
+import { Archive, serializable, Serializable } from 'blackrose/core';
 
 const renderSprites: boolean = true;
 
@@ -29,7 +29,6 @@ class TestGameMode extends GameMode
         this._image.load("assets/spritesheet_default.png", () =>
         {
             AssetLibrary.main.add(this._image);
-            console.log(this._image.serialize());
 
             // camera
             {
@@ -109,16 +108,6 @@ class TestGameMode extends GameMode
                 manager.push(wave);
                 manager.push(wave);
                 manager.start();
-            }
-
-            // tests 
-            {
-                const entity = app.world.spawn(new Entity, new Vector3(0, 0, 3), Quaternion.identity());
-
-                const serialization: string = entity.serialize();
-                console.log(serialization);
-                const e: Entity = Serializable.deserialize(serialization) as Entity;
-                console.log(e);
             }
         });
     }

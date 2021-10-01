@@ -33,11 +33,4 @@ export default abstract class Component extends Serializable
     public unint(): void { }
     public update(world: World, deltaTime: number): void { }
     public render(renderer: Renderer): void { }
-
-    public toSerializationData(): any
-    {
-        let data: any = super.toSerializationData();
-        data.enabled = this.enabled;
-        return data;
-    }
 }

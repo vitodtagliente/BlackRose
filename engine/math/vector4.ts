@@ -78,33 +78,4 @@ export default class Vector4 extends Serializable
     }
 
     public get magnitude(): number { return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z); }
-
-    public toSerializationData(): any
-    {
-        let data: SerializationData = super.toSerializationData();
-        data.x = this.x;
-        data.y = this.y;
-        data.z = this.z;
-        data.w = this.w;
-        return data;
-    }
-
-    public fromSerializationData(data: SerializationData): void 
-    {
-        if (data)
-        {
-            this.x = data.x;
-            this.y = data.y;
-            this.z = data.z;
-            this.w = data.w;
-        }
-    }
-}
-
-interface SerializationData
-{
-    x: number;
-    y: number;
-    z: number;
-    w: number;
 }

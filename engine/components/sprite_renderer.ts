@@ -1,6 +1,6 @@
 import { Image } from "../asset";
 import { serializable } from "../core";
-import { Renderer, TextureRect } from "../graphics";
+import { Renderer, TextureCoords, TextureRect } from "../graphics";
 import { Component } from "../scene";
 
 @serializable

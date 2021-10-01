@@ -90,33 +90,4 @@ export default class Transform extends Serializable
         this.scale.copy(other.scale);
         other.isStatic = this.isStatic;
     }
-
-    public toSerializationData(): any
-    {
-        let data: SerializationData = super.toSerializationData();
-        data.isStatic = this._isStatic;
-        data.position = this.position.toSerializationData();
-        data.rotation = this.rotation.toSerializationData();
-        data.scale = this.scale.toSerializationData();
-        return data;
-    }
-
-    public fromSerializationData(data: SerializationData): void 
-    {
-        if (data)
-        {
-            data.position.copy(this.position);
-            data.rotation.copy(this.rotation);
-            data.scale.copy(this.scale);
-            this.isStatic = data.isStatic;
-        }
-    }
-}
-
-interface SerializationData
-{
-    position: Vector3;
-    rotation: Vector3;
-    scale: Vector3;
-    isStatic: boolean;
 }
