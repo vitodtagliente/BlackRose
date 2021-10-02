@@ -1,6 +1,8 @@
+import { serializable, Serializable } from "../core";
 import { clamp } from "../math";
 
-export default class TextureRect
+@serializable
+export default class TextureRect extends Serializable
 {
     public data: Float32Array;
 
@@ -15,6 +17,7 @@ export default class TextureRect
 
     public constructor(x: number = 0, y: number = 0, width: number = 1, height: number = 1)
     {
+        super();
         this.data = new Float32Array([
             clamp(x, 0, 1), clamp(y, 0, 1), clamp(width, 0, 1), clamp(height, 0, 1)
         ]);
@@ -31,5 +34,29 @@ export default class TextureRect
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+    public serialize(): any 
+    {
+        let data: any = super.serialize();
+        data["x"] = this.x;
+        data["y"] = this.y;
+        data["width"] = this.width;
+        data["height"] = this.height;
+        return data;
+    }
+
+    public deserialize(data: any): void 
+    {
+        for (const key of Object.keys(data))
+        {
+            switch (key)
+            {
+                case "x": this.x = data[key] as number;
+                case "y": this.y = data[key] as number;
+                case "width": this.width = data[key] as number;
+                case "height": this.height = data[key] as number;
+            }
+        }
     }
 }

@@ -22,23 +22,30 @@ export default class Serializable
 
     }
 
-    public static stringify(data: Serializable): string
+    public stringify(): string
     {
-        return JSON.stringify(data.serialize());
+        return JSON.stringify(this.serialize());
     }
 
-    public static fromString(str: string): Serializable
+    public static parse(data: string | any): Serializable
     {
-        const data: any = JSON.parse(str);
-        if ((typeof data === "object")
-            && ("className" in data)
-            && (data.className in registry))
+        if (typeof data === typeof "")
         {
-            const instance = new registry[data.className]() as Serializable;
-            instance.deserialize(data);
-            return instance;
+            const parsedData: any = JSON.parse(data);
+            if ((typeof parsedData === "object")
+                && ("className" in parsedData)
+                && (parsedData.className in registry))
+            {
+                const instance = new registry[parsedData.className]() as Serializable;
+                instance.deserialize(parsedData);
+                return instance;
+            }
+            return null;
         }
-        return null;
+        else 
+        {
+            return this.parse(JSON.stringify(data));
+        }
     }
 }
 

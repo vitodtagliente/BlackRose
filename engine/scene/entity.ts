@@ -121,7 +121,13 @@ export default class Entity extends Serializable
     public serialize(): any 
     {
         let data: any = super.serialize();
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["tag"] = this.tag;
         data["transform"] = this.transform.serialize();
+        data["parent"] = this.parent ? this.parent.id : undefined;
+        data["children"] = this.children.map(child => child.id);
+        data["components"] = this._components.map(component => component.serialize());
         return data;
     }
 
@@ -131,7 +137,30 @@ export default class Entity extends Serializable
         {
             switch (key)
             {
+                case "id": this._id = data[key]; break;
+                case "name": this.name = data[key]; break;
+                case "tag": this.tag = data[key]; break;
                 case "transform": this.transform.deserialize(data[key]); break;
+                case "parent":
+                    {
+                        break;
+                    }
+                case "children":
+                    {
+                        break;
+                    }
+                case "components":
+                    {
+                        for (const element of data[key])
+                        {
+                            const component = Serializable.parse(element) as Component;
+                            if (component)
+                            {
+                                this._components.push(component);
+                            }
+                        }
+                        break;
+                    }
                 default: break;
             }
         }

@@ -24,4 +24,24 @@ export default class SpriteRenderer extends Component
             renderer.drawSprite(renderer.textureLibrary.get(this.image), this.transform, this.textureRect);
         }
     }
+
+    public serialize(): any 
+    {
+        let data: any = super.serialize();
+        data["image"] = this.image.serialize();
+        data["rect"] = this.textureRect.serialize();
+        return data;
+    }
+
+    public deserialize(data: any): void 
+    {
+        for (const key of Object.keys(data))
+        {
+            switch (key)
+            {
+                case "image": break;
+                case "rect": this.textureRect.deserialize(data[key]); break;
+            }
+        }
+    }
 }
