@@ -107,8 +107,14 @@ export default class Vector3 extends Serializable
 
     public deserialize(data: any): void 
     {
-        this.x = data["x"] ? data["x"] as number : 0;
-        this.y = data["y"] ? data["y"] as number : 0;
-        this.z = data["z"] ? data["z"] as number : 0;
+        for (const key of Object.keys(data))
+        {
+            switch (key)
+            {
+                case "x": this.x = data[key]; break;
+                case "y": this.x = data[key]; break;
+                case "z": this.x = data[key]; break;
+            }
+        }
     }
 }

@@ -1,18 +1,20 @@
 import Entity from "./entity";
 import { Vector3, Quaternion } from "../math";
-import { Signal } from "../core";
+import { Serializable, serializable, Signal } from "../core";
 import { Renderer } from "../graphics";
 
-export default class World
+@serializable
+export default class World extends Serializable
 {
     public name: string;
     private _entities: Array<Entity>;
-    
+
     public onEntitySpawn: Signal<Entity>;
     public onEntityDestroy: Signal<Entity>;
 
     public constructor(name?: string)
     {
+        super();
         this.name = name;
         this._entities = new Array<Entity>();
 
@@ -81,5 +83,37 @@ export default class World
             }
         }
         return result;
+    }
+
+    public serialize(): any 
+    {
+        let data: any = super.serialize();
+        data["name"] = this.name;
+        data["entities"] = this.entities.map(entity => entity.serialize());
+        return data;
+    }
+
+    public deserialize(data: any): void 
+    {
+        for (const key of Object.keys(data))
+        {
+            switch (key)
+            {
+                case "name": this.name = data[key]; break;
+                case "entities":
+                    {
+                        for (const element of data[key])
+                        {
+                            const entity: Entity = Serializable.parse(element) as Entity;
+                            if (entity)
+                            {
+                                this.spawn(entity, entity.transform.position, Quaternion.identity());
+                                this._entities.push();
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
     }
 }

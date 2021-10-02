@@ -111,4 +111,28 @@ export default class Quaternion extends Serializable
         const f: number = 1 / Math.pow(this.magnitude, 2);
         return new Quaternion(-this.x * f, -this.y * f, -this.z * f, this.w * f);
     }
+
+    public serialize(): any 
+    {
+        let data: any = super.serialize();
+        data["x"] = this.x;
+        data["y"] = this.y;
+        data["z"] = this.w;
+        data["w"] = this.z;
+        return data;
+    }
+
+    public deserialize(data: any): void 
+    {
+        for (const key of Object.keys(data))
+        {
+            switch (key)
+            {
+                case "x": this.x = data[key]; break;
+                case "y": this.x = data[key]; break;
+                case "z": this.x = data[key]; break;
+                case "w": this.x = data[key]; break;
+            }
+        }
+    }
 }
