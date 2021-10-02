@@ -1,3 +1,4 @@
+import { Prefab } from "blackrose/asset";
 import { Vector3 } from "blackrose/math";
 
 export default class Wave
@@ -7,4 +8,5 @@ export default class Wave
     public numOfMinions: number = 0;
     public spawnPosition: Vector3 = Vector3.zero();
     public pathsToFollow: Array<string> = [];
+    public prefab: Prefab;
 }

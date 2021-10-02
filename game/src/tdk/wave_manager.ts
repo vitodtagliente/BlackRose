@@ -70,13 +70,15 @@ export default class WaveManager extends BlackRose.Scene.Entity
         console.log("spawning wave " + this.waveIndex);
         for (let i: number = 0; i < wave.numOfMinions; ++i)
         {
+            if (wave.prefab == null) continue;
+
             let position: Vector3 = Vector3.zero();
             wave.spawnPosition.copy(position);
-            const entity: Minion = Application.main.world.spawn(new Minion, position, Quaternion.identity());
-            const sprite = entity.addComponent(new SpriteRenderer());
-            sprite.image = AssetLibrary.main.get(AssetType.Image, "assets/spritesheet_default.png") as Image;
-            const size: number = 1 / 11;
-            sprite.textureRect.set(size * 9, size * 9, size, size);
+            Application.main.world.spawn(
+                Minion.parse(wave.prefab.data) as Minion,
+                position,
+                Quaternion.identity()
+            );
 
             await delay(wave.perMinionSpawnDelay);
         }

@@ -1,16 +1,15 @@
 import { serializable } from "../core";
-import { Entity } from "../scene";
 import Asset, { AssetLoadEvent, AssetType } from "./asset";
 
 @serializable
 export default class Frefab extends Asset
 {
-    private _data: Entity;
+    private _data: string;
 
     public constructor()
     {
         super(AssetType.Prefab);
-        this._data = new Entity();
+        this._data = JSON.stringify({});
     }
 
     public load(filename: string, onLoadCallback: AssetLoadEvent = () => { }): void 
@@ -18,14 +17,8 @@ export default class Frefab extends Asset
         super.load(filename, onLoadCallback);
     }
 
-    public get data(): Entity { return this._data; }
-    public set data(entity: Entity) 
-    {
-        if (entity)
-        {
-            entity.copy(this.data);
-        }
-    }
+    public get data(): string { return this._data; }
+    public set data(value: string) { this._data = value; }
 
     public isReady(): boolean { return true; }
     public dispose(): void 

@@ -1,7 +1,7 @@
 import * as BlackRose from 'blackrose';
 import * as BlackRoseEditor from 'blackrose-editor';
 import { SpriteAnimation, SpriteAnimator } from 'blackrose/animation';
-import { AssetLibrary, Image } from 'blackrose/asset';
+import { AssetLibrary, Image, Prefab } from 'blackrose/asset';
 import { CameraController2D, SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
@@ -76,16 +76,26 @@ class TestGameMode extends GameMode
                 sprite.enabled = renderSprites;
             }
 
-            // Minion 
+            let minionPrefab: Prefab;
             {
                 const entity: Minion = app.world.spawn(new Minion(), Vector3.zero(), Quaternion.identity());
-                entity.name = "player";
+                entity.name = "minion";
                 const sprite = entity.addComponent(new SpriteRenderer());
                 sprite.image = this._image;
                 const size: number = 1 / 11;
-                sprite.textureRect.set(size * 9, size * 10, size, size);
+                sprite.textureRect.set(size * 9, size * 9, size, size);
 
-                sprite.enabled = renderSprites;
+                minionPrefab = new Prefab;
+                minionPrefab.data = entity.stringify();
+            }
+
+            // Minion 
+            {
+                app.world.spawn(
+                    Minion.parse(minionPrefab.data) as Minion, 
+                    Vector3.zero(), 
+                    Quaternion.identity()
+                );
             }
 
             // Towers
@@ -103,6 +113,8 @@ class TestGameMode extends GameMode
                     wave.numOfMinions = 10;
                     wave.perMinionSpawnDelay = 500;
                     wave.spawnPosition = new Vector3(-4, 0, 0);
+                    wave.prefab = minionPrefab;
+                    
                 }
                 manager.push(wave);
                 manager.push(wave);

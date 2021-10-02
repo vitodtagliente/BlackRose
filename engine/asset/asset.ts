@@ -59,5 +59,10 @@ export default class Asset extends Serializable
                 case "filename": this._filename = data[key]; break;
             }
         }
+
+        if (this.filename.length > 0)
+        {
+            this.load(this.filename);
+        }
     }
 }
