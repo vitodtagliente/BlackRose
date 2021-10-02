@@ -1,3 +1,4 @@
+import { Audio, Image, Video } from ".";
 import Asset, { AssetType } from "./asset";
 
 class AssetCache
@@ -25,7 +26,19 @@ class AssetCache
 
     public get(id: string): Asset
     {
-        return this._assets.get(id);
+        let asset: Asset = this._assets.get(id);
+        if (asset == null)
+        {
+            switch(this.type)
+            {
+                case AssetType.Image: asset = new Image(); break;
+                case AssetType.Audio: asset = new Audio(); break;
+                case AssetType.Video: asset = new Video(); break;
+                default: return null;
+            }
+            asset.load(id);
+        }
+        return asset;
     }
 
     public dispose(id: string): void 

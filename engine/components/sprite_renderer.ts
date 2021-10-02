@@ -1,4 +1,4 @@
-import { Image } from "../asset";
+import { AssetLibrary, Image } from "../asset";
 import { serializable } from "../core";
 import { Renderer, TextureCoords, TextureRect } from "../graphics";
 import { Component } from "../scene";
@@ -12,6 +12,7 @@ export default class SpriteRenderer extends Component
     public constructor()
     {
         super();
+        this.image = new Image();
         this.textureRect = new TextureRect();
     }
 
@@ -19,7 +20,7 @@ export default class SpriteRenderer extends Component
     {
         super.render(renderer);
         
-        if (this.image != null)
+        if (this.image.isReady)
         {
             renderer.drawSprite(renderer.textureLibrary.get(this.image), this.transform, this.textureRect);
         }
@@ -39,7 +40,7 @@ export default class SpriteRenderer extends Component
         {
             switch (key)
             {
-                case "image": break;
+                case "image": this.image.deserialize(data[key]); break;
                 case "rect": this.textureRect.deserialize(data[key]); break;
             }
         }
