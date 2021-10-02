@@ -40,4 +40,24 @@ export default class Asset extends Serializable
     {
         this.onDispose.emit(this);
     }
+
+    public serialize(): any 
+    {
+        let data: any = super.serialize();
+        data["type"] = this.type;
+        data["filename"] = this.filename;
+        return data;
+    }
+
+    public deserialize(data: any): void 
+    {
+        for (const key of Object.keys(data))
+        {
+            switch (key)
+            {
+                case "type": this._type = data[key]; break;
+                case "filename": this._filename = data[key]; break;
+            }
+        }
+    }
 }

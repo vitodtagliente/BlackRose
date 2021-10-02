@@ -123,8 +123,8 @@ class TestGameMode extends GameMode
                 }
 
                 const transform: Transform = entity.transform;
-                transform.position.x = 5;
-                transform.scale.x = 3;
+                transform.position.x = 2;
+                transform.rotation.z = 23;
 
                 console.log(entity.stringify());
                 let t = Serializable.parse(entity.stringify());
