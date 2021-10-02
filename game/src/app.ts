@@ -121,27 +121,6 @@ class TestGameMode extends GameMode
                 manager.push(wave);
                 manager.start();
             }
-
-            // Tests
-            {
-                const entity: Entity = app.world.spawn(new Entity, Vector3.zero(), Quaternion.identity());
-                entity.name = "player";
-                entity.tag = "mytag";
-                {
-                    const sprite = entity.addComponent(new SpriteRenderer());
-                    sprite.image = this._image;
-                    const size: number = 1 / 11;
-                    sprite.textureRect.set(size * 9, size * 10, size, size);
-                }
-
-                const transform: Transform = entity.transform;
-                transform.position.x = 2;
-                transform.rotation.z = 23;
-
-                console.log(entity.stringify());
-                let t = Serializable.parse(entity.stringify());
-                console.log(t);
-            }
         });
     }
 }
