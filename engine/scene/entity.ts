@@ -156,6 +156,7 @@ export default class Entity extends Serializable
                             const component = Serializable.parse(element) as Component;
                             if (component)
                             {
+                                component.attach(this);
                                 this._components.push(component);
                             }
                         }
