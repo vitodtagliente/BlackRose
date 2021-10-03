@@ -1,49 +1,34 @@
-import { Audio, Image, Video } from ".";
+import { Audio, Image, Prefab } from ".";
 import Asset, { AssetType } from "./asset";
+import AssetData from "./asset_data";
 
 class AssetCache
 {
     private _type: AssetType;
-    private _assets: Map<string, Asset>;
+    private _assets: Map<string, AssetData>;
 
     public constructor(type: AssetType)
     {
         this._type = type;
-        this._assets = new Map<string, Asset>();
+        this._assets = new Map<string, AssetData>();
     }
 
     public get type(): AssetType { return this._type; }
 
-    public add(asset: Asset): boolean
+    public add(filename: string, asset: AssetData): boolean
     {
-        if (asset.type == this.type)
-        {
-            this._assets.set(asset.filename, asset);
-            return true;
-        }
-        return false;
+        this._assets.set(filename, asset);
+        return true;
     }
 
-    public get(id: string): Asset
+    public get(id: string): AssetData
     {
-        let asset: Asset = this._assets.get(id);
-        if (asset == null)
-        {
-            switch(this.type)
-            {
-                case AssetType.Image: asset = new Image(); break;
-                case AssetType.Audio: asset = new Audio(); break;
-                case AssetType.Video: asset = new Video(); break;
-                default: return null;
-            }
-            asset.load(id);
-        }
-        return asset;
+        return this._assets.get(id);
     }
 
     public dispose(id: string): void 
     {
-        const asset: Asset = this.get(id);
+        const asset: AssetData = this.get(id);
         if (asset != null)
         {
             asset.dispose();
@@ -89,10 +74,10 @@ export default class AssetLibrary
             cache = new AssetCache(asset.type);
             this._caches.set(asset.type, cache);
         }
-        return cache.add(asset);
+        return cache.add(asset.filename, asset.data);
     }
 
-    public get(type: AssetType, id: string): Asset
+    public get(type: AssetType, id: string): AssetData
     {
         const cache: AssetCache = this._caches.get(type);
         if (cache != null)

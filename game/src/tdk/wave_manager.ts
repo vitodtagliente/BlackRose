@@ -1,6 +1,6 @@
 import * as BlackRose from "blackrose";
 import { Application } from "blackrose/application";
-import { AssetLibrary, AssetType, Image } from "blackrose/asset";
+import { AssetLibrary, AssetType, Image, Prefab } from "blackrose/asset";
 import { SpriteRenderer } from "blackrose/components";
 import { delay, serializable, Timer } from "blackrose/core";
 import { Quaternion, Vector3 } from "blackrose/math";
@@ -75,7 +75,7 @@ export default class WaveManager extends BlackRose.Scene.Entity
             let position: Vector3 = Vector3.zero();
             wave.spawnPosition.copy(position);
             Application.main.world.spawn(
-                Minion.parse(wave.prefab.data) as Minion,
+                Minion.parse(wave.prefab.raw) as Minion,
                 position,
                 Quaternion.identity()
             );

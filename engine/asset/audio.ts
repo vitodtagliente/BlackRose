@@ -1,26 +1,14 @@
-import { serializable } from "../core";
-import Asset, { AssetLoadEvent, AssetType } from "./asset";
+import { AssetLoadEvent } from ".";
+import AssetData from "./asset_data";
 
-@serializable
-export default class Audio extends Asset
+export default class Audio extends AssetData
 {
-    private _data: HTMLAudioElement;
-
     public constructor()
     {
-        super(AssetType.Audio);
-        this._data = new window.Audio();
+        super(new window.Audio());
     }
 
-    public get data(): HTMLAudioElement { return this._data; }
-    public get isPlaying(): boolean { return this._data.paused == false; }
-
-    public load(filename: string, onLoadCallback: AssetLoadEvent = () => { }): void 
-    {
-        super.load(filename, onLoadCallback);
-        this._data.onload = onLoadCallback;
-        this._data.src = filename;
-    }
+    public get isPlaying(): boolean { return this.raw.paused == false; }
 
     public play(): void 
     {
@@ -30,10 +18,17 @@ export default class Audio extends Asset
         }
     }
 
-    public isReady(): boolean { return this._data.networkState == this._data.NETWORK_IDLE; }
-    public dispose(): void 
+    protected _isLoaded(): boolean { return this.raw.networkState == this.raw.NETWORK_IDLE; }
+    public load(filename: string, onLoadCallback: AssetLoadEvent = () => { }): void 
+    {
+        super.load(filename, onLoadCallback);
+        this._data.onload = onLoadCallback;
+        this._data.src = filename;
+    }
+    public dispose(): void
     {
         super.dispose();
         this._data = null;
     }
+
 }

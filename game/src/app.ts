@@ -1,7 +1,7 @@
 import * as BlackRose from 'blackrose';
 import * as BlackRoseEditor from 'blackrose-editor';
 import { SpriteAnimation, SpriteAnimator } from 'blackrose/animation';
-import { AssetLibrary, Image, Prefab } from 'blackrose/asset';
+import { Asset, AssetType, Image, Prefab } from 'blackrose/asset';
 import { CameraController2D, SpriteRenderer } from 'blackrose/components';
 import { GameMode } from 'blackrose/game';
 import { Color, Texture, TextureRect } from 'blackrose/graphics';
@@ -16,7 +16,8 @@ const renderSprites: boolean = true;
 
 class TestGameMode extends GameMode
 {
-    private _image: Image;
+    private _image: Asset;
+    private _minionPrefab: Asset;
 
     public constructor()
     {
@@ -25,11 +26,16 @@ class TestGameMode extends GameMode
 
     public init(): void 
     {
-        this._image = new Image;
+        this._minionPrefab = new Asset(AssetType.Prefab);
+        this._minionPrefab.load("assets/prefabs/minion.json", () =>
+        {
+            console.log("minion prefab loaded");
+            console.log((this._minionPrefab.data as Prefab).raw);
+        });
+
+        this._image = new Asset(AssetType.Image);
         this._image.load("assets/spritesheet_default.png", () =>
         {
-            AssetLibrary.main.add(this._image);
-
             // camera
             {
                 const w: number = app.canvas.width / 2 / 32;
@@ -64,7 +70,7 @@ class TestGameMode extends GameMode
             for (let i: number = 0; i < 10; ++i)
             {
                 const entity: Entity = app.world.spawn(new Entity(), Vector3.zero(), Quaternion.identity());
-                entity.name = "block" + i;
+                entity.name = "block";
                 entity.transform.position.set(i * 2, -2, 0);
                 const sprite = entity.addComponent(new SpriteRenderer());
                 sprite.image = this._image;
@@ -76,24 +82,11 @@ class TestGameMode extends GameMode
                 sprite.enabled = renderSprites;
             }
 
-            let minionPrefab: Prefab;
-            {
-                const entity: Minion = app.world.spawn(new Minion(), Vector3.zero(), Quaternion.identity());
-                entity.name = "minion";
-                const sprite = entity.addComponent(new SpriteRenderer());
-                sprite.image = this._image;
-                const size: number = 1 / 11;
-                sprite.textureRect.set(size * 9, size * 9, size, size);
-
-                minionPrefab = new Prefab;
-                minionPrefab.data = entity.stringify();
-            }
-
             // Minion 
-            {
+            {     
                 app.world.spawn(
-                    Minion.parse(minionPrefab.data) as Minion, 
-                    Vector3.zero(), 
+                    Minion.parse((this._minionPrefab.data as Prefab).raw) as Minion,
+                    Vector3.zero(),
                     Quaternion.identity()
                 );
             }
@@ -113,8 +106,8 @@ class TestGameMode extends GameMode
                     wave.numOfMinions = 10;
                     wave.perMinionSpawnDelay = 500;
                     wave.spawnPosition = new Vector3(-4, 0, 0);
-                    wave.prefab = minionPrefab;
-                    
+                    wave.prefab = this._minionPrefab.data as Prefab;
+
                 }
                 manager.push(wave);
                 manager.push(wave);

@@ -37,7 +37,7 @@ export default class GLTexture extends Texture
             internalFormat,
             srcFormat,
             srcType,
-            image.data
+            image.raw
         );
     }
 

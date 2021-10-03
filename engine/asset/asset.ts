@@ -1,4 +1,6 @@
-import { Serializable, serializable, Signal } from "../core";
+import { Image, Audio, Prefab, AssetLibrary } from ".";
+import { Serializable, serializable } from "../core";
+import AssetData from "./asset_data";
 
 export enum AssetType
 {
@@ -14,31 +16,50 @@ export type AssetLoadEvent = () => void;
 @serializable
 export default class Asset extends Serializable
 {
+    private _data: AssetData;
     private _filename: string;
     private _type: AssetType;
-
-    public onDispose: Signal<Asset>;
 
     public constructor(type: AssetType = AssetType.Invalid)
     {
         super();
         this._type = type;
-        this.onDispose = new Signal<Asset>();
+
+        switch (type)
+        {
+            case AssetType.Image: this._data = new Image(); break;
+            case AssetType.Audio: this._data = new Audio(); break;
+            case AssetType.Prefab: this._data = new Prefab(); break;
+            default: break;
+        }
     }
 
+    public get data(): AssetData { return this._data; }
     public get filename(): string { return this._filename; }
     public get type(): AssetType { return this._type; }
 
     public load(filename: string, onLoadCallback: AssetLoadEvent = () => { }): void
     {
+        if (filename.length == 0) return;
+
         this._filename = filename;
+        const data: AssetData = AssetLibrary.main.get(this.type, filename);
+        if (data)
+        {
+            this._data = data;
+        }
+        else 
+        {
+            this._data.load(filename, onLoadCallback);
+        }
     }
 
-    public isReady(): boolean { return true; }
+    public isLoaded(): boolean { return this.data && this.data.isLoaded; }
 
     public dispose(): void 
     {
-        this.onDispose.emit(this);
+        if (this.data)
+            this.data.dispose();
     }
 
     public serialize(): any 
