@@ -51,6 +51,7 @@ export default class Asset extends Serializable
         else 
         {
             this._data.load(filename, onLoadCallback);
+            AssetLibrary.main.add(this.type, filename, this._data);
         }
     }
 

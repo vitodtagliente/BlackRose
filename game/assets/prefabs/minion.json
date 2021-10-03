@@ -30,7 +30,7 @@
        {
           "className":"SpriteRenderer",
           "image":{
-             "className":"Image",
+             "className":"Asset",
              "type":2,
              "filename":"assets/spritesheet_default.png"
           },

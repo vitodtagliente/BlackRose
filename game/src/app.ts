@@ -30,7 +30,6 @@ class TestGameMode extends GameMode
         this._minionPrefab.load("assets/prefabs/minion.json", () =>
         {
             console.log("minion prefab loaded");
-            console.log((this._minionPrefab.data as Prefab).raw);
         });
 
         this._image = new Asset(AssetType.Image);
@@ -83,7 +82,7 @@ class TestGameMode extends GameMode
             }
 
             // Minion 
-            {     
+            {
                 app.world.spawn(
                     Minion.parse((this._minionPrefab.data as Prefab).raw) as Minion,
                     Vector3.zero(),

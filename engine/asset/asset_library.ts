@@ -21,24 +21,24 @@ class AssetCache
         return true;
     }
 
-    public get(id: string): AssetData
+    public get(filename: string): AssetData
     {
-        return this._assets.get(id);
+        return this._assets.get(filename);
     }
 
-    public dispose(id: string): void 
+    public dispose(filename: string): void 
     {
-        const asset: AssetData = this.get(id);
+        const asset: AssetData = this.get(filename);
         if (asset != null)
         {
             asset.dispose();
-            this._assets.delete(id);
+            this._assets.delete(filename);
         }
     }
 
     public clear(): void 
     {
-        for (const [id, asset] of this._assets)
+        for (const [filename, asset] of this._assets)
         {
             asset.dispose();
         }
@@ -66,23 +66,23 @@ export default class AssetLibrary
         this._caches = new Map<AssetType, AssetCache>();
     }
 
-    public add(asset: Asset): boolean
+    public add(type: AssetType, filename: string, asset: AssetData): boolean
     {
-        let cache: AssetCache = this._caches.get(asset.type);
+        let cache: AssetCache = this._caches.get(type);
         if (cache == null)
         {
-            cache = new AssetCache(asset.type);
-            this._caches.set(asset.type, cache);
+            cache = new AssetCache(type);
+            this._caches.set(type, cache);
         }
-        return cache.add(asset.filename, asset.data);
+        return cache.add(filename, asset);
     }
 
-    public get(type: AssetType, id: string): AssetData
+    public get(type: AssetType, filename: string): AssetData
     {
         const cache: AssetCache = this._caches.get(type);
         if (cache != null)
         {
-            return cache.get(id);
+            return cache.get(filename);
         }
         return null;
     }
